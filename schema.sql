@@ -1,9 +1,9 @@
 -- As a general rule, all the columns in a unique constraint and all the columns in a foreign key constraint are best defined with not null constraints as well; this will often be a business requirement. Attempting to insert a row in the child table for which there is no matching row in the parent table will give an error --
-
+-- You cannot use ON DELETE CASCADE or ON DELETE SET NULL constraints in duckdb --
 CREATE TABLE companies (
     name STRING,
     CONSTRAINT company_pk PRIMARY KEY (name)
-)
+);
 
 INSERT INTO companies (name) 
 VALUES ('Oracle');
@@ -12,10 +12,11 @@ CREATE TABLE exams (
     name STRING,
     company STRING NOT NULL,
     CONSTRAINT exam_pk PRIMARY KEY (name),
-    CONSTRAINT exam_company_fk FOREIGN KEY (company) REFERENCES companies(name) ON DELETE SET NULL
+    CONSTRAINT exam_company_fk FOREIGN KEY (company) REFERENCES companies(name)
 );
+
 INSERT INTO exams (name, company) 
-VALUES ('1z0-071', 'Oracle')
+VALUES ('1z0-071', 'Oracle');
 
 CREATE TABLE questions (
     number INT,
@@ -24,7 +25,7 @@ CREATE TABLE questions (
     -- Each question belongs to exactly one exam, but an exam can have many questions. The combination of question number and exam must be unique. --
     -- composite primary key --
     CONSTRAINT question_pk PRIMARY KEY (number, exam),
-    CONSTRAINT question_exam_fk FOREIGN KEY (exam) REFERENCES exams(name) ON DELETE SET NULL
+    CONSTRAINT question_exam_fk FOREIGN KEY (exam) REFERENCES exams(name)
 );
 
 INSERT INTO questions (number, exam, text) 
@@ -39,8 +40,8 @@ CREATE TABLE answers (
     -- Each answer belongs to exactly one question, but a question can have many answers. The combination of answer number and question (number and exam) must be unique. --
     -- composite primary key --
     CONSTRAINT answer_pk PRIMARY KEY (number, question_number, question_exam),
-    CONSTRAINT answer_question_fk  FOREIGN KEY (question_number, question_exam) REFERENCES questions(number, exam) ON DELETE SET NULL
-)
+    CONSTRAINT answer_question_fk  FOREIGN KEY (question_number, question_exam) REFERENCES questions(number, exam)
+);
 
 INSERT INTO answers (number, question_number, question_exam, text, is_correct) 
 VALUES (1, 1, '1z0-071', 'SELECT', TRUE),
