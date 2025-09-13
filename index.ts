@@ -47,8 +47,15 @@ let main2 = async () => {
     console.log(text);
 
     const element2 = await page.waitForSelector('::-p-xpath(/html/body/div[2]/div/div[4]/div/div[1]/div[2]/p)');
-    const text2 = await element2?.evaluate(el => el.textContent);
-    console.log(text2);
+    const innerText2 = await element2?.evaluate(el => el.innerHTML);
+    console.log(innerText2);
+    const outerText2 = await element2?.evaluate(el => el.outerHTML);
+    console.log(outerText2);
+
+    const element3 = await page.waitForSelector('::-p-xpath(/html/body/div[2]/div/div[4]/div/div[1]/div[2]/p/img)');    
+    // @ts-ignore
+    const text3 = await element3?.evaluate(el => el.src);
+    console.log(text3);
 
     await browser.close();
 }
