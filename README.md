@@ -28,3 +28,33 @@ The following wont work if ~/.profile exist, Then you need to manually add to .b
 
 7) Compile Typescript and launch with node with sample arguments:
 - tsc && node ./build/index.js
+
+# How to remove popup block
+Apparently if you edit class="popup-overlay show" to "popup-overla show",
+the popup will break
+
+
+# Question with Screenshot (Unsure how to deal with images in question)
+/html/body/div[2]/div/div[4]/div/div[1]/div[2]/p
+
+# Answers
+/html/body/div[2]/div/div[4]/div/div[1]/div[2]/div[2]/ul/li[1]/text()
+
+/html/body/div[2]/div/div[4]/div/div[1]/div[2]/div[2]/ul/li[2]/text()
+
+/html/body/div[2]/div/div[4]/div/div[1]/div[2]/div[2]/ul/li[3]/text()
+
+/html/body/div[2]/div/div[4]/div/div[1]/div[2]/div[2]/ul/li[4]/text()
+
+/html/body/div[2]/div/div[4]/div/div[1]/div[2]/div[2]/ul/li[5]/text()
+
+
+# Discussion texts
+/html/body/div[2]/div/div[4]/div/div[2]/div[2]/div/div/div[2]/div[1]/div/div[2]/div[2]
+
+/html/body/div[2]/div/div[4]/div/div[2]/div[2]/div/div/div[2]/div[2]/div/div[2]/div[2]
+
+# Discussion upvotes
+/html/body/div[2]/div/div[4]/div/div[2]/div[2]/div/div/div[2]/div[1]/div/div[2]/div[3]/span[2]/span
+
+/html/body/div[2]/div/div[4]/div/div[2]/div[2]/div/div/div[2]/div[2]/div/div[2]/div[3]/span[2]/span
