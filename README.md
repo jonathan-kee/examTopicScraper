@@ -37,6 +37,9 @@ the popup will break
 # Question with Screenshot (Unsure how to deal with images in question)
 /html/body/div[2]/div/div[4]/div/div[1]/div[2]/p
 
+# Question Screenshot full link
+https://www.examtopics.com/assets/media/exam-media/04351/0000200001.png
+
 # Answers
 /html/body/div[2]/div/div[4]/div/div[1]/div[2]/div[2]/ul/li[1]/text()
 
