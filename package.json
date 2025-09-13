@@ -7,9 +7,7 @@
     "test": "test"
   },
   "scripts": {
-    "test": "tap \"test/**/*.test.js\"",
-    "start": "fastify start -l info ./build/app.js",
-    "dev": "fastify start -w -l info -P ./build/app.js"
+    "test": "tap \"build/test/**/*.test.js\""
   },
   "keywords": [],
   "author": "",
