@@ -157,5 +157,40 @@ let main2 = async () => {
 
     await browser.close();
 }
-main2()
+
+let main3 = async () => {
+    console.log("Starting test");
+    let google = 'https://www.google.com/';
+    let googleSearch = 'examtopics 1z0-"071" Exam question 1';
+    // const browser = await puppeteer.launch({ headless: false }); // show browser
+
+    const browserURL = 'http://127.0.0.1:9222';  // Remote debugging address
+    const browser = await puppeteer.connect({ browserURL });
+
+    const page = await browser.newPage();
+    // Needs { waitUntil: 'networkidle2' } to make thread continue
+
+    await page.goto(google, { waitUntil: 'networkidle2' });
+    
+    await page.locator('.gLFyf').wait();
+    console.log("Google search input detected");
+    await page.locator('.gLFyf').fill(googleSearch);
+    console.log("Input Google search input");
+
+    page.keyboard.press('Enter');
+    console.log("Clicked enter");
+
+    // await page.locator('.gNO89b').wait();
+    // console.log("Google search button detected");
+    // await page.locator('.gNO89b').click();
+    // console.log("clicked Google search button");
+
+    const element = await page.waitForSelector('::-p-xpath(/html/body/div[3]/div/div[12]/div/div[2]/div[2]/div/div/div[1]/div/div/div/div[1]/div/div/span/a)');
+    // @ts-ignore
+    const link = await element?.evaluate(el => el.href);
+    console.log(link);
+
+}
+main3()
+// main2()
 //main()ts
