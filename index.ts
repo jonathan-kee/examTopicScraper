@@ -62,6 +62,18 @@ let main2 = async () => {
     const outerText2 = await element2?.evaluate(el => el.outerHTML);
     console.log(outerText2);
 
+    let arrayOfText = await element2?.evaluate(el => {
+        let answer = [];
+        for (let i = 0; i < el.childNodes.length; i++) {
+            // @ts-ignore
+            if (el.childNodes[i].nodeName === 'IMG') answer.push(el.childNodes[i].src);
+            else answer.push(el.childNodes[i].textContent?.trim());
+        }
+        return answer;
+    });
+    const result = arrayOfText?.filter(str => str !== '').join('\n');
+    console.log(result);
+
     const element3 = await page.waitForSelector('::-p-xpath(/html/body/div[2]/div/div[4]/div/div[1]/div[2]/p/img)');
     // @ts-ignore
     const text3 = await element3?.evaluate(el => el.src);
