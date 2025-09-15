@@ -67,7 +67,12 @@ let main2 = async () => {
         }
     });
 
-    console.log('\n');
+    await page.locator('.load-full-discussion-button').wait();
+    console.log("Load Discussions button detected");
+    await page.locator('.load-full-discussion-button').click();
+    console.log("clicked load Discussions button");
+
+     console.log('\n');
 
     // Question
     const element2 = await page.waitForSelector('::-p-xpath(/html/body/div[2]/div/div[4]/div/div[1]/div[2]/p)');
@@ -87,9 +92,9 @@ let main2 = async () => {
 
     // Answers
     const questionsElement = await page.waitForSelector('::-p-xpath(/html/body/div[2]/div/div[4]/div/div[1]/div[2]/div[2]/ul)')
-    const questionsChildNodesLengh = await questionsElement?.evaluate(el => el.childElementCount);
-    if (questionsChildNodesLengh !== undefined) {
-        for (let i = 1; i <= questionsChildNodesLengh; i++) {
+    const questionsChildNodesLength = await questionsElement?.evaluate(el => el.childElementCount);
+    if (questionsChildNodesLength !== undefined) {
+        for (let i = 1; i <= questionsChildNodesLength; i++) {
             const element = await page.waitForSelector('::-p-xpath(/html/body/div[2]/div/div[4]/div/div[1]/div[2]/div[2]/ul/li[' + i + '])');
             let answer = await element?.evaluate(el => {
                 let answer = '';
@@ -108,38 +113,45 @@ let main2 = async () => {
     // /html/body/div[2]/div/div[4]/div/div[2]/div[2]/div/div/div[2]/div[1]/div/div[2]/div[1]
     // /html/body/div[2]/div/div[4]/div/div[2]/div[2]/div/div/div[2]/div[1]/div/div[2]/div[2] 
 
-    const discusstionElement = await page.waitForSelector('::-p-xpath(/html/body/div[2]/div/div[4]/div/div[2]/div[2]/div/div/div[2]/div[1]/div/div[2])');
-    const text = await discusstionElement?.evaluate(async el => {
-        async function nodeRecursion(el: Element | ChildNode, array: any[]) {
-            if (el.hasChildNodes()) {
-                for (let i = 0; i < el.childNodes.length; i++) {
-                    await nodeRecursion(el.childNodes[i], array);
+
+    const discussionsElement = await page.waitForSelector('::-p-xpath(/html/body/div[2]/div/div[4]/div/div[2]/div[2]/div/div/div[2])')
+    const discussionsChildNodesLength = await discussionsElement?.evaluate(el => el.childElementCount);
+    if (discussionsChildNodesLength !== undefined) {
+        for (let i = 1; i <= discussionsChildNodesLength; i++) {
+            const discusstionElement = await page.waitForSelector('::-p-xpath(/html/body/div[2]/div/div[4]/div/div[2]/div[2]/div/div/div[2]/div[' + i + ']/div/div[2])');
+            const text = await discusstionElement?.evaluate(async el => {
+                async function nodeRecursion(el: Element | ChildNode, array: any[]) {
+                    if (el.hasChildNodes()) {
+                        for (let i = 0; i < el.childNodes.length; i++) {
+                            await nodeRecursion(el.childNodes[i], array);
+                        }
+                    }
+                    // @ts-ignore
+                    if (el.className === 'comment-selected-answers badge badge-warning') {
+                        // console.log(el.textContent?.trim());
+                        array.push(el.textContent?.trim());
+                    }
+                    // @ts-ignore
+                    else if (el.className === 'comment-content') {
+                        // console.log(el.textContent?.trim());
+                        array.push(el.textContent?.trim());
+
+                    }
+                    // @ts-ignore
+                    else if (el.className === 'ml-2 upvote-text') {
+                        // console.log(el.textContent?.trim());
+                        array.push(el.textContent?.trim());
+
+                    }
                 }
-            }
-            // @ts-ignore
-            if (el.className === 'comment-selected-answers badge badge-warning') {
-                // console.log(el.textContent?.trim());
-                array.push(el.textContent?.trim());
-            }
-            // @ts-ignore
-            else if (el.className === 'comment-content') {
-                // console.log(el.textContent?.trim());
-                array.push(el.textContent?.trim());
 
-            }
-            // @ts-ignore
-            else if (el.className === 'ml-2 upvote-text') {
-                // console.log(el.textContent?.trim());
-                array.push(el.textContent?.trim());
-
-            }
+                let array: any[] = [];
+                await nodeRecursion(el, array);
+                return array;
+            });
+            console.log(text);
         }
-
-        let array: any[] = [];
-        await nodeRecursion(el, array);
-        return array;
-    });
-    console.log(text);
+    }
 
     console.log('Ending Test');
 
