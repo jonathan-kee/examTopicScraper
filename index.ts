@@ -61,7 +61,7 @@ let main2 = async () => {
 
     // Answers
     const questionsElement = await page.waitForSelector('::-p-xpath(/html/body/div[2]/div/div[4]/div/div[1]/div[2]/div[2]/ul)')
-    const questionsChildNodesLengh = await questionsElement?.evaluate(el => el.childNodes.length);
+    const questionsChildNodesLengh = await questionsElement?.evaluate(el => el.childElementCount);
     if (questionsChildNodesLengh !== undefined) {
         for (let i = 1; i <= questionsChildNodesLengh; i++) {
             const element = await page.waitForSelector('::-p-xpath(/html/body/div[2]/div/div[4]/div/div[1]/div[2]/div[2]/ul/li['+i+'])');
@@ -76,6 +76,8 @@ let main2 = async () => {
             console.log('\n');
         }
     }
+
+    console.log('Ending Test');
 
     await browser.close();
 }
