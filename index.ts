@@ -2,7 +2,7 @@ import fs from "fs";
 
 import { DuckDBInstance } from '@duckdb/node-api';
 import puppeteer from 'puppeteer';
-
+import { Client } from 'pg'
 
 let main = async () => {
     const instance = await DuckDBInstance.create(':memory:');
@@ -72,7 +72,7 @@ let main2 = async () => {
     await page.locator('.load-full-discussion-button').click();
     console.log("clicked load Discussions button");
 
-     console.log('\n');
+    console.log('\n');
 
     // Question
     const element2 = await page.waitForSelector('::-p-xpath(/html/body/div[2]/div/div[4]/div/div[1]/div[2]/p)');
@@ -171,7 +171,7 @@ let main3 = async () => {
     // Needs { waitUntil: 'networkidle2' } to make thread continue
 
     await page.goto(google, { waitUntil: 'networkidle2' });
-    
+
     await page.locator('.gLFyf').wait();
     console.log("Google search input detected");
     await page.locator('.gLFyf').fill(googleSearch);
@@ -192,6 +192,65 @@ let main3 = async () => {
     // browser.disconnect();
     browser.close();
 }
-main3()
+
+let main4 = async () => {
+    console.log("Starting test");
+
+    const client = new Client({
+        user: 'postgres',
+        password: 'abc123',
+        host: 'localhost',
+        port: 5432,
+        database: 'examtopic',
+    })
+
+    await client.connect()
+
+    const result = await client.query("SELECT last_value FROM seq_questionsLink;")
+    let sequenceLastValue: number = result.rows[0].last_value;
+
+    const google = 'https://www.google.com/';
+    const browserURL = 'http://127.0.0.1:9222';  // Remote debugging address
+    const browser = await puppeteer.connect({ browserURL });
+
+    for (let i = sequenceLastValue; i <= 272;) {
+
+        let googleSearch = 'examtopics 1z0-"071" Exam question ' + i;
+        const page = await browser.newPage();
+        // Needs { waitUntil: 'networkidle2' } to make thread continue
+
+        await page.goto(google, { waitUntil: 'networkidle2' });
+
+        await page.locator('.gLFyf').wait();
+        console.log("Google search input detected");
+        await page.locator('.gLFyf').fill(googleSearch);
+        console.log("Input Google search input");
+
+        page.keyboard.press('Enter');
+        console.log("Clicked enter");
+
+        const element = await page.waitForSelector('::-p-xpath(/html/body/div[3]/div/div[12]/div/div[2]/div[2]/div/div/div[1]/div/div/div/div[1]/div/div/span/a)');
+        // @ts-ignore
+        const link = await element?.evaluate(el => el.href);
+        console.log(link);
+
+        const insertResult = await client.query(`INSERT INTO questionsLink (number, exam, link) 
+VALUES ((SELECT last_value FROM seq_questionsLink), '1z0-071', '${link}');`)
+        console.log(insertResult);
+        
+        page.close();
+
+        // Increment 
+        const result = await client.query("SELECT nextval('seq_questionsLink') as next_value;")
+        let sequenceLastValue: number = result.rows[0].next_value;
+        i = sequenceLastValue;
+    }
+
+    // browser.disconnect();
+    browser.close();
+}
+
+main4()
+//main3()
 // main2()
 //main()ts

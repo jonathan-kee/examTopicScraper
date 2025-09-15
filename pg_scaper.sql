@@ -7,5 +7,9 @@ CREATE TABLE questionsLink (
 
 CREATE SEQUENCE seq_questionsLink START WITH 1 INCREMENT BY 1;
 
+SELECT last_value FROM seq_questionsLink;
+
+SELECT nextval('seq_questionsLink') as next_value;
+
 INSERT INTO questionsLink (number, exam, link) 
-VALUES (nextval('seq_questionsLink'), '1z0-071', 'https://www.examtopics.com/discussions/oracle/view/79888-exam-1z0-071-topic-1-question-1-discussion/');
+VALUES ((SELECT last_value FROM seq_questionsLink), 'test exam', 'test link');
