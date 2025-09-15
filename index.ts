@@ -193,6 +193,10 @@ let main3 = async () => {
     browser.close();
 }
 
+function randomDelay(min:number, max:number) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
 let main4 = async () => {
     console.log("Starting test");
 
@@ -244,6 +248,11 @@ VALUES ((SELECT last_value FROM seq_questionsLink), '1z0-071', '${link}');`)
         const result = await client.query("SELECT nextval('seq_questionsLink') as next_value;")
         let sequenceLastValue: number = result.rows[0].next_value;
         i = sequenceLastValue;
+
+        // Wait random time between 30s–1min
+        const delay = randomDelay(30000, 60000);
+        console.log(`Waiting ${delay / 1000}s...`)
+        await new Promise(resolve => setTimeout(resolve, delay));
     }
 
     // browser.disconnect();
