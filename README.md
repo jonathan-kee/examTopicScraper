@@ -29,6 +29,11 @@ The following wont work if ~/.profile exist, Then you need to manually add to .b
 7) Compile Typescript and launch with node with sample arguments:
 - tsc && node ./build/index.js
 
+# Launch browser that google does not capcha
+/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome \
+  --remote-debugging-port=9222 \
+  --user-data-dir=/tmp/chrome-profile
+
 # How to remove popup block
 Apparently if you edit class="popup-overlay show" to "popup-overla show",
 the popup will break

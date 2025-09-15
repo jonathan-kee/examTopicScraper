@@ -189,7 +189,8 @@ let main3 = async () => {
     // @ts-ignore
     const link = await element?.evaluate(el => el.href);
     console.log(link);
-
+    // browser.disconnect();
+    browser.close();
 }
 main3()
 // main2()
