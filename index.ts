@@ -41,6 +41,8 @@ let main2 = async () => {
         }
     });
 
+    console.log('\n');
+
     // Question
     const element2 = await page.waitForSelector('::-p-xpath(/html/body/div[2]/div/div[4]/div/div[1]/div[2]/p)');
     let arrayOfText = await element2?.evaluate(el => {
@@ -54,17 +56,26 @@ let main2 = async () => {
     });
     const result = arrayOfText?.filter(str => str !== '').join('\n');
     console.log(result);
-    
-    // Answer
-    const element = await page.waitForSelector('::-p-xpath(/html/body/div[2]/div/div[4]/div/div[1]/div[2]/div[2]/ul/li[1])');
-    let answer = await element?.evaluate(el => {
-        let answer = '';
-        for (let i = 0; i < el.childNodes.length; i++) {
-            answer += el.childNodes[i].textContent?.trim()
+
+    console.log('\n');
+
+    // Answers
+    const questionsElement = await page.waitForSelector('::-p-xpath(/html/body/div[2]/div/div[4]/div/div[1]/div[2]/div[2]/ul)')
+    const questionsChildNodesLengh = await questionsElement?.evaluate(el => el.childNodes.length);
+    if (questionsChildNodesLengh !== undefined) {
+        for (let i = 1; i <= questionsChildNodesLengh; i++) {
+            const element = await page.waitForSelector('::-p-xpath(/html/body/div[2]/div/div[4]/div/div[1]/div[2]/div[2]/ul/li['+i+'])');
+            let answer = await element?.evaluate(el => {
+                let answer = '';
+                for (let i = 0; i < el.childNodes.length; i++) {
+                    answer += el.childNodes[i].textContent?.trim()
+                }
+                return answer;
+            });
+            console.log(answer);
+            console.log('\n');
         }
-        return answer;
-    });
-    console.log(answer);
+    }
 
     await browser.close();
 }
