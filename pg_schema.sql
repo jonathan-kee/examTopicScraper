@@ -68,3 +68,7 @@ VALUES
     (4, 1, '1z0-071', 'Selected Answer: AC',
         'Distinct is used to get distinct set of values for one or more columns mentioned in select statement',
         2);
+
+CREATE SEQUENCE seq_questions START WITH 1 INCREMENT BY 1;
+SELECT last_value FROM seq_questionsLink;
+SELECT nextval('seq_questions') as next_value;

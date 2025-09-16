@@ -95,14 +95,14 @@ class Question {
         return new Question(number, exam, result ?? 'null');
     }
 
-    public static async insert(question: Question, client:Client) {
+    public static async insert(question: Question, client: Client) {
         let query = `INSERT INTO questions
     (number, exam, text)
 VALUES
     ${question.number}, '${question.exam}', '${question.text}');`;
-        
-    const result = await client.query(query);
-    console.log(result);
+
+        const result = await client.query(query);
+        console.log(result);
     }
 }
 
@@ -180,14 +180,14 @@ class Answer {
         return list;
     }
 
-    public static async insert(answer: Answer, client:Client) {
+    public static async insert(answer: Answer, client: Client) {
         let query = `INSERT INTO answers
     (number, question_number, question_exam, text, is_correct)
 VALUES
     (${answer.number}, ${answer.questionNumber}, '${answer.questionExam}', '${answer.text}', ${answer.isCorrect});`
-        
-    const result = await client.query(query);
-    console.log(result);
+
+        const result = await client.query(query);
+        console.log(result);
     }
 }
 
@@ -315,14 +315,14 @@ class Discussion {
         return list;
     }
 
-    public static async insert(discussion: Discussion, client:Client) {
+    public static async insert(discussion: Discussion, client: Client) {
         let query = `INSERT INTO discussions
     (number, question_number, question_exam, selected_answer, text, upvote)
 VALUES
     (${discussion.number}, ${discussion.questionNumber}, '${discussion.questionExam}', '${discussion.selectedAnswer}', '${discussion.text}', ${discussion.upvote});  `
-        
-    const result = await client.query(query);
-    console.log(result);
+
+        const result = await client.query(query);
+        console.log(result);
     }
 }
 
@@ -488,11 +488,107 @@ VALUES ((SELECT last_value FROM seq_questionsLink), '1z0-071', '${link}');`)
         await new Promise(resolve => setTimeout(resolve, delay));
     }
 
+    await client.end();
     // browser.disconnect();
-    browser.close();
+    await browser.close();
+}
+
+let scrapeDataIntoPostgres = async () => {
+    console.log("Starting test");
+
+    const client = new Client({
+        user: 'postgres',
+        password: 'abc123',
+        host: 'localhost',
+        port: 5432,
+        database: 'examtopic',
+    })
+
+    await client.connect()
+
+    const result = await client.query("SELECT last_value FROM seq_questions;")
+    let sequenceLastValue: number = result.rows[0].last_value;
+
+    const google = 'https://www.google.com/';
+    const browserURL = 'http://127.0.0.1:9222';  // Remote debugging address
+    const browser = await puppeteer.connect({ browserURL });
+
+    for (let i = sequenceLastValue; i <= 272;) {
+
+        const questionslinkResult = await client.query(`SELECT link FROM questionslink where number = ${i};`)
+        const questionslink: string = questionslinkResult.rows[0].link;
+
+        const page = await browser.newPage();
+        // Needs { waitUntil: 'networkidle2' } to make thread continue
+        // Make waiting for elements shorter
+        page.setDefaultTimeout(7000);
+
+        await page.goto(questionslink, { waitUntil: 'networkidle2' });
+
+        try {
+            console.log("Page loaded");
+            await page.locator('.popup-overlay.show').wait();
+            console.log("Popup detected");
+
+            // Apparently page.evaluate is like opening up console
+            await page.evaluate(() => {
+                const el = document.querySelector('.popup-overlay.show');
+                if (el) {
+                    el.className = 'popup-overla show';
+                }
+            });
+        } catch (error) {
+            console.log("Popup not detected");
+        }
+
+        try {
+            await page.locator('.load-full-discussion-button').wait();
+            console.log("Load Discussions button detected");
+            await page.locator('.load-full-discussion-button').click();
+            console.log("clicked load Discussions button");
+        } catch (error) {
+            console.log("Load Discussions button not detected");
+        }
+
+        // Question
+        let question = await Question.create(page, i, '1z0-071');
+        console.log(question);
+        await Question.insert(question, client);
+
+        // Answers
+        let answers = await Answer.create(page, i, '1z0-071');
+        for (let i = 0; i < answers.length; i++) {
+            console.log(answers[i]);
+            await Answer.insert(answers[i],client);
+        }
+
+        // Discussions
+        let discussions = await Discussion.create(page, i, '1z0-071');
+        for (let i = 0; i < discussions.length; i++) {
+            console.log(discussions[i]);
+            await Discussion.insert(discussions[i],client);
+        }
+
+        page.close();
+
+        // Increment 
+        const result = await client.query("SELECT nextval('seq_questions') as next_value;")
+        let sequenceLastValue: number = result.rows[0].next_value;
+        i = sequenceLastValue;
+
+        // Wait random time between 1min–1min30s
+        const delay = randomDelay(63000, 70000);
+        console.log(`Waiting ${delay / 1000}s...`)
+        await new Promise(resolve => setTimeout(resolve, delay));
+    }
+
+    await client.end();
+    // browser.disconnect();
+    await browser.close();
 }
 
 // main4()
 //main3()
-scrapeData()
+// scrapeData()
+scrapeDataIntoPostgres()
 //main()ts
