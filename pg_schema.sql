@@ -21,8 +21,8 @@ CREATE TABLE questions
     number INT,
     exam TEXT NOT NULL,
     text TEXT,
-    CONSTRAINT question_pk PRIMARY KEY (number, exam),
-    CONSTRAINT question_exam_fk FOREIGN KEY (exam) REFERENCES exams(name)
+    CONSTRAINT question2_pk PRIMARY KEY (number, exam),
+    CONSTRAINT question2_exam_fk FOREIGN KEY (exam) REFERENCES exams(name)
 );
 
 INSERT INTO questions (number, exam, text)
