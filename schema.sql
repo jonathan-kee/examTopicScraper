@@ -1,24 +1,31 @@
 -- As a general rule, all the columns in a unique constraint and all the columns in a foreign key constraint are best defined with not null constraints as well; this will often be a business requirement. Attempting to insert a row in the child table for which there is no matching row in the parent table will give an error --
 -- You cannot use ON DELETE CASCADE or ON DELETE SET NULL constraints in duckdb --
-CREATE TABLE companies (
+CREATE TABLE companies
+(
     name STRING,
     CONSTRAINT company_pk PRIMARY KEY (name)
 );
 
-INSERT INTO companies (name) 
-VALUES ('Oracle');
+INSERT INTO companies
+    (name)
+VALUES
+    ('Oracle');
 
-CREATE TABLE exams (
+CREATE TABLE exams
+(
     name STRING,
     company STRING NOT NULL,
     CONSTRAINT exam_pk PRIMARY KEY (name),
     CONSTRAINT exam_company_fk FOREIGN KEY (company) REFERENCES companies(name)
 );
 
-INSERT INTO exams (name, company) 
-VALUES ('1z0-071', 'Oracle');
+INSERT INTO exams
+    (name, company)
+VALUES
+    ('1z0-071', 'Oracle');
 
-CREATE TABLE questions (
+CREATE TABLE questions
+(
     number INT,
     exam STRING NOT NULL,
     text STRING,
@@ -28,10 +35,13 @@ CREATE TABLE questions (
     CONSTRAINT question_exam_fk FOREIGN KEY (exam) REFERENCES exams(name)
 );
 
-INSERT INTO questions (number, exam, text) 
-VALUES (1, '1z0-071', 'Which SQL statement is used to extract data from a database?');
+INSERT INTO questions
+    (number, exam, text)
+VALUES
+    (1, '1z0-071', 'Which SQL statement is used to extract data from a database?');
 
-CREATE TABLE answers (
+CREATE TABLE answers
+(
     number INT,
     question_number INT NOT NULL,
     question_exam STRING NOT NULL,
@@ -43,9 +53,30 @@ CREATE TABLE answers (
     CONSTRAINT answer_question_fk  FOREIGN KEY (question_number, question_exam) REFERENCES questions(number, exam)
 );
 
-INSERT INTO answers (number, question_number, question_exam, text, is_correct) 
-VALUES (1, 1, '1z0-071', 'SELECT', TRUE),
-       (2, 1, '1z0-071', 'EXTRACT', FALSE),
-       (3, 1, '1z0-071', 'OPEN', FALSE),
-       (4, 1, '1z0-071', 'GET', FALSE);
+INSERT INTO answers
+    (number, question_number, question_exam, text, is_correct)
+VALUES
+    (1, 1, '1z0-071', 'SELECT', TRUE),
+    (2, 1, '1z0-071', 'EXTRACT', FALSE),
+    (3, 1, '1z0-071', 'OPEN', FALSE),
+    (4, 1, '1z0-071', 'GET', FALSE);
 
+CREATE TABLE discussions
+(
+    number INT,
+    question_number INT NOT NULL,
+    question_exam STRING NOT NULL,
+    selected_answer STRING,
+    text string,
+    upvote INT
+        CONSTRAINT discussion_pk PRIMARY KEY (number, question_number, question_exam),
+    CONSTRAINT discussion_question_fk FOREIGN KEY (question_number, question_exam) REFERENCES questions(number, exam)
+)
+
+INSERT INTO discussions
+    (number, question_number, question_exam, selected_answer, text, upvote)
+VALUES
+    (1, 1, '1z0-071', 'Selected Answer: AC', 'A & C is correct', 1),
+    (2, 1, '1z0-071', 'Selected Answer: AC', 'A-C is correct', 1),
+    (3, 1, '1z0-071', null, 'A and C is the correct answer.', 1),
+    (4, 1, '1z0-071', 'Selected Answer: AC', 'Distinct is used to get distinct set of values for one or more columns mentioned in select statement', 2);  

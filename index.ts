@@ -127,7 +127,7 @@ class Answer {
     }
 }
 
-let main2 = async () => {
+let scrapeData = async () => {
     console.log("Starting test");
     const browser = await puppeteer.launch({ headless: false }); // show browser
     const page = await browser.newPage();
@@ -156,38 +156,16 @@ let main2 = async () => {
     console.log('\n');
 
     // Question
-    const element2 = await page.waitForSelector('::-p-xpath(/html/body/div[2]/div/div[4]/div/div[1]/div[2]/p)');
-    let arrayOfText = await element2?.evaluate(el => {
-        let answer = [];
-        for (let i = 0; i < el.childNodes.length; i++) {
-            // @ts-ignore
-            if (el.childNodes[i].nodeName === 'IMG') answer.push(el.childNodes[i].src);
-            else answer.push(el.childNodes[i].textContent?.trim());
-        }
-        return answer;
-    });
-    const result = arrayOfText?.filter(str => str !== '').join('\n');
-    console.log(result);
+    let question = await Question.create(page, 1, '1z0-071');
+    console.log(question);
 
     console.log('\n');
 
     // Answers
-    const questionsElement = await page.waitForSelector('::-p-xpath(/html/body/div[2]/div/div[4]/div/div[1]/div[2]/div[2]/ul)')
-    const questionsChildNodesLength = await questionsElement?.evaluate(el => el.childElementCount);
-    if (questionsChildNodesLength !== undefined) {
-        for (let i = 1; i <= questionsChildNodesLength; i++) {
-            const element = await page.waitForSelector('::-p-xpath(/html/body/div[2]/div/div[4]/div/div[1]/div[2]/div[2]/ul/li[' + i + '])');
-            let answer = await element?.evaluate(el => {
-                let answer = '';
-                for (let i = 0; i < el.childNodes.length; i++) {
-                    answer += el.childNodes[i].textContent?.trim()
-                }
-                return answer;
-            });
-            console.log(answer);
-            console.log('\n');
-        }
-    }
+    let answers = await Answer.create(page, 1, '1z0-071');
+    console.log(answers);
+
+    console.log('\n');
 
     // Discussions
     // The xpath is dynamic, can only be determined by el.className
@@ -340,7 +318,7 @@ VALUES ((SELECT last_value FROM seq_questionsLink), '1z0-071', '${link}');`)
     browser.close();
 }
 
-main4()
+// main4()
 //main3()
-// main2()
+scrapeData()
 //main()ts
