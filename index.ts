@@ -535,7 +535,6 @@ let scrapeDataIntoPostgres = async () => {
     const result = await client.query("SELECT last_value FROM seq_questions;")
     let sequenceLastValue: number = result.rows[0].last_value;
 
-    const google = 'https://www.google.com/';
     const browserURL = 'http://127.0.0.1:9222';  // Remote debugging address
     const browser = await puppeteer.connect({ browserURL });
 
