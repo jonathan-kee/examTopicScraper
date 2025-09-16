@@ -173,7 +173,7 @@ class Answer {
                 });
                 console.log(answer);
 
-                let answerObj = new Answer(i, questionNumber, questionExam, answer ?? 'null', true); // true for now
+                let answerObj = new Answer(i, questionNumber, questionExam, answer ?? 'null', answer?.includes("Most Voted") ?? false);
                 list.push(answerObj);
             }
         }
