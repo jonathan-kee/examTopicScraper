@@ -1,5 +1,5 @@
 # EXAMTOPICSCRAPER
-An easy starting point would be start reverse engineering websites, like the project right now I am working on is an examdump web scraper. The reason I was doing this is because I don't want to pay the expensive fee to see the certification dumps lol. 
+The reason I was doing this is because I don't want to pay the expensive fee to see the certification dumps lol. 
 
 # Project Setup
 1) Install node version manager:
