@@ -1,7 +1,7 @@
 import fs from "fs";
 
 import { DuckDBInstance } from '@duckdb/node-api';
-import puppeteer from 'puppeteer';
+import puppeteer, { Page } from 'puppeteer';
 import { Client } from 'pg'
 
 let main = async () => {
@@ -47,27 +47,43 @@ async function nodeRecursion(el: Element | ChildNode, array: any[]) {
 }
 
 class Company {
-    private _name: string 
-    public constructor(name: string) { 
+    private _name: string
+    public constructor(name: string) {
         this._name = name;
     }
-} 
+}
 
 class Question {
-   private _number: number 
-   private _exam: string
-   private _text: string
-   public constructor(number: number, exam: string, text: string) { 
+    private _number: number
+    private _exam: string
+    private _text: string
+    private constructor(number: number, exam: string, text: string) {
         this._number = number;
         this._exam = exam;
         this._text = text;
+    }
+
+    public static async create(page: Page, number: number, exam: string): Promise<Question> {
+        const element = await page.waitForSelector('::-p-xpath(/html/body/div[2]/div/div[4]/div/div[1]/div[2]/p)');
+        let arrayOfText = await element?.evaluate(el => {
+            let answer = [];
+            for (let i = 0; i < el.childNodes.length; i++) {
+                // @ts-ignore
+                if (el.childNodes[i].nodeName === 'IMG') answer.push(el.childNodes[i].src);
+                else answer.push(el.childNodes[i].textContent?.trim());
+            }
+            return answer;
+        });
+        const result = arrayOfText?.filter(str => str !== '').join('\n');
+        console.log(result);
+        return new Question(number, exam, result ?? 'null');
     }
 }
 
 class Exam {
     private _name: string
     private _company: string
-    public constructor(name: string, company: string) { 
+    public constructor(name: string, company: string) {
         this._name = name;
         this._company = company;
     }
@@ -77,14 +93,37 @@ class Answer {
     private _number: number
     private _questionNumber: number
     private _questionExam: string
-    private _text:string
+    private _text: string
     private _isCorrect: boolean
-    public constructor(number: number, questionNumber: number, questionExam: string, text: string, isCorrect: boolean) { 
+    private constructor(number: number, questionNumber: number, questionExam: string, text: string, isCorrect: boolean) {
         this._number = number;
         this._questionNumber = questionNumber;
         this._questionExam = questionExam;
         this._text = text;
         this._isCorrect = isCorrect;
+    }
+
+    public static async create(page: Page, questionNumber: number, questionExam: string): Promise<Answer[]> {
+        let list:Answer[] = [];
+        const questionsElement = await page.waitForSelector('::-p-xpath(/html/body/div[2]/div/div[4]/div/div[1]/div[2]/div[2]/ul)')
+        const questionsChildNodesLength = await questionsElement?.evaluate(el => el.childElementCount);
+        if (questionsChildNodesLength !== undefined) {
+            for (let i = 1; i <= questionsChildNodesLength; i++) {
+                const element = await page.waitForSelector('::-p-xpath(/html/body/div[2]/div/div[4]/div/div[1]/div[2]/div[2]/ul/li[' + i + '])');
+                let answer = await element?.evaluate(el => {
+                    let answer = '';
+                    for (let i = 0; i < el.childNodes.length; i++) {
+                        answer += el.childNodes[i].textContent?.trim()
+                    }
+                    return answer;
+                });
+                console.log(answer);
+                
+                let answerObj = new Answer(i, questionNumber, questionExam, answer ?? 'null', true); // true for now
+                list.push(answerObj);
+            }
+        }
+        return list;
     }
 }
 
@@ -235,9 +274,9 @@ let main3 = async () => {
     browser.close();
 }
 
-function randomDelay(min:number, max:number) {
-  return Math.floor(Math.random() * (max - min + 1)) + min;
-} 
+function randomDelay(min: number, max: number) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
 
 let main4 = async () => {
     console.log("Starting test");
@@ -283,7 +322,7 @@ let main4 = async () => {
         const insertResult = await client.query(`INSERT INTO questionsLink (number, exam, link) 
 VALUES ((SELECT last_value FROM seq_questionsLink), '1z0-071', '${link}');`)
         console.log(insertResult);
-        
+
         page.close();
 
         // Increment 
