@@ -96,12 +96,19 @@ class Question {
     }
 
     public static async insert(question: Question, client: Client) {
-        let query = `INSERT INTO questions
+        const query = `
+INSERT INTO questions
     (number, exam, text)
-VALUES
-    (${question.number}, '${question.exam}', '${question.text}');`;
+VALUES ($1, $2, $3);
+`;
 
-        const result = await client.query(query);
+        const values = [
+            question.number,
+            question.exam,
+            question.text
+        ];
+
+        const result = await client.query(query, values);
         console.log(result);
     }
 }
@@ -181,12 +188,21 @@ class Answer {
     }
 
     public static async insert(answer: Answer, client: Client) {
-        let query = `INSERT INTO answers
+        const query = `
+INSERT INTO answers
     (number, question_number, question_exam, text, is_correct)
-VALUES
-    (${answer.number}, ${answer.questionNumber}, '${answer.questionExam}', '${answer.text}', ${answer.isCorrect});`
+VALUES ($1, $2, $3, $4, $5);
+`;
 
-        const result = await client.query(query);
+        const values = [
+            answer.number,
+            answer.questionNumber,
+            answer.questionExam,
+            answer.text,
+            answer.isCorrect
+        ];
+
+        const result = await client.query(query, values);
         console.log(result);
     }
 }
@@ -316,12 +332,22 @@ class Discussion {
     }
 
     public static async insert(discussion: Discussion, client: Client) {
-        let query = `INSERT INTO discussions
+        const query = `
+INSERT INTO discussions
     (number, question_number, question_exam, selected_answer, text, upvote)
-VALUES
-    (${discussion.number}, ${discussion.questionNumber}, '${discussion.questionExam}', '${discussion.selectedAnswer}', '${discussion.text}', ${discussion.upvote});  `
+VALUES ($1, $2, $3, $4, $5, $6);
+`;
 
-        const result = await client.query(query);
+        const values = [
+            discussion.number,
+            discussion.questionNumber,
+            discussion.questionExam,
+            discussion.selectedAnswer,
+            discussion.text,
+            discussion.upvote
+        ];
+
+        const result = await client.query(query, values);
         console.log(result);
     }
 }
@@ -559,14 +585,14 @@ let scrapeDataIntoPostgres = async () => {
         let answers = await Answer.create(page, i, '1z0-071');
         for (let i = 0; i < answers.length; i++) {
             console.log(answers[i]);
-            await Answer.insert(answers[i],client);
+            await Answer.insert(answers[i], client);
         }
 
         // Discussions
         let discussions = await Discussion.create(page, i, '1z0-071');
         for (let i = 0; i < discussions.length; i++) {
             console.log(discussions[i]);
-            await Discussion.insert(discussions[i],client);
+            await Discussion.insert(discussions[i], client);
         }
 
         page.close();
@@ -577,7 +603,7 @@ let scrapeDataIntoPostgres = async () => {
         i = sequenceLastValue;
 
         // Wait random time between 1min–1min30s
-        const delay = randomDelay(63000, 70000);
+        const delay = randomDelay(33000, 60000);
         console.log(`Waiting ${delay / 1000}s...`)
         await new Promise(resolve => setTimeout(resolve, delay));
     }
