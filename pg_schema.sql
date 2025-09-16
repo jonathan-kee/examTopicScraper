@@ -70,5 +70,5 @@ VALUES
         2);
 
 CREATE SEQUENCE seq_questions START WITH 1 INCREMENT BY 1;
-SELECT last_value FROM seq_questionsLink;
+SELECT last_value FROM seq_questions;
 SELECT nextval('seq_questions') as next_value;
