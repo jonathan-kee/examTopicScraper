@@ -182,7 +182,8 @@ class Discussion {
                 const discusstionElement = await page.waitForSelector('::-p-xpath(/html/body/div[2]/div/div[4]/div/div[2]/div[2]/div/div/div[2]/div[' + i + ']/div/div[2])');
                 const obj = await discusstionElement?.evaluate(async el => {
                     async function nodeRecursion(el: Element | ChildNode, object: any) {
-                        if (el.hasChildNodes()) {
+                        // @ts-ignore
+                        if (el.className !== 'comment-replies' && el.hasChildNodes()) {
                             for (let i = 0; i < el.childNodes.length; i++) {
                                 await nodeRecursion(el.childNodes[i], object);
                             }
