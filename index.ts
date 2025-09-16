@@ -46,6 +46,48 @@ async function nodeRecursion(el: Element | ChildNode, array: any[]) {
     }
 }
 
+class Company {
+    private _name: string 
+    public constructor(name: string) { 
+        this._name = name;
+    }
+} 
+
+class Question {
+   private _number: number 
+   private _exam: string
+   private _text: string
+   public constructor(number: number, exam: string, text: string) { 
+        this._number = number;
+        this._exam = exam;
+        this._text = text;
+    }
+}
+
+class Exam {
+    private _name: string
+    private _company: string
+    public constructor(name: string, company: string) { 
+        this._name = name;
+        this._company = company;
+    }
+}
+
+class Answer {
+    private _number: number
+    private _questionNumber: number
+    private _questionExam: string
+    private _text:string
+    private _isCorrect: boolean
+    public constructor(number: number, questionNumber: number, questionExam: string, text: string, isCorrect: boolean) { 
+        this._number = number;
+        this._questionNumber = questionNumber;
+        this._questionExam = questionExam;
+        this._text = text;
+        this._isCorrect = isCorrect;
+    }
+}
+
 let main2 = async () => {
     console.log("Starting test");
     const browser = await puppeteer.launch({ headless: false }); // show browser
@@ -195,7 +237,7 @@ let main3 = async () => {
 
 function randomDelay(min:number, max:number) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
-}
+} 
 
 let main4 = async () => {
     console.log("Starting test");
@@ -249,8 +291,8 @@ VALUES ((SELECT last_value FROM seq_questionsLink), '1z0-071', '${link}');`)
         let sequenceLastValue: number = result.rows[0].next_value;
         i = sequenceLastValue;
 
-        // Wait random time between 30s–1min
-        const delay = randomDelay(30000, 60000);
+        // Wait random time between 1min–1min30s
+        const delay = randomDelay(63000, 70000);
         console.log(`Waiting ${delay / 1000}s...`)
         await new Promise(resolve => setTimeout(resolve, delay));
     }
