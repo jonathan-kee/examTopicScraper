@@ -168,7 +168,7 @@ class Discussion {
         }
 
         build(number: number, questionNumber: number, questionExam: string): Discussion {
-            return new Discussion(number,questionNumber,questionExam, this._selectedAnswer, this._text, this._upvote);
+            return new Discussion(number, questionNumber, questionExam, this._selectedAnswer, this._text, this._upvote);
         }
 
     }
@@ -177,12 +177,11 @@ class Discussion {
         let list: Discussion[] = [];
         const discussionsElement = await page.waitForSelector('::-p-xpath(/html/body/div[2]/div/div[4]/div/div[2]/div[2]/div/div/div[2])')
         const discussionsChildNodesLength = await discussionsElement?.evaluate(el => el.childElementCount);
-        console.log(discussionsChildNodesLength);
         if (discussionsChildNodesLength !== undefined) {
-            for (let i = 1; i <= discussionsChildNodesLength + 1; i++) {
+            for (let i = 1; i <= discussionsChildNodesLength; i++) {
                 const discusstionElement = await page.waitForSelector('::-p-xpath(/html/body/div[2]/div/div[4]/div/div[2]/div[2]/div/div/div[2]/div[' + i + ']/div/div[2])');
                 const obj = await discusstionElement?.evaluate(async el => {
-                    async function nodeRecursion(el: Element | ChildNode, object:any) {
+                    async function nodeRecursion(el: Element | ChildNode, object: any) {
                         if (el.hasChildNodes()) {
                             for (let i = 0; i < el.childNodes.length; i++) {
                                 await nodeRecursion(el.childNodes[i], object);
@@ -211,16 +210,16 @@ class Discussion {
                     }
 
                     let object = {
-                        selectedAnswer : 'null',
-                        text : 'null',
-                        upvote : -1
+                        selectedAnswer: 'null',
+                        text: 'null',
+                        upvote: -1
                     };
 
                     await nodeRecursion(el, object);
                     return object;
                 });
                 // console.log(obj);
-                let discussion = new Discussion(i,questionNumber,questionExam, obj?.selectedAnswer ?? 'null', obj?.text ?? 'null', obj?.upvote ?? -1);
+                let discussion = new Discussion(i, questionNumber, questionExam, obj?.selectedAnswer ?? 'null', obj?.text ?? 'null', obj?.upvote ?? -1);
                 list.push(discussion);
             }
         }
@@ -232,27 +231,37 @@ let scrapeData = async () => {
     console.log("Starting test");
     const browser = await puppeteer.launch({ headless: false }); // show browser
     const page = await browser.newPage();
-    // Needs { waitUntil: 'networkidle2' } to make thread continue
+    // Make waiting for elements shorter
+    page.setDefaultTimeout(7000);
 
-    await page.goto('https://www.examtopics.com/discussions/oracle/view/79888-exam-1z0-071-topic-1-question-1-discussion/', { waitUntil: 'networkidle2' });
+    // Needs { waitUntil: 'networkidle2' } to make thread continue
+    await page.goto('https://www.examtopics.com/discussions/oracle/view/79530-exam-1z0-071-topic-1-question-2-discussion/', { waitUntil: 'networkidle2' });
     // await page.goto('https://www.examtopics.com/discussions/oracle/view/79530-exam-1z0-071-topic-1-question-2-discussion/', { waitUntil: 'networkidle2' });
 
-    console.log("Page loaded");
-    await page.locator('.popup-overlay.show').wait();
-    console.log("Popup detected");
+    try {
+        console.log("Page loaded");
+        await page.locator('.popup-overlay.show').wait();
+        console.log("Popup detected");
 
-    // Apparently page.evaluate is like opening up console
-    await page.evaluate(() => {
-        const el = document.querySelector('.popup-overlay.show');
-        if (el) {
-            el.className = 'popup-overla show';
-        }
-    });
+        // Apparently page.evaluate is like opening up console
+        await page.evaluate(() => {
+            const el = document.querySelector('.popup-overlay.show');
+            if (el) {
+                el.className = 'popup-overla show';
+            }
+        });
+    } catch (error) {
+        console.log("Popup not detected");
+    }
 
-    await page.locator('.load-full-discussion-button').wait();
-    console.log("Load Discussions button detected");
-    await page.locator('.load-full-discussion-button').click();
-    console.log("clicked load Discussions button");
+    try {
+        await page.locator('.load-full-discussion-button').wait();
+        console.log("Load Discussions button detected");
+        await page.locator('.load-full-discussion-button').click();
+        console.log("clicked load Discussions button");
+    } catch (error) {
+        console.log("Load Discussions button not detected");
+    }
 
     console.log('\n');
 
