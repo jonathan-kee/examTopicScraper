@@ -99,7 +99,7 @@ class Question {
         let query = `INSERT INTO questions
     (number, exam, text)
 VALUES
-    ${question.number}, '${question.exam}', '${question.text}');`;
+    (${question.number}, '${question.exam}', '${question.text}');`;
 
         const result = await client.query(query);
         console.log(result);
