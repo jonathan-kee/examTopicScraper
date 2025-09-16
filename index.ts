@@ -51,6 +51,10 @@ class Company {
     public constructor(name: string) {
         this._name = name;
     }
+
+    public get name(): string {
+        return this._name;
+    }
 }
 
 class Question {
@@ -61,6 +65,18 @@ class Question {
         this._number = number;
         this._exam = exam;
         this._text = text;
+    }
+
+    public get number(): number {
+        return this._number;
+    }
+
+    public get exam(): string {
+        return this._exam;
+    }
+
+    public get text(): string {
+        return this._text;
     }
 
     public static async create(page: Page, number: number, exam: string): Promise<Question> {
@@ -87,6 +103,14 @@ class Exam {
         this._name = name;
         this._company = company;
     }
+
+    public get name(): string {
+        return this._name;
+    }
+
+    public get company(): string {
+        return this._company;
+    }
 }
 
 class Answer {
@@ -101,6 +125,26 @@ class Answer {
         this._questionExam = questionExam;
         this._text = text;
         this._isCorrect = isCorrect;
+    }
+
+    public get number(): number {
+        return this._number;
+    }
+
+    public get questionNumber(): number {
+        return this._questionNumber;
+    }
+
+    public get questionExam(): string {
+        return this._questionExam;
+    }
+
+    public get text(): string {
+        return this._text;
+    }
+
+    public get isCorrect(): boolean {
+        return this._isCorrect;
     }
 
     public static async create(page: Page, questionNumber: number, questionExam: string): Promise<Answer[]> {
@@ -141,6 +185,30 @@ class Discussion {
         this._selectedAnswer = selectedAnswer;
         this._text = text;
         this._upvote = upvote;
+    }
+
+    public get number(): number {
+        return this._number;
+    }
+
+    public get questionNumber(): number {
+        return this._questionNumber;
+    }
+
+    public get questionExam(): string {
+        return this._questionExam;
+    }
+
+    public get selectedAnswer(): string {
+        return this._selectedAnswer;
+    }
+
+    public get text(): string {
+        return this._text;
+    }
+
+    public get upvote(): number {
+        return this._upvote;
     }
 
     // Builder Pattern (Not used)
