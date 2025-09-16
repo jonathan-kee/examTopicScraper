@@ -104,7 +104,7 @@ class Answer {
     }
 
     public static async create(page: Page, questionNumber: number, questionExam: string): Promise<Answer[]> {
-        let list:Answer[] = [];
+        let list: Answer[] = [];
         const questionsElement = await page.waitForSelector('::-p-xpath(/html/body/div[2]/div/div[4]/div/div[1]/div[2]/div[2]/ul)')
         const questionsChildNodesLength = await questionsElement?.evaluate(el => el.childElementCount);
         if (questionsChildNodesLength !== undefined) {
@@ -118,9 +118,110 @@ class Answer {
                     return answer;
                 });
                 console.log(answer);
-                
+
                 let answerObj = new Answer(i, questionNumber, questionExam, answer ?? 'null', true); // true for now
                 list.push(answerObj);
+            }
+        }
+        return list;
+    }
+}
+
+class Discussion {
+    private _number: number
+    private _questionNumber: number
+    private _questionExam: string
+    private _selectedAnswer: string
+    private _text: string
+    private _upvote: number
+    private constructor(number: number, questionNumber: number, questionExam: string, selectedAnswer: string, text: string, upvote: number) {
+        this._number = number;
+        this._questionNumber = questionNumber;
+        this._questionExam = questionExam;
+        this._selectedAnswer = selectedAnswer;
+        this._text = text;
+        this._upvote = upvote;
+    }
+
+    // Builder Pattern (Not used)
+    static Builder = class {
+        private _selectedAnswer: string
+        private _text: string
+        private _upvote: number
+
+        constructor() {
+            this._selectedAnswer = 'null';
+            this._text = 'null';
+            this._upvote = -1;
+        }
+
+        public set selectedAnswer(selectedAnswer: string) {
+            this._selectedAnswer = selectedAnswer;
+        }
+
+        public set text(text: string) {
+            this._text = text;
+        }
+
+        public set upvote(upvote: number) {
+            this._upvote = upvote;
+        }
+
+        build(number: number, questionNumber: number, questionExam: string): Discussion {
+            return new Discussion(number,questionNumber,questionExam, this._selectedAnswer, this._text, this._upvote);
+        }
+
+    }
+
+    public static async create(page: Page, questionNumber: number, questionExam: string): Promise<Discussion[]> {
+        let list: Discussion[] = [];
+        const discussionsElement = await page.waitForSelector('::-p-xpath(/html/body/div[2]/div/div[4]/div/div[2]/div[2]/div/div/div[2])')
+        const discussionsChildNodesLength = await discussionsElement?.evaluate(el => el.childElementCount);
+        console.log(discussionsChildNodesLength);
+        if (discussionsChildNodesLength !== undefined) {
+            for (let i = 1; i <= discussionsChildNodesLength + 1; i++) {
+                const discusstionElement = await page.waitForSelector('::-p-xpath(/html/body/div[2]/div/div[4]/div/div[2]/div[2]/div/div/div[2]/div[' + i + ']/div/div[2])');
+                const obj = await discusstionElement?.evaluate(async el => {
+                    async function nodeRecursion(el: Element | ChildNode, object:any) {
+                        if (el.hasChildNodes()) {
+                            for (let i = 0; i < el.childNodes.length; i++) {
+                                await nodeRecursion(el.childNodes[i], object);
+                            }
+                        }
+                        // @ts-ignore
+                        if (el.className === 'comment-selected-answers badge badge-warning') {
+                            // console.log(el.textContent?.trim());
+                            // array.push(el.textContent?.trim());
+                            object.selectedAnswer = el.textContent?.trim() ?? 'null';
+                        }
+                        // @ts-ignore
+                        else if (el.className === 'comment-content') {
+                            // console.log(el.textContent?.trim());
+                            // array.push(el.textContent?.trim());
+                            object.text = el.textContent?.trim() ?? 'null';
+                        }
+                        // @ts-ignore
+                        else if (el.className === 'ml-2 upvote-text') {
+                            // console.log(el.textContent?.trim());
+                            // array.push(el.textContent?.trim());
+                            let upvoteText = el.textContent?.trim();
+                            let upvote = Number(upvoteText?.split(' ')[1]);
+                            object.upvote = upvote;
+                        }
+                    }
+
+                    let object = {
+                        selectedAnswer : 'null',
+                        text : 'null',
+                        upvote : -1
+                    };
+
+                    await nodeRecursion(el, object);
+                    return object;
+                });
+                // console.log(obj);
+                let discussion = new Discussion(i,questionNumber,questionExam, obj?.selectedAnswer ?? 'null', obj?.text ?? 'null', obj?.upvote ?? -1);
+                list.push(discussion);
             }
         }
         return list;
@@ -172,45 +273,10 @@ let scrapeData = async () => {
     // /html/body/div[2]/div/div[4]/div/div[2]/div[2]/div/div/div[2]/div[1]/div/div[2]/div[1]
     // /html/body/div[2]/div/div[4]/div/div[2]/div[2]/div/div/div[2]/div[1]/div/div[2]/div[2] 
 
+    let discussions = await Discussion.create(page, 1, '1z0-071');
+    console.log(discussions);
 
-    const discussionsElement = await page.waitForSelector('::-p-xpath(/html/body/div[2]/div/div[4]/div/div[2]/div[2]/div/div/div[2])')
-    const discussionsChildNodesLength = await discussionsElement?.evaluate(el => el.childElementCount);
-    if (discussionsChildNodesLength !== undefined) {
-        for (let i = 1; i <= discussionsChildNodesLength; i++) {
-            const discusstionElement = await page.waitForSelector('::-p-xpath(/html/body/div[2]/div/div[4]/div/div[2]/div[2]/div/div/div[2]/div[' + i + ']/div/div[2])');
-            const text = await discusstionElement?.evaluate(async el => {
-                async function nodeRecursion(el: Element | ChildNode, array: any[]) {
-                    if (el.hasChildNodes()) {
-                        for (let i = 0; i < el.childNodes.length; i++) {
-                            await nodeRecursion(el.childNodes[i], array);
-                        }
-                    }
-                    // @ts-ignore
-                    if (el.className === 'comment-selected-answers badge badge-warning') {
-                        // console.log(el.textContent?.trim());
-                        array.push(el.textContent?.trim());
-                    }
-                    // @ts-ignore
-                    else if (el.className === 'comment-content') {
-                        // console.log(el.textContent?.trim());
-                        array.push(el.textContent?.trim());
-
-                    }
-                    // @ts-ignore
-                    else if (el.className === 'ml-2 upvote-text') {
-                        // console.log(el.textContent?.trim());
-                        array.push(el.textContent?.trim());
-
-                    }
-                }
-
-                let array: any[] = [];
-                await nodeRecursion(el, array);
-                return array;
-            });
-            console.log(text);
-        }
-    }
+    console.log('\n');
 
     console.log('Ending Test');
 
