@@ -94,6 +94,16 @@ class Question {
         console.log(result);
         return new Question(number, exam, result ?? 'null');
     }
+
+    public static async insert(question: Question, client:Client) {
+        let query = `INSERT INTO questions
+    (number, exam, text)
+VALUES
+    ${question.number}, '${question.exam}', '${question.text}');`;
+        
+    const result = await client.query(query);
+    console.log(result);
+    }
 }
 
 class Exam {
@@ -168,6 +178,16 @@ class Answer {
             }
         }
         return list;
+    }
+
+    public static async insert(answer: Answer, client:Client) {
+        let query = `INSERT INTO answers
+    (number, question_number, question_exam, text, is_correct)
+VALUES
+    (${answer.number}, ${answer.questionNumber}, '${answer.questionExam}', '${answer.text}', ${answer.isCorrect});`
+        
+    const result = await client.query(query);
+    console.log(result);
     }
 }
 
@@ -293,6 +313,16 @@ class Discussion {
             }
         }
         return list;
+    }
+
+    public static async insert(discussion: Discussion, client:Client) {
+        let query = `INSERT INTO discussions
+    (number, question_number, question_exam, selected_answer, text, upvote)
+VALUES
+    (${discussion.number}, ${discussion.questionNumber}, '${discussion.questionExam}', '${discussion.selectedAnswer}', '${discussion.text}', ${discussion.upvote});  `
+        
+    const result = await client.query(query);
+    console.log(result);
     }
 }
 
