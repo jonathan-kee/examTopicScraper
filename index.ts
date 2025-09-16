@@ -572,6 +572,8 @@ let scrapeDataIntoPostgres = async () => {
             console.log("Load Discussions button detected");
             await page.locator('.load-full-discussion-button').click();
             console.log("clicked load Discussions button");
+            // Wait for load discussion to finish
+            await new Promise(resolve => setTimeout(resolve, 5000));
         } catch (error) {
             console.log("Load Discussions button not detected");
         }
