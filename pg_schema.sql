@@ -11,7 +11,7 @@ CREATE TABLE exams
     name TEXT,
     company TEXT NOT NULL,
     CONSTRAINT exam_pk PRIMARY KEY (name),
-    CONSTRAINT exam_company_fk FOREIGN KEY (company) REFERENCES companies(name)
+    CONSTRAINT exam_company_fk FOREIGN KEY (company) REFERENCES companies(name) ON DELETE CASCADE
 );
 
 INSERT INTO exams (name, company) VALUES ('1z0-071', 'Oracle');
@@ -22,7 +22,7 @@ CREATE TABLE questions
     exam TEXT NOT NULL,
     text TEXT,
     CONSTRAINT question2_pk PRIMARY KEY (number, exam),
-    CONSTRAINT question2_exam_fk FOREIGN KEY (exam) REFERENCES exams(name)
+    CONSTRAINT question2_exam_fk FOREIGN KEY (exam) REFERENCES exams(name) ON DELETE CASCADE
 );
 
 INSERT INTO questions (number, exam, text)
@@ -37,7 +37,7 @@ CREATE TABLE answers
     is_correct BOOLEAN,
     CONSTRAINT answer_pk PRIMARY KEY (number, question_number, question_exam),
     CONSTRAINT answer_question_fk FOREIGN KEY (question_number, question_exam)
-        REFERENCES questions(number, exam)
+        REFERENCES questions(number, exam) ON DELETE CASCADE
 );
 
 INSERT INTO answers (number, question_number, question_exam, text, is_correct)
@@ -57,7 +57,7 @@ CREATE TABLE discussions
     upvote INT,
     CONSTRAINT discussion_pk PRIMARY KEY (number, question_number, question_exam),
     CONSTRAINT discussion_question_fk FOREIGN KEY (question_number, question_exam)
-        REFERENCES questions(number, exam)
+        REFERENCES questions(number, exam) ON DELETE CASCADE
 );
 
 INSERT INTO discussions (number, question_number, question_exam, selected_answer, text, upvote)
