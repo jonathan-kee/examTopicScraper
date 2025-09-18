@@ -187,6 +187,65 @@ class Answer {
         return list;
     }
 
+    public static async newCreate(page: Page, questionNumber: number, questionExam: string): Promise<Answer[]> {
+        const element = await page.waitForSelector('::-p-xpath(/html/body/div[2]/div/div[4]/div/div[1]/div[2]/p)');
+        let arrayOfText = await element?.evaluate(el => {
+            let answer = [];
+            for (let i = 0; i < el.childNodes.length; i++) {
+                // @ts-ignore
+                if (el.childNodes[i].nodeName === 'IMG') answer.push(el.childNodes[i].src);
+                else answer.push(el.childNodes[i].textContent?.trim());
+            }
+            return answer;
+        });
+
+        // Check A, B, C, D
+        let answerList: Answer[] = [];
+        const resultList = arrayOfText?.filter(str => str !== '');
+        if (resultList !== undefined) {
+            for (let i = 0; i < resultList.length; i++) {
+                let element: string = resultList[i]
+                console.log(element);
+                switch (element) {
+                    case 'A.': {
+                        let answer = 'A. ' + resultList[i + 1];
+                        console.log(answer);
+                        let answerObj = new Answer(i, questionNumber, questionExam, answer ?? 'null', answer?.includes("Most Voted") ?? false);
+                        answerList.push(answerObj);
+                        i++;
+                        continue;
+                    }
+                    case 'B.': {
+                        let answer = 'B. ' + resultList[i + 1];
+                        console.log(answer);
+                        let answerObj = new Answer(i, questionNumber, questionExam, answer ?? 'null', answer?.includes("Most Voted") ?? false);
+                        answerList.push(answerObj);
+                        i++;
+                        continue;;
+                    }
+                    case 'C.': {
+                        let answer = 'C. ' + resultList[i + 1];
+                        console.log(answer);
+                        let answerObj = new Answer(i, questionNumber, questionExam, answer ?? 'null', answer?.includes("Most Voted") ?? false);
+                        answerList.push(answerObj);
+                        i++;
+                        continue;;
+                    }
+                    case 'D.': {
+                        let answer = 'D. ' + resultList[i + 1];
+                        console.log(answer);
+                        let answerObj = new Answer(i, questionNumber, questionExam, answer ?? 'null', answer?.includes("Most Voted") ?? false);
+                        answerList.push(answerObj);
+                        i++;
+                        continue;
+                    }
+                    default: continue;
+                }
+            }
+        }
+        return answerList;
+    }
+
     public static async insert(answer: Answer, client: Client) {
         const query = `
 INSERT INTO answers
@@ -534,7 +593,6 @@ let scrapeDataIntoPostgres = async () => {
 
     const result = await client.query("SELECT last_value FROM seq_questions;")
     let sequenceLastValue: number = result.rows[0].last_value;
-
     const browserURL = 'http://127.0.0.1:9222';  // Remote debugging address
     const browser = await puppeteer.connect({ browserURL });
 
@@ -546,7 +604,7 @@ let scrapeDataIntoPostgres = async () => {
         const page = await browser.newPage();
         // Needs { waitUntil: 'networkidle2' } to make thread continue
         // Make waiting for elements shorter
-        page.setDefaultTimeout(7000);
+        page.setDefaultTimeout(12000);
 
         await page.goto(questionslink, { waitUntil: 'networkidle2' });
 
@@ -583,7 +641,14 @@ let scrapeDataIntoPostgres = async () => {
         await Question.insert(question, client);
 
         // Answers
-        let answers = await Answer.create(page, i, '1z0-071');
+        let answers = []
+        try {
+            answers = await Answer.create(page, i, '1z0-071');
+        } catch (error) {
+            console.log("cannot find answers")
+            answers = await Answer.newCreate(page, i, '1z0-071');
+        }
+
         for (let i = 0; i < answers.length; i++) {
             console.log(answers[i]);
             await Answer.insert(answers[i], client);

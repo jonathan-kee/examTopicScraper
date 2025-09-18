@@ -32,6 +32,8 @@ The following wont work if ~/.profile exist, Then you need to manually add to .b
 # List of bugs to fix
 - Answer cannot be scraped:
 https://www.examtopics.com/discussions/oracle/view/92435-exam-1z0-071-topic-1-question-24-discussion/
+^
+The answers was already scraped, but it is contained within questions
 
 # Launch browser that google does not capcha
 /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome \
