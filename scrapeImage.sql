@@ -22,5 +22,6 @@ image_url_answers as (
 -- select * from image_url_answers;
 
 select unnest(url) from image_url_questions
-union all
-select unnest(url) from image_url_answers;
+union
+select unnest(url) from image_url_answers
+order by unnest;
