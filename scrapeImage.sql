@@ -23,6 +23,8 @@ all_image_url as (
 	select unnest(url) from image_url_answers
 	order by unnest
 )
-SELECT * 
+SELECT 
+	DENSE_RANK() OVER (ORDER BY unnest) as number,
+	unnest as url
 FROM all_image_url
 ORDER BY unnest;
