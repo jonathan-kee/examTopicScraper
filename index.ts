@@ -679,8 +679,54 @@ let scrapeDataIntoPostgres = async () => {
     await browser.close();
 }
 
+let scrapeImages = async () => {
+    const client = new Client({
+        user: 'postgres',
+        password: 'abc123',
+        host: 'localhost',
+        port: 5432,
+        database: 'examtopic',
+    })
+
+    await client.connect()
+
+    const result = await client.query("SELECT last_value FROM seq_imagesLink;")
+    let sequenceLastValue: number = result.rows[0].last_value;
+
+    for (let i = sequenceLastValue; i <= 83;) {
+        const imageslinkResult = await client.query(`SELECT url FROM view_all_images_url where number = ${i};`)
+        const imageslink: string = imageslinkResult.rows[0].url;
+
+        const filename = imageslink.substring(imageslink.lastIndexOf("/") + 1, imageslink.lastIndexOf("."));
+        console.log(filename);
+
+        const response = await fetch(imageslink);
+        if (!response.ok) {
+            throw new Error(`Failed to fetch ${imageslink}: ${response.statusText}`);
+        }
+
+        const arrayBuffer = await response.arrayBuffer();
+        fs.writeFileSync("./images/" + filename + ".png", Buffer.from(arrayBuffer));
+
+        console.log("Image saved as " + filename + ".png");
+
+        // Increment 
+        const result = await client.query("SELECT nextval('seq_imagesLink') as next_value;")
+        let sequenceLastValue: number = result.rows[0].next_value;
+        i = sequenceLastValue;
+
+        // Wait random time between 1min–1min30s
+        const delay = randomDelay(3000, 10000);
+        console.log(`Waiting ${delay / 1000}s...`)
+        await new Promise(resolve => setTimeout(resolve, delay));
+    }
+
+    await client.end();
+}
+
+scrapeImages()
 // main4()
 //main3()
 // scrapeData()
-scrapeDataIntoPostgres()
+// scrapeDataIntoPostgres()
 //main()ts
