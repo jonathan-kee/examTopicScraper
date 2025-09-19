@@ -1,3 +1,4 @@
+CREATE OR REPLACE VIEW view_all_images_url AS 
 with image_url_questions as (
 	SELECT regexp_matches(
 	  text,
@@ -22,9 +23,6 @@ all_image_url as (
 	select unnest(url) from image_url_answers
 	order by unnest
 )
-select * from all_image_url;
-
--- select * from image_url_questions
--- union all
--- select * from image_url_answers;
-
+SELECT * 
+FROM all_image_url
+ORDER BY unnest;
