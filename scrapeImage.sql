@@ -15,13 +15,16 @@ image_url_answers as (
 		) AS url
 	FROM answers
 	WHERE text like '%https://www.examtopics.com/%'
+),
+all_image_url as (
+	select unnest(url) from image_url_questions
+	union
+	select unnest(url) from image_url_answers
+	order by unnest
 )
+select * from all_image_url;
 
 -- select * from image_url_questions
 -- union all
 -- select * from image_url_answers;
 
-select unnest(url) from image_url_questions
-union
-select unnest(url) from image_url_answers
-order by unnest;
