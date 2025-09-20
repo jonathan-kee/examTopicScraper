@@ -5,7 +5,7 @@ with relative_path_questions as (
     exam,
     regexp_replace(
         text,
-        'https://www\.examtopics\.com/[^\s'']+/([0-9]+\.png)',
+        'https?://[^/\s'']+/[^\s'']+/([^\s'']+\.[^\s'']+)',
         './images/\1',
         'g'
     ) as text
@@ -21,7 +21,7 @@ with relative_path_answers as (
     question_exam,
     regexp_replace(
         text,
-        'https://www\.examtopics\.com/[^\s'']+/([0-9]+\.png)',
+        'https?://[^/\s'']+/[^\s'']+/([^\s'']+\.[^\s'']+)',
         './images/\1',
         'g'
     ) as text,
