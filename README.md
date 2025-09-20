@@ -35,6 +35,10 @@ https://www.examtopics.com/discussions/oracle/view/92435-exam-1z0-071-topic-1-qu
 ^
 The answers was already scraped, but it is contained within questions
 
+- Need to handle 
+- https://img.examtopics.com/1z0-071/image98.png
+- https://www.examtopics.com/assets/media/exam-media/04351/0002400002.jpg
+
 # Launch browser that google does not capcha
 /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome \
   --remote-debugging-port=9222 \
