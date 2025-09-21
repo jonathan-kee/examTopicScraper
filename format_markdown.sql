@@ -1,7 +1,7 @@
 -- questions for question 1
 select questions.number , questions.text
 from relative_path_questions as questions
-where questions.number = 1
+where questions.number = 1;
 
 -- answers for question 1
 select answers.text, answers.is_correct
@@ -19,4 +19,4 @@ on discussions.question_number = questions.number and
 discussions.question_exam = questions.exam
 where questions.number = 1
 order by upvote desc
-limit 5
+limit 5;
