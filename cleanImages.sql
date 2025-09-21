@@ -6,7 +6,9 @@ with relative_path_questions as (
     regexp_replace(
         text,
         'https?://[^/\s'']+/[^\s'']+/([^\s'']+\.[^\s'']+)',
-        './images/\1',
+        '
+![](./images/\1)
+		',
         'g'
     ) as text
     from questions
@@ -22,7 +24,9 @@ with relative_path_answers as (
     regexp_replace(
         text,
         'https?://[^/\s'']+/[^\s'']+/([^\s'']+\.[^\s'']+)',
-        './images/\1',
+        '
+![](./images/\1)
+		',
         'g'
     ) as text,
     is_correct
