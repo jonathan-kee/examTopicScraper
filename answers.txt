@@ -1,0 +1,33 @@
+question 7 (constraints)
+*** never learned DISABLE, ENABLE ***
+
+question 8 (correlated subquery)
+*** not sure how update in correalated query work ***
+C, E is wrong
+ 
+question 9 (truncate & delete difference)
+A, E  is correct
+B, D is wrong
+C not sure
+
+question 10 (addmonths & sysdate)
+*** not sure if I am correct ***
+B, C is correct
+D is wrong
+
+question 11 (scalar subquery)
+A, E is correct
+C (It will return null), D is wrong
+Not sure if B, F is correct
+
+question 12 (variable substituion)
+D, E, F is wrong
+B is correct(You need 1 &1 first)
+^
+Apparently I am wrong
+
+A, C not sure is correct
+
+question 13 (permission)
+*** I don't really remember the exact synax ***
+
