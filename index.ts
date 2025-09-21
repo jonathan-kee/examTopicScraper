@@ -771,7 +771,7 @@ let markdown = async () => {
     const result = await client.query("SELECT last_value FROM seq_markdown;")
     let sequenceLastValue: number = result.rows[0].last_value;
 
-    for (let i = sequenceLastValue; i <= 1;) {
+    for (let i = sequenceLastValue; i <= 272;) {
         const questionResult = await client.query(`select questions.number , questions.text
 from relative_path_questions as questions
 where questions.number = ${i};`);
