@@ -724,7 +724,97 @@ let scrapeImages = async () => {
     await client.end();
 }
 
-scrapeImages()
+class Markdown {
+    private questionNumber: number
+    private question: string
+    private answers: string[]
+    private discussions: string[]
+    constructor(questionNumber: number, question: string, answers: string[], discussions: string[]) {
+        this.questionNumber = questionNumber;
+        this.question = question; // string is immutable
+        this.answers = Array.from(answers); // clone to prevent external modification
+        this.discussions = Array.from(discussions); // clone to prevent external modification
+    }
+
+    public toString(): string {
+        return "# Question " + this.questionNumber + "\n" +
+            this.question + "\n\n" +
+            "# Answers\n" +
+            this.answers.join("\n\n") + "\n\n" +
+            "# Discussions\n" +
+            this.discussions.join("\n\n");      
+    }
+
+    public toFile(): void {
+        fs.writeFileSync("./markdowns/question" + this.questionNumber + ".md", this.toString());
+        console.log("Question, Answers, Discussions saved as " + this.questionNumber + ".md");
+    }
+}
+
+let markdown = async () => {
+    const client = new Client({
+        user: 'postgres',
+        password: 'abc123',
+        host: 'localhost',
+        port: 5432,
+        database: 'examtopic',
+    })
+
+    await client.connect()
+
+    const result = await client.query("SELECT last_value FROM seq_markdown;")
+    let sequenceLastValue: number = result.rows[0].last_value;
+
+    for (let i = sequenceLastValue; i <= 1;) {
+        const questionResult = await client.query(`select questions.number , questions.text
+from relative_path_questions as questions
+where questions.number = ${i};`);
+        const question: string = questionResult.rows[0].text;
+        
+        const answerResult = await client.query(`select REPLACE(answers.text, 'Most Voted', '') as text, answers.is_correct
+from relative_path_questions as questions
+join relative_path_answers as answers 
+on answers.question_number = questions.number and
+answers.question_exam = questions.exam
+where questions.number = ${i};`);
+        let answerCount = answerResult.rowCount;
+        let answers: string[] = [];
+        for (let i = 0; i < (answerCount ?? 0); i++) {
+            let answer = answerResult.rows[i].text;
+            answers.push(answer);
+        }
+
+        const discussionResult = await client.query(`select discussions.selected_answer, discussions.text, discussions.upvote
+from relative_path_questions as questions
+join discussions
+on discussions.question_number = questions.number and
+discussions.question_exam = questions.exam
+where questions.number = ${i}
+order by upvote desc
+limit 5;`);
+
+        let discussionCount = discussionResult.rowCount;
+        let discussions: string[] = [];
+        for (let i = 0; i < (discussionCount ?? 0); i++) {
+            let discussion = discussionResult.rows[i].text;
+            discussions.push(discussion);
+        }
+
+        let markdown = new Markdown(i, question, answers, discussions);
+        markdown.toFile();
+
+        // Increment 
+        const result = await client.query("SELECT nextval('seq_markdown') as next_value;")
+        let sequenceLastValue: number = result.rows[0].next_value;
+        i = sequenceLastValue;
+    }
+
+    await client.end();
+}   
+
+
+markdown()
+// scrapeImages()
 // main4()
 //main3()
 // scrapeData()
