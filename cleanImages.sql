@@ -7,7 +7,7 @@ with relative_path_questions as (
         text,
         'https?://[^/\s'']+/[^\s'']+/([^\s'']+\.[^\s'']+)',
         '
-![](./images/\1)
+![](../images/\1)
 		',
         'g'
     ) as text
@@ -25,7 +25,7 @@ with relative_path_answers as (
         text,
         'https?://[^/\s'']+/[^\s'']+/([^\s'']+\.[^\s'']+)',
         '
-![](./images/\1)
+![](../images/\1)
 		',
         'g'
     ) as text,

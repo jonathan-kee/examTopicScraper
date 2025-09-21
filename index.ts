@@ -737,12 +737,18 @@ class Markdown {
     }
 
     public toString(): string {
+        let discussionsString = "";
+        for (let i = 0; i < this.discussions.length; i++) {
+            discussionsString += "## Discussion " + (i + 1) + "\n" +
+                this.discussions[i] + "\n\n";
+        }
+
         return "# Question " + this.questionNumber + "\n" +
             this.question + "\n\n" +
             "# Answers\n" +
             this.answers.join("\n\n") + "\n\n" +
             "# Discussions\n" +
-            this.discussions.join("\n\n");      
+            discussionsString;
     }
 
     public toFile(): void {
@@ -770,7 +776,7 @@ let markdown = async () => {
 from relative_path_questions as questions
 where questions.number = ${i};`);
         const question: string = questionResult.rows[0].text;
-        
+
         const answerResult = await client.query(`select REPLACE(answers.text, 'Most Voted', '') as text, answers.is_correct
 from relative_path_questions as questions
 join relative_path_answers as answers 
@@ -810,7 +816,7 @@ limit 5;`);
     }
 
     await client.end();
-}   
+}
 
 
 markdown()
