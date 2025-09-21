@@ -29,5 +29,17 @@ Apparently I am wrong
 A, C not sure is correct
 
 question 13 (permission)
-*** I don't really remember the exact synax ***
+*** I don't really remember the exact syntax ***
+
+question 14 (Drop table)
+*** I don't know what is purge ***
+*** I don't really know what happens when to views, synonymns 
+when you drop a table ***
+
+question 15 (Intro)
+B, C, E is correct
+D, F is wrong
+
+question 16 (Synonyms, Object naming)
+*** I don't know what the rules of synonym ***
 
