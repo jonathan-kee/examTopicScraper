@@ -69,4 +69,13 @@ Apparently NOT a higher precendence than AND and ORGANIZATION
 
 question 23 (Datetime arithmatic)
 
-(Continue) question 24
+question 24 (Set operators)
+*** A is confusing because of null ***
+C is correct
+
+question 25 (Group by, Having syntax)
+A, C, D is wrong
+B, E is correct
+^
+ChatGPT says you cannot have aggregate in Group by
+
