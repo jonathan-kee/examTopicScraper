@@ -43,3 +43,16 @@ D, F is wrong
 question 16 (Synonyms, Object naming)
 *** I don't know what the rules of synonym ***
 
+question 17 (ROUND, TRUNC, MOD)
+*** I don't remember how the function works ***
+
+question 18 (Transactions)
+C is wrong
+
+question 19 (Filter & Order by)
+C, D is wrong
+B, E is correct
+^
+Did not really know F is wrong
+
+question 20
