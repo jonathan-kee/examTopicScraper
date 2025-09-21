@@ -693,11 +693,11 @@ let scrapeImages = async () => {
     const result = await client.query("SELECT last_value FROM seq_imagesLink;")
     let sequenceLastValue: number = result.rows[0].last_value;
 
-    for (let i = sequenceLastValue; i <= 83;) {
+    for (let i = sequenceLastValue; i <= 178;) {
         const imageslinkResult = await client.query(`SELECT url FROM view_all_images_url where number = ${i};`)
         const imageslink: string = imageslinkResult.rows[0].url;
 
-        const filename = imageslink.substring(imageslink.lastIndexOf("/") + 1, imageslink.lastIndexOf("."));
+        const filename = imageslink.substring(imageslink.lastIndexOf("/") + 1, imageslink.length);
         console.log(filename);
 
         const response = await fetch(imageslink);
@@ -706,9 +706,9 @@ let scrapeImages = async () => {
         }
 
         const arrayBuffer = await response.arrayBuffer();
-        fs.writeFileSync("./images/" + filename + ".png", Buffer.from(arrayBuffer));
+        fs.writeFileSync("./images/" + filename, Buffer.from(arrayBuffer));
 
-        console.log("Image saved as " + filename + ".png");
+        console.log("Image saved as " + filename);
 
         // Increment 
         const result = await client.query("SELECT nextval('seq_imagesLink') as next_value;")
