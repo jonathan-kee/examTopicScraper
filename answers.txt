@@ -55,4 +55,18 @@ B, E is correct
 ^
 Did not really know F is wrong
 
-question 20
+question 20 (External Table)
+*** I don't know ORGANIZATION EXTERNAL ***
+
+question 21 (Unused)
+*** I am not sure if you can recover from Unused column ***
+D, E, F is wrong
+
+question 22 (Precedence)
+B, C, D is wrong
+^
+Apparently NOT a higher precendence than AND and ORGANIZATION
+
+question 23 (Datetime arithmatic)
+
+(Continue) question 24
