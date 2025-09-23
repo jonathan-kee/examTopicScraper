@@ -79,3 +79,9 @@ B, E is correct
 ^
 ChatGPT says you cannot have aggregate in Group by
 
+question 26 (Single row function)
+A, C, E is wrong
+B, D, F is correct
+
+question 27 (Meta data tables)
+*** Not familiar with this topic ***
