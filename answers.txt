@@ -85,3 +85,11 @@ B, D, F is correct
 
 question 27 (Meta data tables)
 *** Not familiar with this topic ***
+
+question 28 (Multi table insert)
+*** Not familiar with this topic ***
+
+question 29 (Count / Aggregate functions)
+A, C is correct
+B, D (including null is wrong), E is wrong
+
