@@ -97,3 +97,11 @@ question 30 (ADD_MONTHS(), NEXT_DAY())
 A is wrong
 D looks correct
 
+question 31 (GLOBAL TEMPORARY TABLES)
+*** Never learned about this topic ***
+
+question 32 (Variable substitution)
+A, D, E is wrong
+C is Correct
+^
+I guess B is correct
