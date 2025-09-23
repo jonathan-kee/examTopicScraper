@@ -93,3 +93,7 @@ question 29 (Count / Aggregate functions)
 A, C is correct
 B, D (including null is wrong), E is wrong
 
+question 30 (ADD_MONTHS(), NEXT_DAY())
+A is wrong
+D looks correct
+
