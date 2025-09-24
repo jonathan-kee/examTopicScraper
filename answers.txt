@@ -263,4 +263,9 @@ B (one Foreign key is wrong), C, E
 D (Not sure what table level means)
 F is correct
 
+Question 71 (Constraints)
+serial_no
+order_id
+
+A, F is correct
 
