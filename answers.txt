@@ -221,3 +221,6 @@ INVOICE_DATE column of data type DATE
 A, D, E is wrong
 B, C is Correct
 
+Question 61 (Inner Join, Outer Join)
+A, B, F is correct
+C, D, E is wrong
