@@ -105,3 +105,13 @@ A, D, E is wrong
 C is Correct
 ^
 I guess B is correct
+
+Question 33 (Sequence)
+*** I don't know what is CACHE, NOCACHE ***
+I think Cycle will result in duplicates
+
+Question 34 (Date arithmatic)
+*** I don't know the DATE syntax ***
+If I remember SYSDATE will return current datetime
+
+Question 35
