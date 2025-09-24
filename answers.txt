@@ -203,8 +203,14 @@ Question 56 (Subquery)
 A (Could be zero rows), E is wrong
 B, C, D is correct
 
-Question 57
+Question 57 (Alter Table)
+A, B, F, E is Correct
+^
+Apparenlty B is wrong
 
-Question 58
+Question 58 (Parent Child relationship)
+B, D is correct
 
-Question 59
+Question 59 (Roles)
+*** Not really familair with role syntax ***
+
