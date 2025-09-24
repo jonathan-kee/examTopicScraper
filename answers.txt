@@ -214,3 +214,10 @@ B, D is correct
 Question 59 (Roles)
 *** Not really familair with role syntax ***
 
+Question 60 (Data type conversion)
+QTY_SOLD column of data type NUMBER
+INVOICE_DATE column of data type DATE
+
+A, D, E is wrong
+B, C is Correct
+
