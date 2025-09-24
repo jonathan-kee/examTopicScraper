@@ -179,9 +179,11 @@ Question 49 (Order by & function)
 *** Not familiar with TRUNC() ***
 A is correct
 
-Question 50
+Question 50 (Default values of data types)
+*** Not familiar with the details ***
 
-Question 51
+Question 51 (Alias)
+C (Cannot use Alias in where), E (Cannot use Alias in where) is correct
 
 Question 52
 
