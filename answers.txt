@@ -161,9 +161,15 @@ Question 45 (Order by, subquery)
 A, F is wrong
 E, B is correct
 
-Question 46
+Question 46 (External table)
+*** I don't know the details of ORACLE_DATAPUMP access driver ***
 
-Question 47
+Question 47 (Aggregation syntax)
+A (aggregate cannot be in where), 
+B (Having must come after Group by),
+C (Having must come after Group by) is wrong
+
+D is correct
 
 Question 48
 
