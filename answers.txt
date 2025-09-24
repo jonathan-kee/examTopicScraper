@@ -196,9 +196,12 @@ Question 54 (Set operators)
 A, D is wrong
 B, C is correct
 
-Question 55
+Question 55 (Using Sequence in Create Table)
+*** Not too familiar with the details ***
 
-Question 56
+Question 56 (Subquery)
+A (Could be zero rows), E is wrong
+B, C, D is correct
 
 Question 57
 
