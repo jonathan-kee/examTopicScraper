@@ -147,3 +147,44 @@ Question 41 (Self Join)
 A, B is correct
 D looks wrong because of NULL 
 
+Question 42 (Drop column)
+A, B is wrong
+C is correct
+
+Question 43 (Views)
+*** I don't know how views work in detail ***
+
+Question 44 (Create Table)
+*** I don't know GLOBAL TEMPORARY, ON COMMIT PRESERVE ROWS ***
+
+Question 45 (Order by, subquery)
+A, F is wrong
+E, B is correct
+
+Question 46
+
+Question 47
+
+Question 48
+
+Question 49 
+
+Question 50
+
+Question 51
+
+Question 52
+
+Question 53
+
+Question 54 
+
+Question 55
+
+Question 56
+
+Question 57
+
+Question 58
+
+Question 59
