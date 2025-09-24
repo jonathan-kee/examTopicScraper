@@ -248,3 +248,19 @@ D (Union will remove duplicates) is correct
 Question 67 (Set operators)
 D is correct
 
+Question 68 (TO_DATE, TO_CHAR)
+*** Not very familiar with format mask & NLS_DATE_LANGUAGE ***
+
+Question 69 (Transactions)
+*** I don' remember the details ***
+C, D is correct
+F is wrong
+
+Question 70 (Constraints)
+A (Not sure what is table level), 
+B (one Foreign key is wrong), C, E
+
+D (Not sure what table level means)
+F is correct
+
+
