@@ -242,5 +242,9 @@ B, C, E is wrong
 D is correct
 E not sure correct
 
-Question 66
+Question 66 (Set operators)
+D (Union will remove duplicates) is correct
+
+Question 67 (Set operators)
+D is correct
 
