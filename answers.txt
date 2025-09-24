@@ -185,11 +185,16 @@ Question 50 (Default values of data types)
 Question 51 (Alias)
 C (Cannot use Alias in where), E (Cannot use Alias in where) is correct
 
-Question 52
+Question 52 (Table naming rules)
+*** Not sure about '123' & TABLE(123) ***
 
-Question 53
+Question 53 (Update to index)
+*** Not sure about the details of index ***
 
-Question 54 
+Question 54 (Set operators)
+*** Unsure about FOR UPDATE ***
+A, D is wrong
+B, C is correct
 
 Question 55
 
