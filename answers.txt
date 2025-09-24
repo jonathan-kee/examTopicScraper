@@ -143,3 +143,7 @@ B is correct
 Question 40 (TCL)
 *** I don't know how locks work ***
 
+Question 41 (Self Join)
+A, B is correct
+D looks wrong because of NULL 
+
