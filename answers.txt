@@ -118,3 +118,15 @@ Question 35 (Privallages)
 *** I don't the exact details on privallages ***
 A () is wrong
 
+Question 36 (transactionw)
+
+INSERT INTO books VALUES ('ADV112', 'Adventures of Tom Sawyer', NULL, NULL); 
+SAVEPOINT a; 
+DELETE FROM books; 
+ROLLBACK TO SAVEPOINT a; 
+ROLLBACK;
+
+
+B, E is wrong
+C, D is correct
+
