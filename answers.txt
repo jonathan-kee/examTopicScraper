@@ -140,4 +140,6 @@ Question 39 (privallages)
 A (role is not related to object privilleges) is wrong
 B is correct 
 
-Question 40 
+Question 40 (TCL)
+*** I don't know how locks work ***
+
