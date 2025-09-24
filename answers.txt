@@ -224,3 +224,23 @@ B, C is Correct
 Question 61 (Inner Join, Outer Join)
 A, B, F is correct
 C, D, E is wrong
+
+Question 62 (Set operators)
+A is correct
+
+Question 63 (Subquery, window functions)
+A, C, D (there's multiple department_id) is wrong
+B, E is correct
+
+Question 64 (Join syntax)
+*** I not really familiar with the SQL standards ***
+
+Question 65 (Null handling functions)
+*** Not really familiar with the details ***
+I think A is wrong
+B, C, E is wrong
+D is correct
+E not sure correct
+
+Question 66
+
