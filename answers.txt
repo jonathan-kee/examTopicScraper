@@ -114,4 +114,7 @@ Question 34 (Date arithmatic)
 *** I don't know the DATE syntax ***
 If I remember SYSDATE will return current datetime
 
-Question 35
+Question 35 (Privallages)
+*** I don't the exact details on privallages ***
+A () is wrong
+
