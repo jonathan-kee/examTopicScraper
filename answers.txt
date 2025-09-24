@@ -171,9 +171,13 @@ C (Having must come after Group by) is wrong
 
 D is correct
 
-Question 48
+Question 48 (Merge)
+*** I don't quite remember the Merge syntax ***
+A is correct
 
-Question 49 
+Question 49 (Order by & function)
+*** Not familiar with TRUNC() ***
+A is correct
 
 Question 50
 
