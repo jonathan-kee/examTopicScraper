@@ -283,3 +283,16 @@ Question 74 (Set Operators)
 A, D is correct
 I think B, C is wrong
 
+Quetion 75 (Update)
+*** I did not know multi column update exist ***
+
+Question 76 (Cross Join)
+*** Why cross join no need join condition ***
+
+Question 77 (Extra functions)
+I think A is correct
+
+Question 78 (Data type)
+*** Not sure what 3 mean ***
+
+I think E is correct
