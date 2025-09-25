@@ -296,3 +296,12 @@ Question 78 (Data type)
 *** Not sure what 3 mean ***
 
 I think E is correct
+
+Question 79 (Set operator)
+A, C, E  is correct
+^
+I think C, E is correct
+
+B, D is wrong
+
+Question 80
