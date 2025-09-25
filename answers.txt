@@ -318,4 +318,8 @@ STUDENT_ID FIRST_NAME LAST_NAME PROJECT_ID PROJECT_NAME PROJECT_TASK
 A, B is not correct becase of normalization
 C, D is correct
 
+Question 82 (ERD)
+*** Attribute is also known as columns ***
+A is wrong
+C, D, F is correct
 
