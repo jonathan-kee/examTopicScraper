@@ -275,3 +275,9 @@ Looks like group by channel_type, month, country_code
 
 D is correct
 
+Question 73 (Distinct, Not Null)
+A, B, D is wrong
+C is correct
+
+
+Question 74 
