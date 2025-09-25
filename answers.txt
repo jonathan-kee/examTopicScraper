@@ -279,5 +279,7 @@ Question 73 (Distinct, Not Null)
 A, B, D is wrong
 C is correct
 
+Question 74 (Set Operators)
+A, D is correct
+I think B, C is wrong
 
-Question 74 
