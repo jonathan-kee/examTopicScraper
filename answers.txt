@@ -304,4 +304,18 @@ I think C, E is correct
 
 B, D is wrong
 
-Question 80
+Question 80 (Set operator)
+I don't remember set operator Precedence
+B, C, D, E is wrong
+^
+Apparently I missred across data type groups
+
+Question 81 (Parent child)
+*** Because of Many to Many, need to normalize ***
+
+STUDENT_ID FIRST_NAME LAST_NAME PROJECT_ID PROJECT_NAME PROJECT_TASK
+
+A, B is not correct becase of normalization
+C, D is correct
+
+
