@@ -329,4 +329,7 @@ B, F is correct
 ^
 bf only if F is 01-FEB-2019 and not 01-FEB-2015 
 
-Question 84 
+Question 84 (Subquery, null functions)
+A, C, D, E is correct
+B is wrong
+
