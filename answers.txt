@@ -355,3 +355,20 @@ Question 89 (privallages)
 *** Not familiar with the details of privallages ***
 A, B, C is correct
 
+Question 90 (INSERT)
+*** Not sure why A, B is wrong in dicussions, maybe ordering is wrong ***
+A is missing last column
+
+Can a number implicitly convert to DATE?
+^
+You need to know the default MASK for date.
+^
+I think yes 
+
+Can a datetime implicitly convert to Number?
+^
+I think yes
+
+A, B is correct
+
+Question 91
