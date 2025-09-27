@@ -515,4 +515,7 @@ A (missing with GRANT OPTION), C is wrong
 B, D not sure
 E (only grant select) is correct
 
-
+Question 124 (Object privileges)
+A, B is correct
+C is wrong
+D, E is unsure
