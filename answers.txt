@@ -533,3 +533,10 @@ D is wrong
 
 Question 127 (Answers are blank)
 
+Question 128 (Answers are blank)
+
+Question 129 (Set Operator)
+A, C (Union all should include common & uncommon), D (Union all should include common & uncommon) is correct 
+B is wrong
+
+Question 130
