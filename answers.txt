@@ -527,3 +527,9 @@ Question 125 (aggregate / multi-row function)
 
 B is correct
 
+Question 126 (Order of precedence)
+C, E is correct
+D is wrong
+
+Question 127 (Answers are blank)
+
