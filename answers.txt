@@ -519,3 +519,11 @@ Question 124 (Object privileges)
 A, B is correct
 C is wrong
 D, E is unsure
+
+Question 125 (aggregate / multi-row function)
+*** 2 Aggregate in a single line is allowed in Oracle ***
+*** Not sure about the other answers because of 2 aggregates in a single line ***
+*** I did not know Having cannot have expressions for A ***
+
+B is correct
+
