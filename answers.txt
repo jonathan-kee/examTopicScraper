@@ -547,3 +547,13 @@ B, C is wrong
 
 Question 131 (Answers are blank)
 
+Question 132 (NVL2)
+*** I don't remember the exact details of NVL2()
+
+Question 133 (Answers are blank)
+
+Question 134 (Transactions Rollback)
+Unsure about A, B, C, D, E 
+
+
+
