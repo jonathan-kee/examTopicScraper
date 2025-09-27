@@ -555,5 +555,23 @@ Question 133 (Answers are blank)
 Question 134 (Transactions Rollback)
 Unsure about A, B, C, D, E 
 
+Question 135 (drop, unused)
+*** You really need to remember what commands transactions effect ***
+A, E is wrong
+Unsure about C, F
+^
+I don't know what is Partition key column
+
+B, D is correct
+
+Question 136 (External Table, ORACLE_DATAPUMP)
+*** I did not study External Tables ***
+
+Question 137 (Aggregate / Multirow function)
+Unsure of C
+^
+C should be correct
+
+A, B, D (should be ignored) is wrong
 
 
