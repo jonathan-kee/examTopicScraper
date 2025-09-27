@@ -574,4 +574,20 @@ C should be correct
 
 A, B, D (should be ignored) is wrong
 
+Question 138 (MultiTable insert)
+A, D, F is correct
+Unsure of B(What is remote table?), C
+E is wrong
+
+Question 139 (single row subquery)
+A, C (should return null) is wrong,
+Unsure about E
+B, D, F is correct
+^
+Apparently B is wrong in discussions
+
+Question 140 (NLS_DATE_FORMAT)
+*** I guessing SYSDATE must match with format mask of TO_DATE(), TO_CHAR() ***
+CONTINUE
+
 
