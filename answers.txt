@@ -464,3 +464,12 @@ Question 114 (General knowledge)
 If I rememebr correctly, Schema & User is the same thing ***
 A, B, E is wrong
 
+Question 115 (TRUNCATE, DELETE)
+*** This question need to considre ON DELETE CASCADE ***
+*** What does DISABLE CONSTRAINT mean? *** 
+B is correct
+A, D, C is wrong
+
+Question 116 (CASE & DECODE)
+A, B, F is wrong
+C, D, E is Correct
