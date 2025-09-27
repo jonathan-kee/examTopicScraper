@@ -539,4 +539,11 @@ Question 129 (Set Operator)
 A, C (Union all should include common & uncommon), D (Union all should include common & uncommon) is correct 
 B is wrong
 
-Question 130
+Question 130 (Sequences)
+Unsure about A, D, E, F
+^
+I am partially confuse because sequence next & curr value can result in same number
+B, C is wrong
+
+Question 131 (Answers are blank)
+
