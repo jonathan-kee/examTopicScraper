@@ -450,4 +450,9 @@ Question 111 (Order by)
 *** Not too familair with NULLS LAST ***
 A is Correct
 
-Question 112 ()
+Question 112 (like operator, string function)
+A, B, C(is % not *), D, G is wrong
+E, F is correct
+
+customer_id in (10,20)
+
