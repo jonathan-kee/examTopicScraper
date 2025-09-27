@@ -473,3 +473,24 @@ A, D, C is wrong
 Question 116 (CASE & DECODE)
 A, B, F is wrong
 C, D, E is Correct
+^
+You can only choose 2 answers
+
+Question 117 (Transactions)
+*** I am not sure if you can ROLLBACK after to SAVEPOINT a after you commit ***
+
+savepoint B
+(10, 'pen');
+(3, 'fountain pen');
+
+savepoint C
+(10, 'pen');
+(30, 'fountain pen');
+
+Current
+(10, 'pen');
+(3, 'fountain pen');
+
+A, D, E is correct
+B, C, F is wrong
+
