@@ -456,3 +456,11 @@ E, F is correct
 
 customer_id in (10,20)
 
+Question 113 (TO_CHAR format mask)
+*** Not too familiar with format mask ***
+
+Question 114 (General knowledge)
+*** Not sure what C means ***
+If I rememebr correctly, Schema & User is the same thing ***
+A, B, E is wrong
+
