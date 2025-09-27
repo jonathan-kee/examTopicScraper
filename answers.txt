@@ -494,3 +494,10 @@ Current
 A, D, E is correct
 B, C, F is wrong
 
+Question 118 (Variable substitution)
+A (Not sure about DML)
+B, D is correct
+A, C, E not sure
+
+Question 119 (Answers are blank)
+
