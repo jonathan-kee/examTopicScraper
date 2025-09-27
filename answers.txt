@@ -348,3 +348,10 @@ Question 87 (WHERE, HAVING, aggregate)
 A, B, E is wrong
 C, D is correct
 
+Question 88 (global temporary tables)
+*** I don't know what global temporary tables mean ***
+
+Question 89 (privallages)
+*** Not familiar with the details of privallages ***
+A, B, C is correct
+
