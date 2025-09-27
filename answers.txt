@@ -439,3 +439,15 @@ Question 108 (Delete, Co-related query)
 A, B, E is correct
 C, D is wrong
 
+Question 109 (Contraints meta table)
+*** I wonder how check contraints deal with null ***
+*** I don't know what are C, P, R constraint type ***
+
+Question 110 (Create Table general knowledge)
+B, C is true
+
+Question 111 (Order by)
+*** Not too familair with NULLS LAST ***
+A is Correct
+
+Question 112 ()
