@@ -333,3 +333,18 @@ Question 84 (Subquery, null functions)
 A, C, D, E is correct
 B is wrong
 
+Question 85 (Self join)
+A, B, C is wrong
+D, E, F is correct
+
+Question 86 (date functions)
+LAST_DAY(SYSDATE)
+NEXT_DAY(, 'MON')
+TO_CHAR(, 'dd "Monday for" fmMonth rrrr')
+^
+B is the correct
+
+Question 87 (WHERE, HAVING, aggregate)
+A, B, E is wrong
+C, D is correct
+
