@@ -371,4 +371,71 @@ I think yes
 
 A, B is correct
 
-Question 91
+Question 91 (Truncate)
+A, B, C is wrong
+D, E is correct
+
+Question 92 (Drop Table)
+*** I am guessing Synonyms is not related to table ***
+A (Sequence is not related to TABLE), B, C is wrong
+D, E, F is correct
+
+Question 93 (Set Operator)
+CONTINUE
+
+Question 94 (Views)
+CONTINUE
+
+Question 95 (String concatenation)
+CONTINUE
+
+Question 96 (Unused columns)
+CONTINUE
+
+Question 97 (String functions)
+CONTINUE
+
+Question 98 (Set operator)
+*** I do not remember set operator will sort columns ***
+CONTINUE
+
+Question 99 (Order by)
+CONTINUE
+
+Question 100 (Cross Join, filter condition)
+CONTINUE
+
+Question 101 (Literals)
+CONTINUE
+
+Question 102 (Trunc, round)
+CONTINUE
+
+Question 103
+*** Missing Answers ***
+
+Question 104 (Indexes)
+*** What does non-unqiue index mean? ***
+
+D is wrong
+E is correct
+B, C, F not sure correct
+
+Question 105  (Group by)
+*** Never seen GROUP BY 1 before ***
+
+D is correct
+
+Question 106 (Virtual columns)
+*** Never heard of virtual column before ***
+
+Question 107 (Date)
+*** Not sure how DATE '2019-01-01' works ***
+C, E is wrong
+D is correct
+
+Question 108 (Delete, Co-related query)
+*** Not sure why B is wrong ***
+A, B, E is correct
+C, D is wrong
+
