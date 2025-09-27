@@ -501,4 +501,18 @@ A, C, E not sure
 
 Question 119 (Answers are blank)
 
-Question 120 (Answers are blank)
+Question 120 (Answers are blank, image not found in mages folder)
+
+Question 121 (Literals)
+*** Not too familiar with Literals ***
+
+Question 122 (NLS_DATE_FORMAT, TIME_ZONE, LOCALTIMESTAMP)
+*** Not too what are NLS_DATE_FORMAT, TIME_ZONE, LOCALTIMESTAMP *** 
+
+Question 123 (User, Privallages, Grant)
+*** I fogot the exact details of WITH GRANT OPTION ***
+A (missing with GRANT OPTION), C is wrong
+B, D not sure
+E (only grant select) is correct
+
+
