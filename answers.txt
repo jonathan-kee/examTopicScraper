@@ -600,3 +600,35 @@ B, D, E is wrong
 Apparently D is correct
 
 unsure of F
+
+Question 142 (Duplicate question 117)
+
+Question 143 (TO_DATE function)
+*** I am not too familiar with format mask ***
+E (. instead of ,) is wrong
+
+Question 144 (filter general knowledge)
+B is correct
+
+Question 145 (Object Privallages)
+*** I don't really remember the details of object privallages ***
+A, B
+^
+Apparently I am wrong
+
+Question 146 (Answers are blank)
+
+Question 147 (Insert, subquery)
+
+Question 148 (Insert, subquery, Parent/Child)
+*** Picture is missing for this part ***
+
+A, B, F is correct
+
+Customers is child (Many), Countries is Parent (One)
+many customers to one country
+
+C (prod_id is many relationship), E is wrong
+Unsure of D
+
+
