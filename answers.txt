@@ -659,3 +659,16 @@ Apparently C & D are correct
 Question 152 (Describe general knowledge)
 B is wrong because it mentions columns
 A, D, F is correct
+
+Question 153 (Drop View)
+A is wrong
+B, C is correct
+^
+Apparently B is wrong
+^
+What about DELETE?
+^
+*** Need to find out what happens when you delete or drop a view ***
+
+Unsure about D, E
+
