@@ -636,3 +636,10 @@ B, C, D is correct
 B is wrong because Precede means come before
 ^
 C is wrong because you can add the option to sort nulls first, so it's not always
+
+Question 149 (Null with arithmatic)
+*** Question got typo, 
+SALARY, NOT NULL, NUMBER
+COMMISSION, NUMBER
+
+A (salary + commission can result in null), B, F is correct
