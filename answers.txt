@@ -619,8 +619,6 @@ Apparently I am wrong
 Question 146 (Answers are blank)
 
 Question 147 (Insert, subquery)
-
-Question 148 (Insert, subquery, Parent/Child)
 *** Picture is missing for this part ***
 
 A, B, F is correct
