@@ -590,4 +590,13 @@ Question 140 (NLS_DATE_FORMAT)
 *** I guessing SYSDATE must match with format mask of TO_DATE(), TO_CHAR() ***
 CONTINUE
 
+Question 141 (Transaction, Savepoint)
+A, C is correct
+^
+Apparently C is wrong 
 
+B, D, E is wrong
+^
+Apparently D is correct
+
+unsure of F
