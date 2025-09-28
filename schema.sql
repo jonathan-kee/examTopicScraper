@@ -61,6 +61,21 @@ VALUES
     (3, 1, '1z0-071', 'OPEN', FALSE),
     (4, 1, '1z0-071', 'GET', FALSE);
 
+MERGE INTO answers
+USING (
+-- Source data to be inserted or updated --
+SELECT 5 AS number, 1 AS question_number, '1z0-071' AS question_exam, 'https://example.com/image1.png' AS text, FALSE AS is_correct
+) AS src
+-- Join condition -- 
+ON answers.number = src.number AND answers.question_number = src.question_number AND answers.question_exam = src.question_exam 
+-- Update existing record --
+WHEN MATCHED THEN
+    UPDATE SET text = src.text, is_correct = src.is_correct
+-- Insert new record --    
+WHEN NOT MATCHED THEN
+    INSERT (number, question_number, question_exam, text, is_correct) VALUES (src.number, src.question_number, src.question_exam, src.text, src.is_correct); 
+
+
 CREATE TABLE discussions
 (
     number INT,
