@@ -629,4 +629,10 @@ many customers to one country
 C (prod_id is many relationship), E is wrong
 Unsure of D
 
-
+Question 148 (Order by clause)
+A, E, F is wrong
+B, C, D is correct
+^
+B is wrong because Precede means come before
+^
+C is wrong because you can add the option to sort nulls first, so it's not always
