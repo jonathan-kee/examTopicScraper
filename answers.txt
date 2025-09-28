@@ -656,4 +656,6 @@ I guess C is correct
 ^
 Apparently C & D are correct
 
-Question 152 
+Question 152 (Describe general knowledge)
+B is wrong because it mentions columns
+A, D, F is correct
