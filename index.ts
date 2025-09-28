@@ -174,7 +174,12 @@ class Answer {
                 let answer = await element?.evaluate(el => {
                     let answer = '';
                     for (let i = 0; i < el.childNodes.length; i++) {
-                        answer += el.childNodes[i].textContent?.trim()
+                        if (el.childNodes[i].nodeName === 'IMG') {
+                            // @ts-ignore
+                            answer += el.childNodes[i].src;
+                        } else {
+                            answer += el.childNodes[i].textContent?.trim()
+                        }
                     }
                     return answer;
                 });

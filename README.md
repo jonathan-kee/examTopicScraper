@@ -29,6 +29,9 @@ The following wont work if ~/.profile exist, Then you need to manually add to .b
 7) Compile Typescript and launch with node with sample arguments:
 - tsc && node ./build/index.js
 
+# Features to add
+- Rescrape pages that result in dirty data, need to update / merge existing data.
+
 # List of bugs to fix
 - Answer cannot be scraped:
 https://www.examtopics.com/discussions/oracle/view/92435-exam-1z0-071-topic-1-question-24-discussion/
