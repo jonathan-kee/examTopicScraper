@@ -637,9 +637,15 @@ B is wrong because Precede means come before
 ^
 C is wrong because you can add the option to sort nulls first, so it's not always
 
-Question 149 (Null with arithmatic)
+Question 149 (Null with arithmatic, NVL, NVL2, NULLIF, COALESCE)
 *** Question got typo, 
 SALARY, NOT NULL, NUMBER
 COMMISSION, NUMBER
 
 A (salary + commission can result in null), B, F is correct
+
+Question 150 (date arithmatic)
+*** Why divide by 12, 365? ***
+^
+Need to look into the details
+
