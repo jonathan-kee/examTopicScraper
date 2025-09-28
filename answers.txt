@@ -649,3 +649,11 @@ Question 150 (date arithmatic)
 ^
 Need to look into the details
 
+Question 151 (String format, Oracle specific)
+A is correct
+B is wrong
+I guess C is correct
+^
+Apparently C & D are correct
+
+Question 152 
