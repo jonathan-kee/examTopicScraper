@@ -749,3 +749,11 @@ I am not familiar with disable
 I am not familiar with table or column level contraint
 
 E is correct
+
+Question 169 (functions)
+*** Not familiar with details of TRUNC, FLOOR ***
+*** B has a typo, should be = 0 ***
+B is correct
+D, E is wrong
+Unsure of A, C
+
