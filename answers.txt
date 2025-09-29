@@ -757,3 +757,8 @@ B is correct
 D, E is wrong
 Unsure of A, C
 
+Question 170 (Indexes)
+*** Not too familiar with the detials of indexes ***
+A is correct
+C is wrong
+Unsure of B, D, E
