@@ -736,3 +736,16 @@ Unsure of C, D, E
 
 Question 166 (Answers are blank)
 
+Question 167 (Join general knowledge)
+C is correct
+
+Question 168 (contraints general knowledge)
+*** I am not familiar with disable & table or column level contraint ***
+A, C (update as well) is wrong
+Unsure of B, D 
+^
+I am not familiar with disable
+^
+I am not familiar with table or column level contraint
+
+E is correct
