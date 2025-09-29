@@ -680,3 +680,17 @@ Apparently WHEN MATCHED is limited to UPDATE
 ^
 Apparently WHEN NOT MATCHED is limited to INSERT
 
+Question 155 (Non-equijoin)
+A, C is wrong
+D, E is correct
+
+Question 156 (Alter Table)
+A, B is wrong
+C, D is correct
+Unsure of E
+
+Question 157 (implicit or explicit conversion)
+D is correct
+C is wrong
+
+
