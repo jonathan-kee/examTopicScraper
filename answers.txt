@@ -704,3 +704,22 @@ Question 160 (Join)
 B, C is wrong
 Unsure of E
 A, D is correct
+
+Question 161 (Self Join)
+A, E is correct
+B, C, D is wrong
+
+Question 162 (Implicit conversion, Date literals)
+CUSTOMER_ID, NOT NULL, NUMBER
+CUSTOMER_NAME, NOT NULL, VARCHAR2 
+INSERT_DATE, NOT NULL, DATE
+
+A is correct
+B is wrong
+Unsure of C, D, E 
+
+Question 163 (CURRENT_TIMESTAMP)
+*** I don't know the details of CURRENT_TIMESTAMP ***
+B is correct
+Unsure of A, C, D, E, F
+
