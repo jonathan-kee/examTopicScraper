@@ -727,3 +727,12 @@ Question 164 (Wild Character)
 B, C is wrong
 A is correct
 D (city can more than 3 words)
+
+Question 165 (FOR UPDATE, locking)
+*** I don't really remember the details ***
+I think A is wrong
+B is correct
+Unsure of C, D, E 
+
+Question 166 (Answers are blank)
+
