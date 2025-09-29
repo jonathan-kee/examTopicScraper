@@ -672,3 +672,11 @@ What about DELETE?
 
 Unsure about D, E
 
+Question 154 (Merge)
+*** WATCHED is a typo, should be WHEN MATCHED ***
+A, B is correct
+^
+Apparently WHEN MATCHED is limited to UPDATE
+^
+Apparently WHEN NOT MATCHED is limited to INSERT
+
