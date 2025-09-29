@@ -693,4 +693,6 @@ Question 157 (implicit or explicit conversion)
 D is correct
 C is wrong
 
-
+Question 158  (Set Operator)
+A is correct
+B, C, D is wrong
