@@ -783,5 +783,24 @@ B, C, D is correct
 Question 175 (Sequence)
 *** Not too familiar with details of Sequence like CACHE ***
 C (I remember from experience you need to activate it first) is correct
+^
+Apparently I am wrong because ALTER Sequence don't allow
 
+Question 176 (Order by)
+A, B, C, D, E are correct
+^
+I did not know you can only order by select columns
+^
+Need to double check
+
+Question 177 (Variable Substitution)
+*** Not too familiar with PROMPT, DEFINE ***
+
+Question 178 (String functions)
+*** Not familiar with SUBSTR(,-3) ***
+*** Not familiar with TRAILING ***
+A is correct
+D is wrong 
+^
+TRIM(‘son’ FROM cust_last_name) is missing SELECT 
 
