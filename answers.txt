@@ -963,3 +963,26 @@ SELECT SUBSTR(join_date, 1, 2) -1’
 
 Unsure of A, D 
 B, C, E is wrong
+
+Question 193 (External tables)
+*** Not too familiar with details of external tables ***
+
+Question 194 (Transaction)
+User HR starts a session and successfully executes these statements:
+GRANT DELETE ON employees TO alice;
+UPDATE employees 
+SET salary = 24000 
+WHERE employee_id = 109;
+^
+The update is not commited yet
+
+
+In her existing session ALICE then executes: 
+DELETE FROM hr.employees 
+WHERE employee_id = 109;
+
+D is correct
+^
+Apparently I am wrong, and the answer is C
+
+
