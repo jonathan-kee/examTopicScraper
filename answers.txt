@@ -839,3 +839,22 @@ C, D is wrong
 Unsure of E
 A, B is correct
 
+Question 185 (Set Operator)
+*** I don't remember the details of the implicit conversion for Set Operator ***
+A (First query missing second column) is wrong
+
+B
+CHAR4 to CHAR2, DATE to TIMESTAMP6
+
+C (Second query missing second & third columns) is wrong
+
+D
+Number to CHAR(2), VARCHAR2(10) to CHAR4
+
+E
+CHAR4 to CHAR2, VARCHAR2 to CHAR4, DATE to TIMESTAMP6
+
+B, E is correct
+A, C, D is wrong
+
+
