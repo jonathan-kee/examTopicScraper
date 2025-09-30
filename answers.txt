@@ -862,3 +862,13 @@ Question 186 (DML general knowledge)
 A, D, E is correct
 B, C is wrong
 
+Question 187 (Multi table insert)
+*** I not familiar with the details of multi table insert ***
+
+Question 188 (Where, Having general knowledge)
+*** I am not sure if you can use single-row functions in having ***
+Unsure of A, D
+^
+I guess A is correct
+
+B, C is wrong
