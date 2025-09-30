@@ -758,7 +758,21 @@ D, E is wrong
 Unsure of A, C
 
 Question 170 (Indexes)
-*** Not too familiar with the detials of indexes ***
+*** Not too familiar with the details of indexes ***
 A is correct
 C is wrong
 Unsure of B, D, E
+
+Question 171 (Date literals, data arithmatic)
+*** Not familiar with detials of Date literals ***
+
+Question 172 (Data Dictionary)
+*** Not familiar with data dictionary ***
+
+Question 173 (DUAL Table)
+A, B, F is wrong
+C, D is correct
+^
+Apparently Multiple rows is wrong
+Unsure of E
+
