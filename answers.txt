@@ -857,4 +857,8 @@ CHAR4 to CHAR2, VARCHAR2 to CHAR4, DATE to TIMESTAMP6
 B, E is correct
 A, C, D is wrong
 
+Question 186 (DML general knowledge)
+*** You really need to remember which commands will do commit transaction ***
+A, D, E is correct
+B, C is wrong
 
