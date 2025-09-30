@@ -872,3 +872,41 @@ Unsure of A, D
 I guess A is correct
 
 B, C is wrong
+
+Question 189 (Transaction)
+B, C is correct
+^
+I did not remember SAVEPOINT is optional
+
+Question 190 (Aggregation/ Multirow function)
+*** I don't really know the behaviour of nested aggregation ***
+A
+SELECT MAX(salary)
+FROM employees 
+GROUP By department_id 
+HAVING MAX(salary) = MAX(MAX(salary));
+
+B
+SELECT MAX(salary)
+FROM employees 
+GROUP By department_id;
+
+C 
+SELECT department_id, MAX(salary)
+FROM employees 
+GROUP By department_id;
+
+D 
+SELECT MAX(salary)
+FROM employees;
+
+E 
+SELECT MAX(MAX(salary))
+FROM employees 
+GROUP By department_id; 
+
+D is correct
+^
+Apparently E is correct
+^
+I don't really know the behaviour of nested aggregation
