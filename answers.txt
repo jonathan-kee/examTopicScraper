@@ -804,3 +804,27 @@ D is wrong
 ^
 TRIM(‘son’ FROM cust_last_name) is missing SELECT 
 
+Question 179 (String q format)
+*** Not too familiar with q'' or q "" ***
+
+Question 180 (Date literal arithmatic)
+*** Not too familiar with date literals ***
+
+Question 181 (Data dictionary)
+*** Not too familiar with data dictionary *** 
+
+Question 182 (String function, Like)
+like 'A%'  
+like 'a%'  
+like 'B%'
+like 'b%'
+
+SUBSTR(,1,1) IN ('A','a','B','b')
+
+UPPER(SUBSTR(,1,1)) IN ('A','B')
+
+LOWER(SUBSTR(,1,1)) IN ('a','b')
+
+A is wrong
+B, D is correct
+
