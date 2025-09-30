@@ -910,3 +910,32 @@ D is correct
 Apparently E is correct
 ^
 I don't really know the behaviour of nested aggregation
+
+Question 191 (Group by,Aggregation)
+*** I wonder how the bahviour of max() on String works ***
+A 
+SELECT dept_id, INSTR(last_name, ‘A’), SUM(salary) 
+FROM employees 
+GROUP BY dept_id;
+
+B
+SELECT dept_id, STDDEV(last_name), SUM(salary) 
+FROM employees 
+GROUP BY dept_id;
+
+C 
+SELECT dept_id, LENGTH(last_name), SUM(salary) 
+FROM employees 
+GROUP BY dept_id;
+
+D 
+SELECT dept_id, MAX(last_name), SUM(salary) 
+FROM employees 
+GROUP BY dept_id;
+
+A (singlerow function not allowed in group by), B (last_name is VARCHAR), 
+C (singlerow function not allowed in group by) is wrong
+Unsure of D 
+^
+I guess D is correct
+
