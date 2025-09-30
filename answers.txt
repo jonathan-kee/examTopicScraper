@@ -939,3 +939,27 @@ Unsure of D
 ^
 I guess D is correct
 
+Question 192 (Date explicit conversion)
+*** Not too familiar with the details of implicit & explcit conversion *** 
+
+NLS_DATE_FORMAT is set to DD-MON-YY
+
+A
+SELECT join_date 
+FROM employees
+WHERE join_datee > ’10-02-2018’;
+
+B 
+SELECT join_date || ‘ ‘ || salary FROM employees;
+
+C 
+SELECT salary + ’120.50’ FROM employees;
+
+D 
+SELECT join_date + ‘20’ FROM employees;
+
+E 
+SELECT SUBSTR(join_date, 1, 2) -1’
+
+Unsure of A, D 
+B, C, E is wrong
