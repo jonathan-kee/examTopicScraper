@@ -828,3 +828,14 @@ LOWER(SUBSTR(,1,1)) IN ('a','b')
 A is wrong
 B, D is correct
 
+Question 183 (Substition Variables general knowledge)
+*** Not too familiar with what a session is ***
+A, E is wrong
+Unsure of B, D, F
+C is correct
+
+Question 184 (Scalar Subquery)
+C, D is wrong
+Unsure of E
+A, B is correct
+
