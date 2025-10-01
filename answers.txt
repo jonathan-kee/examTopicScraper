@@ -1020,3 +1020,14 @@ A is correct
 Unsure of B, C, E
 D is wrong
 
+Question 202 (Data dictonary)
+
+Question 203 (Set Operator)
+
+Question 204 (Null handling functions)
+*** Not too familair with the detials of NULLIF, COALESCE ***
+C, E is correct 
+^
+Apparently E is wrong
+^
+I wonder why A, B is wrong
