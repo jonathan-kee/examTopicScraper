@@ -1114,3 +1114,31 @@ Unsure of B
 I did not know FROM was optional
 D, E is correct
 
+Question 208 (IS NOT NULL, alias)
+A
+SELECT cust_first_name, cust_credit_limit * .05 AS due_amount 
+FROM customers 
+WHERE cust_income_level IS NOT NULL AND cust_credit_limit IS NOT NULL
+
+B 
+SELECT cust_first_name, cust_credit_limit * .05 AS due_amount 
+FROM customers 
+WHERE cust_income_level <> NULL AND due_amount <> NULL;
+
+C 
+SELECT cust_first_name, cust_credit_limit * .05 AS due_amount 
+FROM customers 
+WHERE cust_income_level != NULL AND cust_credit_level != NULL;
+
+D 
+SELECT cust_first_name, cust_credit_limit * .05 AS due_amount 
+FROM customers 
+WHERE cust_income_level != NULL AND due_amount != NULL;
+
+E 
+SELECT cust_first_name, cust_credit_limit * .05 AS due_amount 
+FROM customers 
+WHERE cust_income_level IS NOT NULL AND due_amount IS NOT NULL;
+
+B, C, D, E(You cannot use alias in where) is wrong
+A is correct
