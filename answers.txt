@@ -1075,3 +1075,30 @@ C, E is correct
 Apparently E is wrong
 ^
 I wonder why A, B is wrong
+
+Question 205 (Aggregation with nulls)
+
+A 
+SELECT COUNT(NVL(list_price, 0)) 
+FROM product_information 
+WHERE list_price is NULL;
+
+B
+SELECT COUNT(list_price) 
+FROM product_information 
+WHERE list_price = NULL;
+
+C 
+SELECT COUNT(list_price) 
+FROM product_information 
+WHERE list_price IS NULL;
+
+D 
+SELECT COUNT(DISTINCT list_price) 
+FROM product_information 
+WHERE list_price IS NULL;
+
+
+B (= NULL is wrong), C, D is wrong 
+
+A is correct
