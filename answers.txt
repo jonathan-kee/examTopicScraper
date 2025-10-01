@@ -1024,6 +1024,50 @@ Question 202 (Data dictonary)
 
 Question 203 (Set Operator)
 
+A 
+SELECT * FROM orders ORDER BY order_id 
+INTERSECT 
+SELECT * FROM invoices ORDER BY invoice_id;
+
+B
+(SELECT * FROM orders 
+UNION ALL 
+SELECT * FROM invoices) ORDER BY order_id;
+
+C
+SELECT order_id, order_date FROM orders 
+UNION ALL 
+SELECT invoice_id, invoice_date FROM invoices 
+ORDER BY order_id;
+
+D
+SELECT * FROM orders 
+MINUS 
+SELECT * FROM invoices ORDER BY 1;
+
+E
+SELECT order_id invoice_id, order_date FROM orders 
+MINUS 
+SELECT invoice_id, invoice_date FROM invoices ORDER BY invoice_id;
+
+F
+SELECT * FROM orders ORDER BY order_id 
+UNION 
+SELECT * FROM invoices;
+
+G
+SELECT order_id, order_date FROM orders
+INTERSECT 
+SELECT invoice_id, invoice_date FROM invoices ORDER BY invoice_id;
+
+A (Order by not allowed in first query), F (Same as A), 
+G (Invoice_id should be overriden by order_id) is wrong 
+Unsure of B, D 
+C, E is correct
+^
+I think C, D, E is correct
+
+
 Question 204 (Null handling functions)
 *** Not too familair with the detials of NULLIF, COALESCE ***
 C, E is correct 
