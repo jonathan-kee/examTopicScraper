@@ -1102,3 +1102,15 @@ WHERE list_price IS NULL;
 B (= NULL is wrong), C, D is wrong 
 
 A is correct
+
+Question 206 (Scalar Subquery)
+A, B, C is wrong
+D is correct
+
+Question 207 (Delete syntax)
+C is wrong
+Unsure of B
+^
+I did not know FROM was optional
+D, E is correct
+
