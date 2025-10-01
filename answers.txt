@@ -988,3 +988,11 @@ Apparently I am wrong, and the answer is C
 Question 195 (DML, Triggers)
 *** I have never learned about triggers ***
 
+Question 196 (Date arithmatic)
+*** Not too familiar with details of date arithmatic ***
+In the PROMOTIONS table, the PROMO_BEGIN_DATE column 
+is of data type DATE and the default date format is DD-MON-RR.
+
+PROMO_BEGIN_DATE – SYSDATE will return an error.
+B is wrong
+
