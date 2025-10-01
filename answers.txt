@@ -996,3 +996,27 @@ is of data type DATE and the default date format is DD-MON-RR.
 PROMO_BEGIN_DATE – SYSDATE will return an error.
 B is wrong
 
+Question 197 (SYNONYM)
+*** Not too familiar with details of synonym ***
+
+Question 198 (SET OPERATOR)
+Unsure of A, D
+^
+Needs to add this detail into my notes
+
+B is correct
+C, E is wrong
+
+Question 199 (SET OPERATOR)
+A, E is wrong
+B, D is correct
+Unsure of C 
+
+Question 200 (Alter table)
+*** Not too familiar with the details of Alter Table ***
+
+Question 201 (Transaction, Privallages)
+A is correct
+Unsure of B, C, E
+D is wrong
+
