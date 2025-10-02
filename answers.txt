@@ -1167,4 +1167,43 @@ Question 212 (Subquery)
 Unsure of A, D, E
 B, C is wrong
 
-Question 213 ()
+Question 213 (Multi-table insert)
+*** Unsure of syntax for multi-table insert ***
+
+Question 214 (GLOBAL TEMPORARY TABLES)
+*** Never learned about GLOBAL TEMPORARY TABLES ***
+
+Question 215 (Evaluation order)
+*** Not sure how to do this quickly, I think just evaluate the order of each query ***
+A 
+WHERE borrowed_date = SYSDATE AND (transaction_type = 'RM' AND member_id = 'A101' OR member_id = 'A102');
+
+(transaction_type = 'RM' AND member_id = 'A101' OR member_id = 'A102')
+borrowed_date = SYSDATE AND
+
+B
+WHERE borrowed_date = SYSDATE AND (transaction_type = 'RM' AND (member_id = 'A101' OR member_id = 'A102'));
+
+(member_id = 'A101' OR member_id = 'A102')
+(transaction_type = 'RM' AND )
+borrowed_date = SYSDATE AND
+
+C
+WHERE borrowed_date = SYSDATE AND transaction_type = 'RM' OR member_id IN ('A101', 'A102');
+
+borrowed_date = SYSDATE AND transaction_type = 'RM'
+OR member_id IN ('A101', 'A102')
+
+D
+WHERE borrowed_date = SYSDATE AND (transaction_type = 'RM' OR member_id IN ('A101', 'A102');
+^
+Missing enclosing )
+
+E
+WHERE (borrowed_date = SYSDATE AND transaction_type = 'RM') OR member_id IN ('A101', 'A102');
+
+borrowed_date = SYSDATE AND transaction_type = 'RM'
+OR member_id IN ('A101', 'A102')
+
+C & E is correct
+
