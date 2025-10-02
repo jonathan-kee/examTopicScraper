@@ -1156,5 +1156,12 @@ C, D is wrong
 ^
 Apparently you can only hvae 1 LONG columns
 
-Question 210
+Question 210 (Date literals, conversion function, mask for conversion function)
+*** Not too familiar with the details ***
+
+Question 211 (Date literals, conversion function, mask for conversion function)
+*** Not too familiar with the details ***
+
+
+
 
