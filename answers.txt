@@ -1162,6 +1162,9 @@ Question 210 (Date literals, conversion function, mask for conversion function)
 Question 211 (Date literals, conversion function, mask for conversion function)
 *** Not too familiar with the details ***
 
+Question 212 (Subquery)
+*** I kind of forgotten how ANY, ALL works ***
+Unsure of A, D, E
+B, C is wrong
 
-
-
+Question 213 ()
