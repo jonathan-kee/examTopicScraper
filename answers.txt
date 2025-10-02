@@ -1142,3 +1142,19 @@ WHERE cust_income_level IS NOT NULL AND due_amount IS NOT NULL;
 
 B, C, D, E(You cannot use alias in where) is wrong
 A is correct
+
+Question 209 (Column Data type, Contraints)
+*** Unsure of what table level, column level ***
+^
+I think this is referring to inline, outofline contraints 
+
+Unsure of A, B, E 
+^
+I don't remember the exact details, and syntax
+
+C, D is wrong
+^
+Apparently you can only hvae 1 LONG columns
+
+Question 210
+
