@@ -1207,3 +1207,7 @@ OR member_id IN ('A101', 'A102')
 
 C & E is correct
 
+Question 216 (Date arithmatic)
+*** I always see default date format over & over ***
+*** Not too familiar with date arithmatic ***
+
