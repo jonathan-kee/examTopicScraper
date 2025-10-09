@@ -1285,4 +1285,35 @@ Question 231 (Order By, Fetch first)
 A is correct
 B, C is wrong
 
+Question 232 (Data type, implicit conversion)
+*** Not familiar with truncation ***
 
+CREATE TABLE rate_list (
+    rate NUMBER(6,2)
+); 
+
+Question 233 (ROUND, TRUNC)
+*** Not too familiar with ROUND, TRUNC ***
+
+Question 234 (Null handling)
+A is correct
+B, C is wrong
+
+Question 235 (ANY, ALL)
+*** Not familiar with how ANY, ALL works ***
+
+Question 236 (Missing Answers)
+
+Question 237 (Subquery)
+*** Looks too advanced for me to understand ***
+
+Question 238 (Merge)
+*** Not too familiar with Merge details ***
+
+Question 239 (Contraints)
+A, B is wrong
+C, D, E 
+
+Question 240 (Non-equijoin)
+A, E is wrong
+B, D is correct
