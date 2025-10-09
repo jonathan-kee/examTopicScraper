@@ -1252,3 +1252,37 @@ Question 226 (Transactions)
 Question 227 (General knowledge)
 A is wrong
 B, C is correct
+
+Question 228
+*** Missing Answers ***
+
+Question 229 (Contraints)
+*** Not familiar with table level ***
+^
+I think table level means in-line contraint
+
+A, B, F is correct
+Unsure of C, E, G
+D is wrong
+
+Question 230 (Privallages)
+*** Not too familiar with privallages ***
+*** Not familiar with UNLIMITED TABLESPACE ***
+
+Question 231 (Order By, Fetch first)
+*** When ties, I think second sort by 1st column? ***
+*** I am not familiar of WITH TIES ***
+
+103 DeHann 12000
+107 Ben 12000
+104 Lex 17000
+105 Bill 18000
+102 Neena 24000
+108 George 25000
+101 John 26000
+106 Daniel 26000
+
+A is correct
+B, C is wrong
+
+
