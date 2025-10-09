@@ -1211,3 +1211,28 @@ Question 216 (Date arithmatic)
 *** I always see default date format over & over ***
 *** Not too familiar with date arithmatic ***
 
+Question 217 (Table privallages)
+*** Not too familiar with table privallages ***
+Unsure of A, B, C, D, E, F
+
+Question 218 (Synonym)
+*** Not too familiar with Synonym details ***
+Unsure of A, B, C, D, E, F
+
+Question 219 (alias, SQL Syntax)
+B is correct
+
+Question 220 (Sequence)
+*** Not familiar with SEQUENCE CACHE ***
+
+Question 221 (time zones, date data types, and timestamp data types)
+*** Not familiar with time zone, date data type, timestamp data type ***
+
+Question 222 (INVISIBLE indexes)
+*** Mot familiar with Invisible index ***
+
+Question 223 (Subquery)
+*** I don't remember the exact details of ANY, ALL ***
+A, E is wrong
+Unsure of B, C, D, G
+F is correct
