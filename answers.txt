@@ -1236,3 +1236,19 @@ Question 223 (Subquery)
 A, E is wrong
 Unsure of B, C, D, G
 F is correct
+
+Question 224 (ERD)
+*** I think D is typo ***
+Not sure about A, B
+C (There's no many to many), D, E (You need alias) is wrong
+
+Question 225 (Self Join)
+A, D is correct
+B, C, E, F is wrong
+
+Question 226 (Transactions)
+*** I am not familiar with GLOBAL TEMPORARY ***
+
+Question 227 (General knowledge)
+A is wrong
+B, C is correct
