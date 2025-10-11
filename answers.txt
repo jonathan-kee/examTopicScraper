@@ -1440,4 +1440,30 @@ Apparently C is Correct
 Question 266 (NLS_DATE_FORMAT)
 *** Not too familair with NLS_DATE_FORMAT ***
 
+Question 267 (UNUSED)
+*** Not too familiar with UNUSED ***
 
+Question 268 (CREATE TABLE)
+*** Not familiar with tablespace ***
+A, C is correct
+Unsure of B, E, F
+D is wrong
+
+Question 269 (read-only mode, UNUSED)
+*** What does read-only mode mean? ***
+
+Question 270 (Primary & Foreign key behaviour)
+A, D, G is correct
+^
+F should be correct
+
+B, C, E is wrong
+I think F means set null
+
+Question 271 (EXIST)
+*** Not sure how EXIST works with null ***
+A, B, D is wrong
+C, E is correct
+
+Question 272 (Object privallages)
+*** Not familiar with UNLIMITED TABLESPACE, CREATE ANY INDEX ***
