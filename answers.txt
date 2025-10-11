@@ -1394,3 +1394,15 @@ Apparently E might be wrong
 Question 256
 *** Missing Answers ***
 
+Question 257 (Privallages granting)
+*** Not too familiar with details of Privallages granting ***
+ 
+Question 258 (single row, multirow, aggregate)
+*** Not too familiar with nested aggregation ***
+A(join_date will output multiple row) is wrong
+B is correct
+
+Question 259 (Sequence)
+B is correct
+
+Question 260 ()
