@@ -1375,3 +1375,16 @@ E will result in null
 Question 252 (System, Object privallages)
 *** Not too familiar with details of system & object privallages ***
 
+Question 253 (External Tables)
+*** Not too familiar with details of External Tables ***
+
+Question 254 (View)
+*** Not too familiar with details of VIEW ***
+
+Question 255 (Privileges and Roles)
+A, B is wrong
+Unsure of C, G
+D, E, F is correct
+^
+Apparently E might be wrong
+
