@@ -42,6 +42,8 @@ The answers was already scraped, but it is contained within questions
 - https://img.examtopics.com/1z0-071/image98.png
 - https://www.examtopics.com/assets/media/exam-media/04351/0002400002.jpg
 
+- Apparently there was nothing wrong with my scraping code, the image's src just did not appear, meaning the resource did not lead.
+
 # Launch browser that google does not capcha
 /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome \
   --remote-debugging-port=9222 \

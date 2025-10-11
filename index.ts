@@ -520,7 +520,7 @@ function randomDelay(min: number, max: number) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-let main4 = async () => {
+let scrapeWebsiteLinksIntoPostgres = async () => {
     console.log("Starting test");
 
     const client = new Client({
@@ -684,6 +684,62 @@ let scrapeDataIntoPostgres = async () => {
     await browser.close();
 }
 
+let rescrapeDataDebug = async () => {
+    let missingAnswersQuestions = [103, 119, 120, 127, 128, 131, 133, 146, 166, 228, 236, 245, 256]
+
+    const browserURL = 'http://127.0.0.1:9222';  // Remote debugging address
+    const browser = await puppeteer.connect({ browserURL });
+
+    const questionslink: string = "https://www.examtopics.com/discussions/oracle/view/90081-exam-1z0-071-topic-1-question-103-discussion/";
+
+    const page = await browser.newPage();
+    // Needs { waitUntil: 'networkidle2' } to make thread continue
+    // Make waiting for elements shorter
+    page.setDefaultTimeout(12000);
+
+    await page.goto(questionslink, { waitUntil: 'networkidle2' });
+
+    try {
+        console.log("Page loaded");
+        await page.locator('.popup-overlay.show').wait();
+        console.log("Popup detected");
+
+        // Apparently page.evaluate is like opening up console
+        await page.evaluate(() => {
+            const el = document.querySelector('.popup-overlay.show');
+            if (el) {
+                el.className = 'popup-overla show';
+            }
+        });
+    } catch (error) {
+        console.log("Popup not detected");
+    }
+
+    try {
+        await page.locator('.load-full-discussion-button').wait();
+        console.log("Load Discussions button detected");
+        await page.locator('.load-full-discussion-button').click();
+        console.log("clicked load Discussions button");
+        // Wait for load discussion to finish
+        await new Promise(resolve => setTimeout(resolve, 5000));
+    } catch (error) {
+        console.log("Load Discussions button not detected");
+    }
+
+    // Answers
+    let answers = []
+    try {
+        answers = await Answer.create(page, 103, '1z0-071');
+    } catch (error) {
+        console.log("cannot find answers")
+        answers = await Answer.newCreate(page, 103, '1z0-071');
+    }
+
+    for (let i = 0; i < answers.length; i++) {
+        console.log(answers[i]);
+    }
+}
+
 let scrapeImages = async () => {
     const client = new Client({
         user: 'postgres',
@@ -824,10 +880,12 @@ limit 5;`);
 }
 
 
-markdown()
+// markdown()
 // scrapeImages()
-// main4()
+// scrapeWebsiteLinksIntoPostgres()
 //main3()
 // scrapeData()
 // scrapeDataIntoPostgres()
 //main()ts
+
+rescrapeDataDebug()
