@@ -5,14 +5,24 @@ Which query can be used?
 
 # Answers
 A.
+![](../images/image10.png)
+		
 
 B.
+![](../images/image11.png)
+		
 
 C.
+![](../images/image12.png)
+		
 
 D.
+![](../images/image13.png)
+		 
 
 E.
+![](../images/image14.png)
+		
 
 # Discussions
 ## Discussion 1

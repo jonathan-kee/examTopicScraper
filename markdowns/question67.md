@@ -6,11 +6,11 @@ Examine this statement:
 What is returned upon execution?
 
 # Answers
-C.0 rows
-
 A.an error
 
 B.2 rows
+
+C.0 rows
 
 D.1 row
 

@@ -889,7 +889,8 @@ from relative_path_questions as questions
 join relative_path_answers as answers 
 on answers.question_number = questions.number and
 answers.question_exam = questions.exam
-where questions.number = ${i};`);
+where questions.number = ${i}
+order by text`);
         let answerCount = answerResult.rowCount;
         let answers: string[] = [];
         for (let i = 0; i < (answerCount ?? 0); i++) {
@@ -926,8 +927,8 @@ limit 5;`);
 }
 
 
-// markdown()
-scrapeImages()
+markdown()
+// scrapeImages()
 // scrapeWebsiteLinksIntoPostgres()
 //main3()
 // scrapeData()

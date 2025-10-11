@@ -12,12 +12,20 @@ Which statement will do this?
 
 # Answers
 A.
+![](../images/image137.png)
+		
 
 B.
+![](../images/image138.png)
+		
 
 C.
+![](../images/image139.png)
+		
 
 D.
+![](../images/image140.png)
+		
 
 # Discussions
 ## Discussion 1

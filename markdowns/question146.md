@@ -10,14 +10,24 @@ Which two queries can be used? (Choose two.)
 
 # Answers
 A.
+![](../images/image64.png)
+		
 
 B.
+![](../images/image65.png)
+		
 
 C.
+![](../images/image66.png)
+		 
 
 D.
+![](../images/image67.png)
+		
 
 E.
+![](../images/image68.png)
+		 
 
 # Discussions
 ## Discussion 1

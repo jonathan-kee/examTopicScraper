@@ -4,12 +4,20 @@ Which statement fails to do this?
 
 # Answers
 A.
+![](../images/image76.png)
+		 
 
 B.
+![](../images/image77.png)
+		
 
 C.
+![](../images/image78.png)
+		
 
 D.
+![](../images/image79.png)
+		
 
 # Discussions
 ## Discussion 1

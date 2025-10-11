@@ -11,14 +11,24 @@ Which two queries return all the rows from COLORS? (Choose two.)
 
 # Answers
 A.
+![](../images/image29.png)
+		 
 
 B.
+![](../images/image30.png)
+		 
 
 C.
+![](../images/image31.png)
+		
 
 D.
+![](../images/image32.png)
+		
 
 E.
+![](../images/image33.png)
+		
 
 # Discussions
 ## Discussion 1

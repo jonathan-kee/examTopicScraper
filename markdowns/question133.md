@@ -7,12 +7,20 @@ Which statement will violate the CHECK constraint?
 
 # Answers
 A.
+![](../images/image57.png)
+		
 
 B.
+![](../images/image58.png)
+		
 
 C.
+![](../images/image59.png)
+		
 
 D.
+![](../images/image60.png)
+		 
 
 # Discussions
 ## Discussion 1

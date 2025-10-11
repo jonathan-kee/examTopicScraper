@@ -11,14 +11,24 @@ Which two queries only return CUBE? (Choose two.)
 
 # Answers
 A.
+![](../images/image40.png)
+		
 
 B.
+![](../images/image41.png)
+		
 
 C.
+![](../images/image42.png)
+		 
 
 D.
+![](../images/image43.png)
+		 
 
 E.
+![](../images/image44.png)
+		
 
 # Discussions
 ## Discussion 1

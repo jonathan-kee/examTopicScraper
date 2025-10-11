@@ -14,12 +14,20 @@ Which statement satisfies all the requirements?
 
 # Answers
 A.
+![](../images/image130.png)
+		
 
 B.
+![](../images/image131.png)
+		
 
 C.
+![](../images/image132.png)
+		
 
 D.
+![](../images/image133.png)
+		 
 
 # Discussions
 ## Discussion 1

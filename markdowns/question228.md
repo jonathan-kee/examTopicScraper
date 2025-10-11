@@ -15,12 +15,20 @@ Which two queries will return a list of countries with no departments? (Choose t
 
 # Answers
 A.
+![](../images/image113.png)
+		
 
 B.
+![](../images/image114.png)
+		 
 
 C.
+![](../images/image115.png)
+		
 
 D.
+![](../images/image116.png)
+		 
 
 # Discussions
 ## Discussion 1

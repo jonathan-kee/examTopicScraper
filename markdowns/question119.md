@@ -3,12 +3,20 @@ Which statement will return a comma-separated list of employee names in alphabet
 
 # Answers
 A.
+![](../images/image23.png)
+		 
 
 B.
+![](../images/image24.png)
+		
 
 C.
+![](../images/image25.png)
+		
 
 D.
+![](../images/image26.png)
+		
 
 # Discussions
 ## Discussion 1

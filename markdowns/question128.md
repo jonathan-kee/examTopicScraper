@@ -3,14 +3,24 @@ Which two statements will return the names of the three employees with the lowes
 
 # Answers
 A.
+![](../images/image45.png)
+		
 
 B.
+![](../images/image46.png)
+		 
 
 C.
+![](../images/image47.png)
+		 
 
 D.
+![](../images/image48.png)
+		
 
 E.
+![](../images/image49.png)
+		
 
 # Discussions
 ## Discussion 1

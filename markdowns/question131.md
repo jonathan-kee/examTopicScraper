@@ -9,12 +9,20 @@ Which two statements execute without errors? (Choose two.)
 
 # Answers
 A.
+![](../images/image52.png)
+		
 
 B.
+![](../images/image53.png)
+		
 
 C.
+![](../images/image54.png)
+		 
 
 D.
+![](../images/image55.png)
+		 
 
 # Discussions
 ## Discussion 1

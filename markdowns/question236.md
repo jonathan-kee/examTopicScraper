@@ -3,12 +3,20 @@ Which statement fails to execute successfully?
 
 # Answers
 A.
+![](../images/image124.png)
+		
 
 B.
+![](../images/image125.png)
+		 
 
 C.
+![](../images/image126.png)
+		
 
 D.
+![](../images/image127.png)
+		
 
 # Discussions
 ## Discussion 1
