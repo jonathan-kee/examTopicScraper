@@ -1424,3 +1424,20 @@ Question 262 (Set operator with nulls)
 
 C is correct 
 
+Question 263 (Oracle crss join syntax)
+*** Not familiar with this syntax ***
+
+Question 264 (Subquery syntax)
+A is correct
+
+Question 265 (Using syntax)
+A is Correct
+unsure of D, E
+B, C is wrong
+^
+Apparently C is Correct
+
+Question 266 (NLS_DATE_FORMAT)
+*** Not too familair with NLS_DATE_FORMAT ***
+
+
