@@ -274,7 +274,7 @@ VALUES ($1, $2, $3, $4, $5);
         const query = `
 MERGE INTO answers
 USING (
-SELECT $1 AS number, $2 AS question_number, $3 AS question_exam, $4 AS text, $5 AS is_correct
+SELECT CAST($1 AS integer) AS number, CAST($2 AS integer) AS question_number, CAST($3 AS text) AS question_exam, CAST($4 AS text) AS text, CAST($5 AS boolean) AS is_correct
 ) AS src
 ON answers.number = src.number AND answers.question_number = src.question_number AND answers.question_exam = src.question_exam 
 WHEN MATCHED THEN
