@@ -1331,3 +1331,12 @@ A, C is correct
 Unsure of B, D, E 
 ^
 Not sure which is the third correct answer
+
+Question 243 (Roles)
+*** Not too familiar with privallages details ***
+
+Question 244 (INITCAP, TRIM, SUBSTR, LOWER)
+B is correct answer
+^
+Apparently I did not see case sensitive
+
