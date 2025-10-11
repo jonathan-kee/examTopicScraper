@@ -1415,3 +1415,12 @@ Not sure if Create Table will inherit contraints
 Question 261 (Single row function)
 *** Not too familiar with TRUNC, FLOOR, MOD, CEIL, CONCAT ***
 
+Question 262 (Set operator with nulls)
+1 null removed
+2 null stays
+3 01-jan stays
+4 01-feb removed
+5 01-mar stays
+
+C is correct 
+
