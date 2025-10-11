@@ -290,7 +290,7 @@ WHEN NOT MATCHED THEN
             answer.text,
             answer.isCorrect
         ];
-
+        
         const result = await client.query(query, values);
         console.log(result);
     }
@@ -775,7 +775,7 @@ let rescrapeDataDebug = async () => {
 
         for (let i = 0; i < answers.length; i++) {
             console.log(answers[i]);
-            Answer.merge(answers[i], client);
+            await Answer.merge(answers[i], client);
         }
 
         page.close();
