@@ -1317,3 +1317,17 @@ C, D, E
 Question 240 (Non-equijoin)
 A, E is wrong
 B, D is correct
+
+Question 241 (Set Operators)
+A, B, C is wrong
+Unsure of D
+E is correct
+^
+Unsure of the second correct answer
+
+Question 242 (Privileges)
+*** There system & object privileges ***
+A, C is correct
+Unsure of B, D, E 
+^
+Not sure which is the third correct answer
