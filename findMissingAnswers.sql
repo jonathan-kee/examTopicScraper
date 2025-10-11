@@ -1,3 +1,14 @@
-select distinct question_number
-from answers
-where length(text) = 2;
+CREATE OR REPLACE VIEW missing_answers_link AS 
+with missing_answers as (
+	select distinct question_number
+	from answers
+	where length(text) = 2
+),
+missing_answers_link as (
+	select * 
+	from questionslink
+	where number in (
+		select * from missing_answers
+	)
+)
+select * from missing_answers_link;

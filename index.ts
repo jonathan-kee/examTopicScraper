@@ -269,6 +269,31 @@ VALUES ($1, $2, $3, $4, $5);
         const result = await client.query(query, values);
         console.log(result);
     }
+
+    public static async merge(answer: Answer, client: Client) {
+        const query = `
+MERGE INTO answers
+USING (
+SELECT $1 AS number, $2 AS question_number, $3 AS question_exam, $4 AS text, $5 AS is_correct
+) AS src
+ON answers.number = src.number AND answers.question_number = src.question_number AND answers.question_exam = src.question_exam 
+WHEN MATCHED THEN
+    UPDATE SET text = src.text, is_correct = src.is_correct
+WHEN NOT MATCHED THEN
+    INSERT (number, question_number, question_exam, text, is_correct) VALUES (src.number, src.question_number, src.question_exam, src.text, src.is_correct); 
+        `
+
+        const values = [
+            answer.number,
+            answer.questionNumber,
+            answer.questionExam,
+            answer.text,
+            answer.isCorrect
+        ];
+
+        const result = await client.query(query, values);
+        console.log(result);
+    }
 }
 
 class Discussion {
@@ -685,59 +710,80 @@ let scrapeDataIntoPostgres = async () => {
 }
 
 let rescrapeDataDebug = async () => {
-    let missingAnswersQuestions = [103, 119, 120, 127, 128, 131, 133, 146, 166, 228, 236, 245, 256]
+
+    const client = new Client({
+        user: 'postgres',
+        password: 'abc123',
+        host: 'localhost',
+        port: 5432,
+        database: 'examtopic',
+    })
+
+    await client.connect()
+
+    const result = await client.query("select number, link from missing_answers_link;")
 
     const browserURL = 'http://127.0.0.1:9222';  // Remote debugging address
     const browser = await puppeteer.connect({ browserURL });
 
-    const questionslink: string = "https://www.examtopics.com/discussions/oracle/view/90081-exam-1z0-071-topic-1-question-103-discussion/";
+    for (let i = 0; i < (result.rowCount ?? 0); i++) {
+        const questionsnumber = result.rows[i].number
+        const questionslink = result.rows[i].link
 
-    const page = await browser.newPage();
-    // Needs { waitUntil: 'networkidle2' } to make thread continue
-    // Make waiting for elements shorter
-    page.setDefaultTimeout(12000);
+        const page = await browser.newPage();
+        // Needs { waitUntil: 'networkidle2' } to make thread continue
+        // Make waiting for elements shorter
+        page.setDefaultTimeout(12000);
 
-    await page.goto(questionslink, { waitUntil: 'networkidle2' });
+        await page.goto(questionslink, { waitUntil: 'networkidle2' });
 
-    try {
-        console.log("Page loaded");
-        await page.locator('.popup-overlay.show').wait();
-        console.log("Popup detected");
+        try {
+            console.log("Page loaded");
+            await page.locator('.popup-overlay.show').wait();
+            console.log("Popup detected");
 
-        // Apparently page.evaluate is like opening up console
-        await page.evaluate(() => {
-            const el = document.querySelector('.popup-overlay.show');
-            if (el) {
-                el.className = 'popup-overla show';
-            }
-        });
-    } catch (error) {
-        console.log("Popup not detected");
+            // Apparently page.evaluate is like opening up console
+            await page.evaluate(() => {
+                const el = document.querySelector('.popup-overlay.show');
+                if (el) {
+                    el.className = 'popup-overla show';
+                }
+            });
+        } catch (error) {
+            console.log("Popup not detected");
+        }
+
+        try {
+            await page.locator('.load-full-discussion-button').wait();
+            console.log("Load Discussions button detected");
+            await page.locator('.load-full-discussion-button').click();
+            console.log("clicked load Discussions button");
+            // Wait for load discussion to finish
+            await new Promise(resolve => setTimeout(resolve, 5000));
+        } catch (error) {
+            console.log("Load Discussions button not detected");
+        }
+
+        // Answers
+        let answers = []
+        try {
+            answers = await Answer.create(page, questionsnumber, '1z0-071');
+        } catch (error) {
+            console.log("cannot find answers")
+            answers = await Answer.newCreate(page, questionsnumber, '1z0-071');
+        }
+
+        for (let i = 0; i < answers.length; i++) {
+            console.log(answers[i]);
+            Answer.merge(answers[i], client);
+        }
+
+        page.close();
     }
 
-    try {
-        await page.locator('.load-full-discussion-button').wait();
-        console.log("Load Discussions button detected");
-        await page.locator('.load-full-discussion-button').click();
-        console.log("clicked load Discussions button");
-        // Wait for load discussion to finish
-        await new Promise(resolve => setTimeout(resolve, 5000));
-    } catch (error) {
-        console.log("Load Discussions button not detected");
-    }
-
-    // Answers
-    let answers = []
-    try {
-        answers = await Answer.create(page, 103, '1z0-071');
-    } catch (error) {
-        console.log("cannot find answers")
-        answers = await Answer.newCreate(page, 103, '1z0-071');
-    }
-
-    for (let i = 0; i < answers.length; i++) {
-        console.log(answers[i]);
-    }
+    await client.end();
+    // browser.disconnect();
+    await browser.close();
 }
 
 let scrapeImages = async () => {

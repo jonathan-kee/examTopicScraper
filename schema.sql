@@ -64,7 +64,7 @@ VALUES
 MERGE INTO answers
 USING (
 -- Source data to be inserted or updated --
-SELECT 5 AS number, 1 AS question_number, '1z0-071' AS question_exam, 'https://example.com/image1.png' AS text, FALSE AS is_correct
+SELECT 1 AS number, 103 AS question_number, '1z0-071' AS question_exam, 'https://example.com/image1.png' AS text, FALSE AS is_correct
 ) AS src
 -- Join condition -- 
 ON answers.number = src.number AND answers.question_number = src.question_number AND answers.question_exam = src.question_exam 
