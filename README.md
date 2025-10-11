@@ -46,6 +46,10 @@ The answers was already scraped, but it is contained within questions
 
 - Need to rescrape images from 103, 119, 120, 127, 128, 131, 133, 146, 166, 228, 236, 245, 256
 
+- replace pngMost with png
+
+- if pngMost exist, then replace 'pngMost' with 'png' & replace 'Voted' with ''
+
 # Launch browser that google does not capcha
 /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome \
   --remote-debugging-port=9222 \
