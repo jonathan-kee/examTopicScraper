@@ -1405,4 +1405,13 @@ B is correct
 Question 259 (Sequence)
 B is correct
 
-Question 260 ()
+Question 260 (Create Table)
+A is correct
+Unsure of B & D 
+C, D is wrong
+^
+Not sure if Create Table will inherit contraints
+
+Question 261 (Single row function)
+*** Not too familiar with TRUNC, FLOOR, MOD, CEIL, CONCAT ***
+
