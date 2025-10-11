@@ -31,6 +31,10 @@ The following wont work if ~/.profile exist, Then you need to manually add to .b
 
 # Features to add
 - Rescrape pages that result in dirty data, need to update / merge existing data.
+^
+Partially added for Answers, never needed for question & discussions
+
+- Error handling for missing src images
 
 # List of bugs to fix
 - Answer cannot be scraped:
