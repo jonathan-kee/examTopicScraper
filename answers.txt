@@ -1,3 +1,6 @@
+I notice a lot of discussion answers come from 
+https://docs.oracle.com/cd/A58617_01/server.804/a58227/ch18.htm
+
 question 7 (constraints)
 *** never learned DISABLE, ENABLE ***
 
@@ -1388,3 +1391,4 @@ D, E, F is correct
 ^
 Apparently E might be wrong
 
+Question 256 
