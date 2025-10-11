@@ -800,7 +800,7 @@ let scrapeImages = async () => {
     const result = await client.query("SELECT last_value FROM seq_imagesLink;")
     let sequenceLastValue: number = result.rows[0].last_value;
 
-    for (let i = sequenceLastValue; i <= 178;) {
+    for (let i = sequenceLastValue; i <= 57;) {
         const imageslinkResult = await client.query(`SELECT url FROM view_all_images_url where number = ${i};`)
         const imageslink: string = imageslinkResult.rows[0].url;
 
@@ -927,11 +927,11 @@ limit 5;`);
 
 
 // markdown()
-// scrapeImages()
+scrapeImages()
 // scrapeWebsiteLinksIntoPostgres()
 //main3()
 // scrapeData()
 // scrapeDataIntoPostgres()
 //main()ts
 
-rescrapeDataDebug()
+// rescrapeDataDebug()

@@ -44,6 +44,8 @@ The answers was already scraped, but it is contained within questions
 
 - Apparently there was nothing wrong with my scraping code, the image's src just did not appear, meaning the resource did not lead.
 
+- Need to rescrape images from 103, 119, 120, 127, 128, 131, 133, 146, 166, 228, 236, 245, 256
+
 # Launch browser that google does not capcha
 /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome \
   --remote-debugging-port=9222 \
