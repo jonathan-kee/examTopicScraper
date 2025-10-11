@@ -1340,3 +1340,38 @@ B is correct answer
 ^
 Apparently I did not see case sensitive
 
+Question 245
+*** Missing Answers ***
+
+Question 246 (ALTER TABLE)
+*** I don't know pesudocolumns, lock, enable, disable ***
+
+Question 247 (Data type knowledge)
+*** Not too familiar with details of data types ***
+
+Question 248 (Object privileges)
+*** Not too familiar with details of object privallages ***
+
+Question 249 (Self Join)
+
+CUSTNO is unique,
+CUSTNAME, CUSTADDRESS, CUST_CREDIT_LIMIT is duplicate
+
+C, D 
+^
+Apparently I might be wrong, not enough discussions
+
+Question 250 (Transactions)
+A (I think index creation is auto commited), B (Multiple is possible), E (Truncate cannot rollback) is wrong
+C, D is correct
+
+Question 251 (Syntax, keywords)
+A will result in null
+B will result in null
+C will result in null
+D will result in null
+E will result in null
+
+Question 252 (System, Object privallages)
+*** Not too familiar with details of system & object privallages ***
+
