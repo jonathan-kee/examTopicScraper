@@ -24,6 +24,74 @@ DISABLE, VALIDATE
 
 DISABLE, NOVALIDATE
 
+Examples of ENABLE, DISABLE, VALIDATE, NOVALIDATE
+https://docs.oracle.com/en/database/oracle/oracle-database/19/admin/managing-schema-objects.html#GUID-F504F7C9-D201-4B32-A25C-17650FE49002
+
+18.5.2.1 Disabling Constraints Upon Definition
+CREATE TABLE emp (
+    empno NUMBER(5) PRIMARY KEY DISABLE,   . . . ;
+
+ALTER TABLE emp
+   ADD PRIMARY KEY (empno) DISABLE;
+
+18.5.2.2 Enabling Constraints Upon Definition
+CREATE TABLE emp (
+    empno NUMBER(5) CONSTRAINT emp.pk PRIMARY KEY,   . . . ;
+
+ALTER TABLE emp
+    ADD CONSTRAINT emp.pk PRIMARY KEY (empno);
+
+18.5.3 Modifying, Renaming, or Dropping Existing Integrity Constraints
+You can use the ALTER TABLE statement to enable, disable, modify, or drop a constraint. When the database is using a UNIQUE or PRIMARY KEY index to enforce a constraint, and constraints associated with that index are dropped or disabled, the index is dropped, unless you specify otherwise.
+
+While enabled foreign keys reference a PRIMARY or UNIQUE key, you cannot disable or drop the PRIMARY or UNIQUE key constraint or the index.
+^
+Important points:
+*** When the database is using a UNIQUE or PRIMARY KEY index to enforce a constraint, 
+and constraints associated with that index are dropped or disabled, 
+the index is dropped, unless you specify otherwise. ***
+
+*** While enabled foreign keys reference a PRIMARY or UNIQUE key, 
+you cannot disable or drop the PRIMARY or UNIQUE key constraint or the index. ***
+
+18.5.3.1 Disabling and Enabling Constraints
+The following statements disable integrity constraints. The second statement specifies that the associated indexes are to be kept.
+
+ALTER TABLE dept
+    DISABLE CONSTRAINT dname_ukey;
+
+ALTER TABLE dept
+    DISABLE PRIMARY KEY KEEP INDEX,
+    DISABLE UNIQUE (dname, loc) KEEP INDEX;
+
+The following statements enable novalidate disabled integrity constraints:
+ALTER TABLE dept
+    ENABLE NOVALIDATE CONSTRAINT dname_ukey;
+
+ALTER TABLE dept
+    ENABLE NOVALIDATE PRIMARY KEY,
+    ENABLE NOVALIDATE UNIQUE (dname, loc);
+
+The following statements enable or validate disabled integrity constraints:
+ALTER TABLE dept
+    MODIFY CONSTRAINT dname_key VALIDATE;
+
+ALTER TABLE dept
+    MODIFY PRIMARY KEY ENABLE NOVALIDATE;
+
+The following statements enable disabled integrity constraints:
+ALTER TABLE dept
+    ENABLE CONSTRAINT dname_ukey;
+
+ALTER TABLE dept
+    ENABLE PRIMARY KEY,
+    ENABLE UNIQUE (dname, loc);
+
+To disable or drop a UNIQUE key or PRIMARY KEY constraint and all dependent FOREIGN KEY constraints in a single step, use the CASCADE option of the DISABLE or DROP clauses. For example, the following statement disables a PRIMARY KEY constraint and any FOREIGN KEY constraints that depend on it:
+
+ALTER TABLE dept
+    DISABLE PRIMARY KEY CASCADE;
+
 https://docs.oracle.com/en/database/oracle/oracle-database/19/sqlrf/constraint.html#SQLRF52214
 ^
 Search "ENABLE Clause" heading to learn more 
