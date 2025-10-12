@@ -1,6 +1,68 @@
 I notice a lot of discussion answers come from 
 https://docs.oracle.com/cd/A58617_01/server.804/a58227/ch18.htm
 
+*** Topics I need to cover ***
+1) DISABLE, ENABLE
+2) Update, Correlated query
+2.1) Permission syntax
+3) Purge
+4) What happens when to views, synonymns when you drop a table
+5) Synonyms
+5.1) ROUND, TRUNC, MOD
+6) ORGANIZATION EXTERNAL (External Table)
+7) UNUSED
+8) SET Operator with Null
+9) Meta data tables
+10) Multi table insert
+10.1) ADD_MONTHS(), NEXT_DAY()
+11) GLOBAL TEMPORARY TABLES
+12) CACHE, NOCACHE (Sequence)
+12.1) privallages details
+13) Date literals, date arithmatic
+14) Datetime literals, datetime arithmatic
+15) lock
+16) Views details
+17) GLOBAL TEMPORARY, ON COMMIT PRESERVE ROWS
+18) ORACLE_DATAPUMP (External Table)
+19) Merge syntax
+20) TRUNC()
+21) Default values of data types
+22) Table naming rules
+23) Details of index 
+24) FOR UPDATE (Set Operators)
+25) Sequence Details
+26) Roles syntax 
+27) SQL standards
+28) Null handling functions details
+29) TO_DATE, TO_CHAR, format mask
+30) NLS_DATE_LANGUAGE
+31) Transactions details
+32) ROLLUP(), CUBE()
+33) multi column update
+34) cross join no need join condition 
+35) Attribute is also known as columns
+36) non-unqiue index
+37) virtual column
+38) how check contraints deal with null
+39) what are C, P, R constraint type
+40) TO_CHAR format mask
+41) DISABLE CONSTRAINT
+42) Not sure if you can ROLLBACK after to SAVEPOINT a after you commit
+43) NLS_DATE_FORMAT, TIME_ZONE, LOCALTIMESTAMP
+44) details of WITH GRANT OPTION
+45) 2 Aggregate in a single line
+46) Having cannot have expressions
+47) what commands transactions effect
+48) Partition key column
+49) What is remote table
+50) details of object privallages 
+51) Orcale specific string format
+52) what happens when you delete or drop a view
+53) For merge, Apparently WHEN MATCHED is limited to UPDATE, Apparently WHEN NOT MATCHED is limited to INSERT
+54) V$TRANSACTION
+55) details of CURRENT_TIMESTAMP 
+Continue 163 onwards
+
 question 7 (constraints)
 *** never learned DISABLE, ENABLE ***
 
