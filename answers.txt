@@ -61,7 +61,51 @@ https://docs.oracle.com/cd/A58617_01/server.804/a58227/ch18.htm
 53) For merge, Apparently WHEN MATCHED is limited to UPDATE, Apparently WHEN NOT MATCHED is limited to INSERT
 54) V$TRANSACTION
 55) details of CURRENT_TIMESTAMP 
-Continue 163 onwards
+66) FOR UPDATE, locking
+67) table or column level contraint
+68) TRUNC, FLOOR
+69) data dictionary
+70) PROMPT, DEFINE (Variable Substitution)
+71) SUBSTR(,-3), TRAILING
+72) q'' or q ""
+73) what a session is
+74) details of the implicit conversion for Set Operator
+75) details of multi table insert
+76) can use single-row functions in having 
+77) behviour of max() on String works
+78) triggers
+79) details of synonym
+80) details of Alter Table
+81) detials of NULLIF, COALESCE
+82) Delete syntax, FROM was optional
+83) table level, column level (referring to inline, outofline contraints)
+84) only hvae 1 LONG columns
+85) Date literals, conversion function, mask for conversion function
+86) how ANY, ALL works
+87) syntax for multi-table insert
+88) GLOBAL TEMPORARY TABLES
+89) default date format
+90) Synonym details
+91) SEQUENCE CACHE
+92) Invisible index (Index)
+93) GLOBAL TEMPORARY (Transactions)
+94) UNLIMITED TABLESPACE (Privallages)
+95) WITH TIES (Order By, Fetch first)
+96) truncation (Data type, implicit conversion)
+97) privallages details
+98) pesudocolumns, lock, enable, disable (Alter Table)
+99) details of data types
+100) details of system & object privallages 
+101) details of External Tables
+102) details of VIEW
+103) details of Privallages granting
+104) Not sure if Create Table will inherit contraints
+105) TRUNC, FLOOR, MOD, CEIL, CONCAT
+106) Oracle cross join syntax
+107) tablespace (REATE TABLE)
+108) read-only mode, UNUSED
+109) how EXIST works with null
+110) UNLIMITED TABLESPACE, CREATE ANY INDEX (Object privallages)
 
 question 7 (constraints)
 *** never learned DISABLE, ENABLE ***
@@ -1486,7 +1530,7 @@ Question 262 (Set operator with nulls)
 
 C is correct 
 
-Question 263 (Oracle crss join syntax)
+Question 263 (Oracle cross join syntax)
 *** Not familiar with this syntax ***
 
 Question 264 (Subquery syntax)
