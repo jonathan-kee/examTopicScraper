@@ -1,6 +1,9 @@
 I notice a lot of discussion answers come from 
 https://docs.oracle.com/cd/A58617_01/server.804/a58227/ch18.htm
 
+Where to search for documentation
+https://docs.oracle.com/search/
+
 Documentation about Constraints
 https://docs.oracle.com/en/database/oracle/oracle-database/19/admin/
 
