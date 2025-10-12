@@ -1,8 +1,16 @@
 I notice a lot of discussion answers come from 
 https://docs.oracle.com/cd/A58617_01/server.804/a58227/ch18.htm
 
+Documentation about Constraints
+https://docs.oracle.com/en/database/oracle/oracle-database/19/admin/
+
+Documentation about Roles, System privileges, Object privileges
+https://docs.oracle.com/en/database/oracle/oracle-database/19/dbseg/preface.html
+
 *** Topics I need to cover ***
 1) DISABLE, ENABLE
+https://docs.oracle.com/en/database/oracle/oracle-database/19/admin/managing-schema-objects.html#GUID-BF457CD9-DD31-4673-BDDB-F7965A8C04E0
+
 2) Update, Correlated query
 2.1) Permission syntax
 3) Purge
