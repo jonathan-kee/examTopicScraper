@@ -11,6 +11,23 @@ https://docs.oracle.com/en/database/oracle/oracle-database/19/dbseg/preface.html
 1) DISABLE, ENABLE
 https://docs.oracle.com/en/database/oracle/oracle-database/19/admin/managing-schema-objects.html#GUID-BF457CD9-DD31-4673-BDDB-F7965A8C04E0
 
+You can specify that a constraint is enabled (ENABLE) or disabled (DISABLE). If a constraint is enabled, data is checked as it is entered (INSERT, MERGE) or updated (UPDATE, MERGE) in the database, and data that does not conform to the constraint is prevented from being entered. If a constraint is disabled, then data that does not conform can be allowed to enter the database.
+Additionally, you can specify that existing data in the table must conform to the constraint (VALIDATE). Conversely, if you specify NOVALIDATE, you are not ensured that existing data conforms.
+
+An integrity constraint defined on a table can be in one of the following states:
+
+ENABLE, VALIDATE
+
+ENABLE, NOVALIDATE
+
+DISABLE, VALIDATE
+
+DISABLE, NOVALIDATE
+
+https://docs.oracle.com/en/database/oracle/oracle-database/19/sqlrf/constraint.html#SQLRF52214
+^
+Search "ENABLE Clause" heading to learn more 
+
 2) Update, Correlated query
 2.1) Permission syntax
 3) Purge
