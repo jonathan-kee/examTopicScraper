@@ -112,6 +112,21 @@ Search "ENABLE Clause" heading to learn more
 10) Multi table insert
 10.1) ADD_MONTHS(), NEXT_DAY()
 11) GLOBAL TEMPORARY TABLES
+
+Search GLOBAL TEMPORARY
+https://docs.oracle.com/en/database/oracle/oracle-database/19/sqlrf/CREATE-TABLE.html#GUID-F9CE0CC3-13AE-4744-A43C-EAC7A71AAAB6
+^
+Search "GLOBAL TEMPORARY"
+
+Specify GLOBAL TEMPORARY to create a temporary table, whose definition is visible to all sessions with appropriate 
+privileges. The data in a temporary table is visible only to the session that inserts the data into the table.
+
+ON COMMIT clause for GLOBAL TEMPORARY tables
+https://docs.oracle.com/en/database/oracle/oracle-database/19/sqlrf/CREATE-TABLE.html#GUID-F9CE0CC3-13AE-4744-A43C-EAC7A71AAAB6__I2189569
+
+TLDR of GLOBAL TEMPORARY:
+It's in SQL OCA Exam Condensed
+
 12) CACHE, NOCACHE (Sequence)
 12.1) privallages details
 13) Date literals, date arithmatic
