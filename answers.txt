@@ -107,6 +107,10 @@ Search "ENABLE Clause" heading to learn more
 5.1) ROUND, TRUNC, MOD
 6) ORGANIZATION EXTERNAL (External Table)
 7) UNUSED
+^
+TLDR of GLOBAL TEMPORARY:
+It's in SQL OCA Exam Condensed
+
 8) SET Operator with Null
 9) Meta data tables
 10) Multi table insert
