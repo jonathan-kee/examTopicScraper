@@ -105,6 +105,20 @@ Search "ENABLE Clause" heading to learn more
 4) What happens when to views, synonymns when you drop a table
 Source to learn about it
 https://docs.oracle.com/en/database/oracle/oracle-database/19/admin/managing-views-sequences-and-synonyms.html#GUID-11AE4E2F-B193-4FEE-89C5-62C1CB7ABCC5
+^
+Search 24.1.3 Replacing Views
+Before replacing a view, consider the following effects:
+
+- Replacing a view replaces the view definition in the data dictionary. All underlying objects referenced by the view are not affected.
+
+- If a constraint in the CHECK OPTION was previously defined but not included in the new view definition, the constraint is dropped.
+
+- All views dependent on a replaced view become invalid (not usable). 
+In addition, dependent PL/SQL program units may become invalid, depending on what was changed in the new version of the view. 
+For example, if only the WHERE clause of the view changes, dependent PL/SQL program units remain valid. 
+However, if any changes are made to the number of view columns or to the view column names or data types, 
+dependent PL/SQL program units are invalidated. 
+See "Managing Object Dependencies" for more information on how the database manages such dependencies.
 
 5) Synonyms
 5.1) ROUND, TRUNC, MOD
