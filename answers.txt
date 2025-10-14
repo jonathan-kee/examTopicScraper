@@ -190,6 +190,10 @@ The default value of this parameter is determined by NLS_TERRITORY.
 46) Having cannot have expressions
 47) what commands transactions effect
 48) Partition key column
+^
+Explanation on Partition:
+https://docs.oracle.com/en/database/oracle/oracle-database/19/cncpt/partitions-views-and-other-schema-objects.html#GUID-3E154566-50D6-48C1-BAE5-57EF20266B43
+
 49) What is remote table
 50) details of object privallages 
 51) Orcale specific string format
