@@ -136,6 +136,22 @@ It's in SQL OCA Exam Condensed
 13) Date literals, date arithmatic
 14) Datetime literals, datetime arithmatic
 15) lock
+^
+Explanation on Locking:
+https://docs.oracle.com/en/database/oracle/oracle-database/19/cncpt/data-concurrency-and-consistency.html#GUID-AD0CEE83-2F33-4906-94E1-3D1022924C63
+
+Example of Table locking:
+https://docs.oracle.com/en/database/oracle/oracle-database/19/sqlrf/LOCK-TABLE.html
+
+Automatic Table locking in DML opeations:
+https://docs.oracle.com/en/database/oracle/oracle-database/19/sqlrf/Automatic-Locks-in-DML-Operations.html#GUID-0304C4AA-BD28-4C2A-B7F5-267532FB9499
+
+Automatic Table locking in DDL opeations:
+https://docs.oracle.com/en/database/oracle/oracle-database/19/sqlrf/Automatic-Locks-in-DDL-Operations.html#GUID-84D392A3-94EC-444D-950F-7829DBCD43EE
+
+Manual Table locking:
+https://docs.oracle.com/en/database/oracle/oracle-database/19/sqlrf/Manual-Data-Locking.html
+
 16) Views details
 17) GLOBAL TEMPORARY, ON COMMIT PRESERVE ROWS
 18) ORACLE_DATAPUMP (External Table)
