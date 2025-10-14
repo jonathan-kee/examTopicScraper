@@ -105,8 +105,11 @@ Search "ENABLE Clause" heading to learn more
 4) What happens when to views, synonymns when you drop a table
 ^
 I think you have to search for docs related to CREATE, CREATE OR REPLACE, ALTER, DROP
+^
+18.7.1 About Object Dependencies and Object Invalidation
+https://docs.oracle.com/en/database/oracle/oracle-database/19/admin/managing-schema-objects.html#GUID-46D82F8E-C360-4223-B469-18039B1FFB21
 ^ 
-Source to learn about it
+24 Managing Views, Sequences, and Synonyms
 https://docs.oracle.com/en/database/oracle/oracle-database/19/admin/managing-views-sequences-and-synonyms.html#GUID-11AE4E2F-B193-4FEE-89C5-62C1CB7ABCC5
 ^
 Search 24.1.3 Replacing Views
