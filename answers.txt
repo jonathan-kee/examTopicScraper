@@ -103,6 +103,9 @@ Search "ENABLE Clause" heading to learn more
 2.1) Permission syntax
 3) Purge
 4) What happens when to views, synonymns when you drop a table
+^
+I think you have to search for docs related to CREATE, CREATE OR REPLACE, ALTER, DROP
+^ 
 Source to learn about it
 https://docs.oracle.com/en/database/oracle/oracle-database/19/admin/managing-views-sequences-and-synonyms.html#GUID-11AE4E2F-B193-4FEE-89C5-62C1CB7ABCC5
 ^
