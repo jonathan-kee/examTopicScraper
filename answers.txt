@@ -163,6 +163,14 @@ It's in SQL OCA Exam Condensed
 12) CACHE, NOCACHE (Sequence)
 12.1) privallages details
 13) Date literals, date arithmatic
+^
+Example of DATE, TIMESTAMP, INTERVAL
+https://oracle-base.com/articles/misc/oracle-dates-timestamps-and-intervals#Top
+^
+If Both DATE and TIMESTAMP columns contain a time component, what is the point of DATE?
+^
+ChatGBT got answer for this
+
 14) Datetime literals, datetime arithmatic
 15) lock
 ^
