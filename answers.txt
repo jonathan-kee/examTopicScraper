@@ -259,6 +259,10 @@ https://docs.oracle.com/en/database/oracle/oracle-database/19/cncpt/partitions-v
 92) Invisible index (Index)
 93) GLOBAL TEMPORARY (Transactions)
 94) UNLIMITED TABLESPACE (Privallages)
+^
+CREATE TABLESPACE
+https://docs.oracle.com/en/database/oracle/oracle-database/21/sqlrf/CREATE-TABLESPACE.html
+
 95) WITH TIES (Order By, Fetch first)
 96) truncation (Data type, implicit conversion)
 97) privallages details
@@ -273,6 +277,10 @@ https://docs.oracle.com/en/database/oracle/oracle-database/19/cncpt/partitions-v
 106) Oracle cross join syntax
 107) tablespace (REATE TABLE)
 108) read-only mode, UNUSED
+^
+read-only mode might refer to below:
+https://docs.oracle.com/en/database/oracle/oracle-database/19/sqlrf/SET-TRANSACTION.html
+
 109) how EXIST works with null
 110) UNLIMITED TABLESPACE, CREATE ANY INDEX (Object privallages)
 
