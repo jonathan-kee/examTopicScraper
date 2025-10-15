@@ -232,7 +232,9 @@ The transaction remains active and can be continued.
 ^
 I also not sure if you can rollback to a savepoint after you do rollback.
 ^
-Not you cannot do that because all subsequent savepoints are lost after you rollback.
+3.4 Rolling Back Transactions
+https://docs.oracle.com/en/database/oracle/oracle-database/19/tdddg/dml-and-transactions.html#GUID-C9CA9BBB-DECD-4935-A790-195424E08C6A
+No you cannot do that because all subsequent savepoints are lost after you rollback.
 
 43) NLS_DATE_FORMAT, TIME_ZONE, LOCALTIMESTAMP
 https://docs.oracle.com/en/database/oracle/oracle-database/19/refrn/NLS_DATE_FORMAT.html
