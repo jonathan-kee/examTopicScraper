@@ -208,6 +208,32 @@ https://docs.oracle.com/en/database/oracle/oracle-database/19/sqlrf/Manual-Data-
 40) TO_CHAR format mask
 41) DISABLE CONSTRAINT
 42) Not sure if you can ROLLBACK after to SAVEPOINT a after you commit
+^
+Overview of Savepoints
+https://docs.oracle.com/en/database/oracle/oracle-database/19/cncpt/transactions.html#GUID-55081904-2D79-430B-9E37-D4127F0BBF7D
+^
+A rollback to a savepoint in an uncommitted transaction means undoing any changes made after the specified savepoint, 
+but it does not mean a rollback of the transaction itself.
+
+When a transaction is rolled back to a savepoint, as when the ROLLBACK TO SAVEPOINT after_banda_sal is run in Table 11-1, the following occurs:
+
+1. Oracle Database rolls back only the statements run after the savepoint.
+
+In Table 11-1, the ROLLBACK TO SAVEPOINT causes the UPDATE for Greene to be rolled back, but not the UPDATE for Banda.
+
+2. Oracle Database preserves the savepoint specified in the ROLLBACK TO SAVEPOINT statement, but all subsequent savepoints are lost.
+
+In Table 11-1, the ROLLBACK TO SAVEPOINT causes the after_greene_sal savepoint to be lost.
+
+3. Oracle Database releases all table and row locks acquired after the specified savepoint but retains all data locks acquired before the savepoint.
+
+The transaction remains active and can be continued.
+
+^
+I also not sure if you can rollback to a savepoint after you do rollback.
+^
+Not you cannot do that because all subsequent savepoints are lost after you rollback.
+
 43) NLS_DATE_FORMAT, TIME_ZONE, LOCALTIMESTAMP
 https://docs.oracle.com/en/database/oracle/oracle-database/19/refrn/NLS_DATE_FORMAT.html
 
@@ -234,6 +260,10 @@ This calculation evaluates the inner aggregate (MAX(salary)) for each group defi
 
 46) Having cannot have expressions
 47) what commands transactions effect
+^
+Overview on transactions
+https://docs.oracle.com/en/database/oracle/oracle-database/19/cncpt/transactions.html#GUID-B97790CB-DF82-442D-B9D5-50CCE6BF9FBD
+
 48) Partition key column
 ^
 Explanation on Partition:
