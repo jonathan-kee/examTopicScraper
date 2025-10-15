@@ -263,6 +263,38 @@ This calculation evaluates the inner aggregate (MAX(salary)) for each group defi
 ^
 Overview on transactions
 https://docs.oracle.com/en/database/oracle/oracle-database/19/cncpt/transactions.html#GUID-B97790CB-DF82-442D-B9D5-50CCE6BF9FBD
+^
+Data Manipulation Languages (DML) statements (These Statements can be chained during a transaction):
+https://docs.oracle.com/en/database/oracle/oracle-database/19/sqlrf/Types-of-SQL-Statements.html#GUID-2E008D4A-F6FD-4F34-9071-7E10419CA24D
+
+CALL
+DELETE
+EXPLAIN PLAN
+INSERT
+LOCK TABLE
+MERGE
+SELECT
+UPDATE
+
+^
+Data Definition Language (DDL) Statements (Implicit commits current transaction before and after every DDL statement): 
+https://docs.oracle.com/en/database/oracle/oracle-database/19/sqlrf/Types-of-SQL-Statements.html#GUID-FD9A8CB4-6B9A-44E5-B114-EFB8DA76FC88
+
+ALTER ... (All statements beginning with ALTER, except ALTER SESSION and ALTER SYSTEM—see "Session Control Statements" and "System Control Statement")
+ANALYZE
+ASSOCIATE STATISTICS
+AUDIT
+COMMENT
+CREATE ... (All statements beginning with CREATE)
+DISASSOCIATE STATISTICS
+DROP ... (All statements beginning with DROP)
+FLASHBACK ... (All statements beginning with FLASHBACK)
+GRANT
+NOAUDIT
+PURGE
+RENAME
+REVOKE
+TRUNCATE
 
 48) Partition key column
 ^
