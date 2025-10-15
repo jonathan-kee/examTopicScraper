@@ -127,6 +127,12 @@ dependent PL/SQL program units are invalidated.
 See "Managing Object Dependencies" for more information on how the database manages such dependencies.
 
 5) Synonyms
+^
+It is similar to Java's Polymorphism
+https://docs.oracle.com/en/database/oracle/oracle-database/21/sqlrf/CREATE-SYNONYM.html
+^
+I have notes on it in SQL OCA Exam Condensed
+
 5.1) ROUND, TRUNC, MOD
 6) ORGANIZATION EXTERNAL (External Table)
 7) UNUSED
