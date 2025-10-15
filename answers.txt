@@ -216,6 +216,22 @@ The default value of this parameter is determined by NLS_TERRITORY.
 
 44) details of WITH GRANT OPTION
 45) 2 Aggregate in a single line
+^
+Nesting aggregate
+https://docs.oracle.com/en/database/oracle/oracle-database/19/sqlrf/Aggregate-Functions.html
+
+You can nest aggregate functions. For example, the following example calculates the average of the maximum salaries of all the departments in the sample schema hr:
+
+SELECT AVG(MAX(salary))
+  FROM employees
+  GROUP BY department_id;
+
+AVG(MAX(SALARY))
+----------------
+      10926.3333
+
+This calculation evaluates the inner aggregate (MAX(salary)) for each group defined by the GROUP BY clause (department_id), and aggregates the results again.
+
 46) Having cannot have expressions
 47) what commands transactions effect
 48) Partition key column
