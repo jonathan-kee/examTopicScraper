@@ -167,6 +167,8 @@ It's in SQL OCA Exam Condensed
 Example of DATE, TIMESTAMP, INTERVAL
 https://oracle-base.com/articles/misc/oracle-dates-timestamps-and-intervals#Top
 ^
+Go through the exam dump questions again & see whether the blog got answer this
+^
 If Both DATE and TIMESTAMP columns contain a time component, what is the point of DATE?
 ^
 ChatGBT got answer for this
