@@ -104,7 +104,15 @@ Search "ENABLE Clause" heading to learn more
 3) Purge
 4) What happens when to views, synonymns when you drop a table
 ^
-I think you have to search for docs related to CREATE, CREATE OR REPLACE, ALTER, DROP
+20.11 Dropping Tables
+https://docs.oracle.com/en/database/oracle/oracle-database/19/admin/managing-tables.html#GUID-C35B192C-1C8B-425F-A003-D36D0EABEB3A
+^
+Before dropping a table, familiarize yourself with the consequences of doing so:
+- Dropping a table removes the table definition from the data dictionary. All rows of the table are no longer accessible.
+- All indexes and triggers associated with a table are dropped.
+- All views and PL/SQL program units dependent on a dropped table remain, yet become invalid (not usable). See "Managing Object Dependencies" for information about how the database manages dependencies.
+- All synonyms for a dropped table remain, but return an error when used.
+- All extents allocated for a table that is dropped are returned to the free space of the tablespace and can be used by any other object requiring new extents or new objects. All rows corresponding to a clustered table are deleted from the blocks of the cluster. Clustered tables are the subject of Managing Clusters.
 ^
 18.7.1 About Object Dependencies and Object Invalidation
 https://docs.oracle.com/en/database/oracle/oracle-database/19/admin/managing-schema-objects.html#GUID-46D82F8E-C360-4223-B469-18039B1FFB21
