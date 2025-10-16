@@ -36,6 +36,8 @@ Partially added for Answers, never needed for question & discussions
 
 - Error handling for missing src images
 
+- Column lineage with airflow & dbt
+
 # List of bugs to fix
 - Answer cannot be scraped:
 https://www.examtopics.com/discussions/oracle/view/92435-exam-1z0-071-topic-1-question-24-discussion/
