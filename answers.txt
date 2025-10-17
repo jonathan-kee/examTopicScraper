@@ -371,6 +371,10 @@ nq'ï Ÿ1234 ï'
 q'"name like '['"'
 
 73) what a session is
+^
+Overview of Process Architecture (Some info related to session):
+https://docs.oracle.com/en/database/oracle/oracle-database/19/cncpt/process-architecture.html#GUID-3A11FF2F-50EE-4839-A1A6-F746DFF634AB
+
 74) details of the implicit conversion for Set Operator
 75) details of multi table insert
 76) can use single-row functions in having 
