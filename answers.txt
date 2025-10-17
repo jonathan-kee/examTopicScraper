@@ -372,8 +372,23 @@ q'"name like '['"'
 
 73) what a session is
 ^
+Session Control Statements:
+https://docs.oracle.com/en/database/oracle/oracle-database/19/cncpt/sql.html#GUID-261BEAAC-0897-465D-9137-D201CE80675C
+
+The following statement dynamically changes the default date format for your session to 'YYYY MM DD-HH24:MI:SS':
+ALTER SESSION 
+   SET NLS_DATE_FORMAT = 'YYYY MM DD HH24:MI:SS';
+^
+NLS_DATE_FORMAT is one of the many initialization parameters
+^
+1.4 Changing Parameter Values in a Parameter File
+https://docs.oracle.com/en/database/oracle/oracle-database/19/refrn/changing-parameter-values-in-a-parameter-file.html#GUID-4C578B21-DE2B-4210-8EB7-EF28D36CC1CB
+^
 Overview of Process Architecture (Some info related to session):
 https://docs.oracle.com/en/database/oracle/oracle-database/19/cncpt/process-architecture.html#GUID-3A11FF2F-50EE-4839-A1A6-F746DFF634AB
+^
+Session Control Statements:
+https://docs.oracle.com/en/database/oracle/oracle-database/19/sqlrf/Types-of-SQL-Statements.html#SQLRF30044
 
 74) details of the implicit conversion for Set Operator
 75) details of multi table insert
