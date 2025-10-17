@@ -395,6 +395,8 @@ https://docs.oracle.com/en/database/oracle/oracle-database/19/sqlrf/Types-of-SQL
 76) can use single-row functions in having 
 77) behviour of max() on String works
 78) triggers
+^
+Is an important concept to learn
 79) details of synonym
 80) details of Alter Table
 81) detials of NULLIF, COALESCE
