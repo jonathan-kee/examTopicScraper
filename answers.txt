@@ -335,6 +335,41 @@ https://docs.oracle.com/en/database/oracle/oracle-database/19/cncpt/partitions-v
 70) PROMPT, DEFINE (Variable Substitution)
 71) SUBSTR(,-3), TRAILING
 72) q'' or q ""
+^
+Text Literals link:
+https://docs.oracle.com/en/database/oracle/oracle-database/19/sqlrf/Literals.html#GUID-1824CBAA-6E16-4921-B2A6-112FB02248DA
+
+How N or n works:
+where N or n specifies the literal using the national character set (NCHAR or NVARCHAR2 data). 
+By default, text entered using this notation is translated into the national character set by way of the database character set when used by the server. 
+To avoid potential loss of data during the text literal conversion to the database character set, set the environment variable ORA_NCHAR_LITERAL_REPLACE to TRUE. 
+Doing so transparently replaces the n' internally and preserves the text literal for SQL processing.
+
+How Q or q works:
+- Q or q indicates that the alternative quoting mechanism will be used. This mechanism allows a wide range of delimiters for the text string.
+
+- The outermost ' ' are two single quotation marks that precede and follow, respectively, the opening and closing quote_delimiter.
+
+- c is any member of the user's character set. You can include quotation marks (") in the text literal made up of c characters. You can also include the quote_delimiter, as long as it is not immediately followed by a single quotation mark.
+
+- quote_delimiter is any single- or multibyte character except space, tab, and return. The quote_delimiter can be a single quotation mark. However, if the quote_delimiter appears in the text literal itself, ensure that it is not immediately followed by a single quotation mark.
+
+If the opening quote_delimiter is one of [, {, <, or (, then the closing quote_delimiter must be the corresponding ], }, >, or ). In all other cases, the opening and closing quote_delimiter must be the same character.
+
+Here are some valid text literals:
+'Hello'
+'ORACLE.dbs'
+'Jackie''s raincoat'
+'09-MAR-98'
+N'nchar literal'
+
+Here are some valid text literals using the alternative quoting mechanism:
+q'!name LIKE '%DBMS_%%'!'
+q'<'So,' she said, 'It's finished.'>'
+q'{SELECT * FROM employees WHERE last_name = 'Smith';}'
+nq'ï Ÿ1234 ï'
+q'"name like '['"'
+
 73) what a session is
 74) details of the implicit conversion for Set Operator
 75) details of multi table insert
