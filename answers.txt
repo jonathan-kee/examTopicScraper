@@ -363,6 +363,9 @@ https://docs.oracle.com/en/database/oracle/oracle-database/21/sqlrf/CREATE-TABLE
 
 95) WITH TIES (Order By, Fetch first)
 96) truncation (Data type, implicit conversion)
+^
+SQL OCA Exam Condensed
+
 97) privallages details
 98) pesudocolumns, lock, enable, disable (Alter Table)
 99) details of data types
