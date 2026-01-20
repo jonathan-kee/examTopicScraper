@@ -1,6 +1,9 @@
 # EXAMTOPICSCRAPER
 The reason I was doing this is because I don't want to pay the expensive fee to see the certification dumps lol. 
 
+# Theory on webscraping
+https://webscraping.fyi/
+
 # Project Setup
 1) Install node version manager:
 - curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
