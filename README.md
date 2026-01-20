@@ -3,6 +3,12 @@ The reason I was doing this is because I don't want to pay the expensive fee to 
 
 # Theory on webscraping
 https://webscraping.fyi/
+^
+https://webscraping.fyi/overview/browser-automation/
+^
+I am currently using browser automation instead of http clients
+^
+https://webscraping.fyi/overview/languages/#http-clients
 
 # Project Setup
 1) Install node version manager:
