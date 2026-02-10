@@ -32,6 +32,12 @@ https://academy.astronomer.io/page/astronomer-certification
 - Notes on Airflow certification:
 https://substack.com/@michaelsalata/p-181463528
 
+3) Official Reddit Date Engineering website
+https://dataengineering.wiki/Tools/Tools
+
+4) Architecture for Data
+https://www.youtube.com/watch?v=gsUqW1IookY
+
 # Project Setup
 1) Install node version manager:
 - curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
