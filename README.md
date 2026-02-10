@@ -15,7 +15,15 @@ I am currently using browser automation instead of http clients
 https://webscraping.fyi/overview/languages/#http-clients
 
 # Resources to learn Data Engineering
+1) Kodekloud
+https://kodekloud.com/courses/data-engineering-fundamentals
 
+2) Airflow:
+- Airflow certification link:
+https://academy.astronomer.io/page/astronomer-certification
+
+- Notes on Airflow certification:
+https://substack.com/@michaelsalata/p-181463528
 
 # Project Setup
 1) Install node version manager:
@@ -53,6 +61,8 @@ Partially added for Answers, never needed for question & discussions
 - Error handling for missing src images
 
 - Column lineage with airflow & dbt
+
+- Schema Drift from upstream (The HTML, Javascript from examtopics)
 
 # List of bugs to fix
 - Answer cannot be scraped:
