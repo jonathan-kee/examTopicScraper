@@ -39,12 +39,15 @@ https://academy.astronomer.io/page/astronomer-certification
 https://substack.com/@michaelsalata/p-181463528
 
 5) Data Ingestion
-- Dlt Certification link:
+- Dlt Certification links:
 https://dlthub.learnworlds.com/course/dlt-fundamentals
 https://dlthub.learnworlds.com/course/dlt-advanced
 
 6) Data Processing
-- DBT
+- DBT Certification links:
+https://learn.getdbt.com/learning-paths/dbt-certified-developer
+https://learn.getdbt.com/learning-paths/dbt-certified-cloud-architect
+
 - Apache Spark 
 
 7) Data Analytics
