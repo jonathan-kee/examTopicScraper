@@ -22,21 +22,34 @@ https://www.youtube.com/@JohnWatsonRooney/playlists
 https://www.youtube.com/watch?v=CraPKax37lo
 
 # Resources to learn Data Engineering
-1) Kodekloud
+1) Official Reddit Date Engineering website
+https://dataengineering.wiki/Tools/Tools
+
+2) Kodekloud
 https://kodekloud.com/courses/data-engineering-fundamentals
 
-2) Airflow:
+3) Architecture for Data
+https://www.youtube.com/watch?v=gsUqW1IookY
+
+4) Workflow Orchestration
 - Airflow certification link:
 https://academy.astronomer.io/page/astronomer-certification
 
 - Notes on Airflow certification:
 https://substack.com/@michaelsalata/p-181463528
 
-3) Official Reddit Date Engineering website
-https://dataengineering.wiki/Tools/Tools
+5) Data Ingestion
+- Dlt Certification link:
+https://dlthub.learnworlds.com/course/dlt-fundamentals
+https://dlthub.learnworlds.com/course/dlt-advanced
 
-4) Architecture for Data
-https://www.youtube.com/watch?v=gsUqW1IookY
+6) Data Processing
+- DBT
+- Apache Spark 
+
+7) Data Analytics
+- Excel
+- Power BI
 
 # Project Setup
 1) Install node version manager:
