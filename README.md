@@ -18,6 +18,9 @@ https://webscraping.fyi/overview/languages/#http-clients
 https://www.youtube.com/@MichaelMintz
 https://www.youtube.com/@JohnWatsonRooney/playlists
 
+3) Airflow being used for webscraping
+https://www.youtube.com/watch?v=CraPKax37lo
+
 # Resources to learn Data Engineering
 1) Kodekloud
 https://kodekloud.com/courses/data-engineering-fundamentals
