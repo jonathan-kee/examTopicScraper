@@ -14,6 +14,10 @@ I am currently using browser automation instead of http clients
 ^
 https://webscraping.fyi/overview/languages/#http-clients
 
+2) Youtube channels on webscraping & crawling
+https://www.youtube.com/@MichaelMintz
+https://www.youtube.com/@JohnWatsonRooney/playlists
+
 # Resources to learn Data Engineering
 1) Kodekloud
 https://kodekloud.com/courses/data-engineering-fundamentals
