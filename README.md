@@ -4,12 +4,18 @@ The reason I was doing this is because I don't want to pay the expensive fee to 
 # Resources to learn webscraping
 1) Website on webscraping & crawling
 https://webscraping.fyi/
+
 ^
 https://webscraping.fyi/overview/browser-automation/
+
 ^
 I am currently using browser automation instead of http clients
+
 ^
 https://webscraping.fyi/overview/languages/#http-clients
+
+# Resources to learn Data Engineering
+
 
 # Project Setup
 1) Install node version manager:
