@@ -1,7 +1,8 @@
 # EXAMTOPICSCRAPER
 The reason I was doing this is because I don't want to pay the expensive fee to see the certification dumps lol. 
 
-# Theory on webscraping
+# Resources to learn webscraping
+1) Website on webscraping & crawling
 https://webscraping.fyi/
 ^
 https://webscraping.fyi/overview/browser-automation/
