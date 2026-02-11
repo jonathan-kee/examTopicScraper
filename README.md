@@ -82,6 +82,8 @@ The following wont work if ~/.profile exist, Then you need to manually add to .b
 7) Compile Typescript and launch with node with sample arguments:
 - tsc && node ./build/index.js
 
+# DBT Setup 
+
 # Features to add
 - Rescrape pages that result in dirty data, need to update / merge existing data.
 ^
@@ -94,6 +96,8 @@ Partially added for Answers, never needed for question & discussions
 - Column lineage with dbt
 
 - Schema Drift from upstream (The HTML, Javascript from examtopics)
+
+- SQL backup dump on repository, so when switch computer we get the data back
 
 # List of bugs to fix
 - Answer cannot be scraped:
