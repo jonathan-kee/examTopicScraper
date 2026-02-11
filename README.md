@@ -89,7 +89,9 @@ Partially added for Answers, never needed for question & discussions
 
 - Error handling for missing src images
 
-- Column lineage with airflow & dbt
+- Workflow Orchestration with Airflow
+
+- Column lineage with dbt
 
 - Schema Drift from upstream (The HTML, Javascript from examtopics)
 
