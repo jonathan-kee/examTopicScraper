@@ -54,6 +54,8 @@ https://learn.getdbt.com/learning-paths/dbt-certified-cloud-architect
 - Excel
 - Power BI
 
+# 12 Factor App
+
 # Project Setup
 1) Install node version manager:
 - curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
