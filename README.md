@@ -82,7 +82,16 @@ The following wont work if ~/.profile exist, Then you need to manually add to .b
 7) Compile Typescript and launch with node with sample arguments:
 - tsc && node ./build/index.js
 
+# Github Actions / Forejo Actions Setup
+
+# Docker Setup
+
 # DBT Setup 
+1) Install DBT fusion
+https://docs.getdbt.com/docs/fusion/install-fusion-cli
+
+2) Install DBT extension by "dbt Labs Inc"
+https://docs.getdbt.com/docs/install-dbt-extension
 
 # Features to add
 - Rescrape pages that result in dirty data, need to update / merge existing data.
