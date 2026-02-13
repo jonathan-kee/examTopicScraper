@@ -113,6 +113,9 @@ Partially added for Answers, never needed for question & discussions
 
 - SQL backup dump on repository, so when switch computer we get the data back
 
+- Maybe instead of scraping the data directly, you take all the data first and dump it into a data lake,
+then only process it at some future point
+
 # List of bugs to fix
 - Answer cannot be scraped:
 https://www.examtopics.com/discussions/oracle/view/92435-exam-1z0-071-topic-1-question-24-discussion/
