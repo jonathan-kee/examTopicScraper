@@ -54,7 +54,8 @@ https://learn.getdbt.com/learning-paths/dbt-certified-cloud-architect
 - Excel
 - Power BI
 
-# 12 Factor App
+# 12 Factor App Methodology
+
 
 # Project Setup
 1) Install node version manager:
