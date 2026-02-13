@@ -60,6 +60,9 @@ Github Actions solves
 - Build, Release and Run
 ^
 You have to learn Git before Github Actions to make sense
+^
+Can try below:
+https://blinry.itch.io/oh-my-git
 
 # Project Setup
 1) Install node version manager:
@@ -117,6 +120,8 @@ Partially added for Answers, never needed for question & discussions
 
 - Maybe instead of scraping the data directly, you take all the data first and dump it into a data lake,
 then only process it at some future point
+^
+Try to use MINIO as a datalake, Hadoop also works
 
 # List of bugs to fix
 - Answer cannot be scraped:
