@@ -55,7 +55,9 @@ https://learn.getdbt.com/learning-paths/dbt-certified-cloud-architect
 - Power BI
 
 # 12 Factor App Methodology
-
+Github Actions solves 
+- Codebase
+- Build, Release and Run
 
 # Project Setup
 1) Install node version manager:
