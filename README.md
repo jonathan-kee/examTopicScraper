@@ -58,6 +58,8 @@ https://learn.getdbt.com/learning-paths/dbt-certified-cloud-architect
 Github Actions solves 
 - Codebase
 - Build, Release and Run
+^
+You have to learn Git before Github Actions to make sense
 
 # Project Setup
 1) Install node version manager:
