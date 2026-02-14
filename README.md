@@ -101,6 +101,8 @@ The following wont work if ~/.profile exist, Then you need to manually add to .b
 Both of these need to use volume, otherwise they would data would be lost
 
 I am not entirely sure if I should create an image for the webscraper
+^
+If I am not mistaken, the 12 factor app mentioned about containerize scripts
 
 # DBT Setup 
 1) Install DBT fusion
