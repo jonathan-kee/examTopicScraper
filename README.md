@@ -64,7 +64,7 @@ You have to learn Git before Github Actions to make sense
 Can try below:
 https://blinry.itch.io/oh-my-git
 
-# Project Setup
+# System Packages / Project Setup
 1) Install node version manager:
 - curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
 
