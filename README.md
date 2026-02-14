@@ -100,6 +100,8 @@ The following wont work if ~/.profile exist, Then you need to manually add to .b
 ^
 Both of these need to use volume, otherwise they would data would be lost
 
+I am not entirely sure if I should create an image for the webscraper
+
 # DBT Setup 
 1) Install DBT fusion
 https://docs.getdbt.com/docs/fusion/install-fusion-cli
