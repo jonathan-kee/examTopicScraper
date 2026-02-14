@@ -113,6 +113,10 @@ Docker is actually a server, it comes with
 ^
 Based on Kodekloud's Docker-Certified-Associate-Exam-Course, You still need indepth knowledge of Linux
 
+1) docker pull minio/minio
+
+2) docker pull postgres:14.21-trixie
+
 # DBT Setup 
 1) Install DBT fusion
 https://docs.getdbt.com/docs/fusion/install-fusion-cli
