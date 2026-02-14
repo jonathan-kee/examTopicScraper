@@ -110,6 +110,8 @@ Docker is actually a server, it comes with
 - Docker Daemon (dockerd)
 - REST API
 - Docker CLI (docker)
+^
+Based on Kodekloud's Docker-Certified-Associate-Exam-Course, You still need indepth knowledge of Linux
 
 # DBT Setup 
 1) Install DBT fusion
