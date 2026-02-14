@@ -103,6 +103,8 @@ Both of these need to use volume, otherwise they would data would be lost
 I am not entirely sure if I should create an image for the webscraper
 ^
 If I am not mistaken, the 12 factor app mentioned about containerize scripts
+^
+The famous voting app has a image that is not a web server, it's like a script that has loop forevor until it errors
 
 # DBT Setup 
 1) Install DBT fusion
