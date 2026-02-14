@@ -119,6 +119,9 @@ https://a.storyblok.com/f/146871/x/2001ce939c/docker-study-guide_v1-5-jan-2025.p
 Mirantis bought over the Docker Certification Exam:
 https://training.mirantis.com/certification/dca-certification-exam/
 
+An alternative to Kodekloud's docker courses
+https://labs.iximiuz.com/roadmaps/docker
+
 Download an image without starting a container:
 1) docker image pull minio/minio
 
