@@ -117,6 +117,10 @@ Based on Kodekloud's Docker-Certified-Associate-Exam-Course, You still need inde
 
 2) docker pull postgres:14.21-trixie
 
+3) Build Image for the webscraper
+
+4) Create docker compose file
+
 # DBT Setup 
 1) Install DBT fusion
 https://docs.getdbt.com/docs/fusion/install-fusion-cli
