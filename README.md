@@ -95,6 +95,8 @@ The following wont work if ~/.profile exist, Then you need to manually add to .b
 # Github Actions / Forejo Actions Setup
 
 # Docker Setup
+- Minio
+- Postgres
 
 # DBT Setup 
 1) Install DBT fusion
