@@ -113,9 +113,16 @@ Docker is actually a server, it comes with
 ^
 Based on Kodekloud's Docker-Certified-Associate-Exam-Course, You still need indepth knowledge of Linux
 
-1) docker pull minio/minio
+Link to Docker Certified Associate (DCA) Exam:
+https://a.storyblok.com/f/146871/x/2001ce939c/docker-study-guide_v1-5-jan-2025.pdf
 
-2) docker pull postgres:14.21-trixie
+Mirantis bought over the Docker Certification Exam:
+https://training.mirantis.com/certification/dca-certification-exam/
+
+Download an image without starting a container:
+1) docker image pull minio/minio
+
+2) docker image pull postgres:14.21-trixie
 
 3) Build Image for the webscraper
 
