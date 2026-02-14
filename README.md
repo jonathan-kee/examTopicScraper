@@ -97,6 +97,8 @@ The following wont work if ~/.profile exist, Then you need to manually add to .b
 # Docker Setup
 - Minio
 - Postgres
+^
+Both of these need to use volume, otherwise they would data would be lost
 
 # DBT Setup 
 1) Install DBT fusion
