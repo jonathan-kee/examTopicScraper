@@ -129,6 +129,8 @@ then only process it at some future point
 ^
 Try to use MINIO as a datalake, Hadoop also works
 
+- Convert the project into a CLI
+
 # List of bugs to fix
 - Answer cannot be scraped:
 https://www.examtopics.com/discussions/oracle/view/92435-exam-1z0-071-topic-1-question-24-discussion/
