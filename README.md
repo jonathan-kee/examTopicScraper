@@ -122,6 +122,9 @@ https://training.mirantis.com/certification/dca-certification-exam/
 An alternative to Kodekloud's docker courses
 https://labs.iximiuz.com/roadmaps/docker
 
+Not sure what is the importance for the process tree looking like that
+https://labs.iximiuz.com/challenges/docker-101-container-run-in-background
+
 Download an image without starting a container:
 1) docker image pull minio/minio
 
