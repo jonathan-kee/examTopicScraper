@@ -166,6 +166,8 @@ Try to use MINIO as a datalake, Hadoop also works
 
 - Convert the project into a CLI
 
+- Add Presentation like Excel or PowerBi if possible
+
 # List of bugs to fix
 - Answer cannot be scraped:
 https://www.examtopics.com/discussions/oracle/view/92435-exam-1z0-071-topic-1-question-24-discussion/
