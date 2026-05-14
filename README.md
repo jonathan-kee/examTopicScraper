@@ -141,8 +141,11 @@ Download an image without starting a container:
 Question: If Postgres has delta table extension, 
 will it be able to handle DBA SQL as well?
 Answer: 
-Oracle Database 12c DBA Handbook book is around 700 pages,
+- Oracle Database 12c DBA Handbook book is around 700 pages,
 I will just assume Postgres DBA SQL is that deep as well.
+
+- I have a folder named DBA1-handouts-16-en for Postgres DBA SQL, 
+I downloaded from https://edu.postgrespro.com/16/DBA1-handouts-16-en.zip
 
 # DBT Setup 
 1) Install DBT fusion
