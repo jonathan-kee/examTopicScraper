@@ -137,6 +137,13 @@ Download an image without starting a container:
 
 4) Create docker compose file
 
+## Docker Setup QNA
+Question: If Postgres has delta table extension, 
+will it be able to handle DBA SQL as well?
+Answer: 
+Oracle Database 12c DBA Handbook book is around 700 pages,
+I will just assume Postgres DBA SQL is that deep as well.
+
 # DBT Setup 
 1) Install DBT fusion
 https://docs.getdbt.com/docs/fusion/install-fusion-cli
