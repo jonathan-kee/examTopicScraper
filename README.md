@@ -173,6 +173,8 @@ Partially added for Answers, never needed for question & discussions
 then only process it at some future point
 ^
 Try to use MINIO as a datalake, Hadoop also works
+^
+This pattern is good, because you don't have to think about transforming the data, you just focus on extracting as much data as possible
 
 - Convert the project into a CLI
 
