@@ -180,6 +180,12 @@ This pattern is good, because you don't have to think about transforming the dat
 
 - Add Presentation like Excel or PowerBi if possible
 
+# QNA
+Question: Is SSIS still worth learning just to learn more about ETL patterns?
+
+# Projects Ideas
+- Connect Touch&Go Ewallet to Bukku Accounting system  
+
 # List of bugs to fix
 - Answer cannot be scraped:
 https://www.examtopics.com/discussions/oracle/view/92435-exam-1z0-071-topic-1-question-24-discussion/
