@@ -65,7 +65,11 @@ Can try below:
 https://blinry.itch.io/oh-my-git
 
 # Project Management Tools
+Github's Project Management tool like Trello, Jira:
 https://github.com/jonathan-kee/examTopicScraper/projects?query=is%3Aopen
+
+Very useful feature for Github:
+https://docs.github.com/en/issues/tracking-your-work-with-issues/using-issues/linking-a-pull-request-to-an-issue
 
 # System Packages / Project Setup
 1) Install node version manager:
@@ -175,6 +179,9 @@ then only process it at some future point
 Try to use MINIO as a datalake, Hadoop also works
 ^
 This pattern is good, because you don't have to think about transforming the data, you just focus on extracting as much data as possible
+^
+Good oppurtunity to use pg_lake for Postgres:
+https://github.com/Snowflake-Labs/pg_lake
 
 - Convert the project into a CLI
 
