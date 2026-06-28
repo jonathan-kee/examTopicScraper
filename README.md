@@ -85,6 +85,9 @@ https://www.youtube.com/watch?v=d3N2yeAaLkc
 
 TLDR: Create Issue -> New Branch from Issue -> Create Pull Request (Compare branch to main) -> Merge Pull Request -> Close Issue
 
+GitHub Foundations Certification Course (Most detailed explanation on Issues & Pull Request)
+https://www.youtube.com/watch?v=Jdc0i7RcBv8
+
 Learn about Github Issue before moving into Github projects:
 https://docs.github.com/en/issues/tracking-your-work-with-issues/learning-about-issues/quickstart
 
