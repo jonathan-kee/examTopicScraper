@@ -83,7 +83,7 @@ https://www.youtube.com/watch?v=d3N2yeAaLkc
 4) Creating a pull request will link to the issue
 5) Merge Pull request will also close the issue
 
-TLDR: Create Issue -> New Branch from Issue -> Create Pull Request -> Merge Pull Request -> Close Issue
+TLDR: Create Issue -> New Branch from Issue -> Create Pull Request (Compare branch to main) -> Merge Pull Request -> Close Issue
 
 Learn about Github Issue before moving into Github projects:
 https://docs.github.com/en/issues/tracking-your-work-with-issues/learning-about-issues/quickstart
