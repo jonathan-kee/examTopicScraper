@@ -1,6 +1,15 @@
 # EXAMTOPICSCRAPER
 The reason I was doing this is because I don't want to pay the expensive fee to see the certification dumps lol. 
 
+# Project Highlights
+[Docker containers in workflow created & removed](./screenshots/serviceContainerInWorkflow.png)
+
+![Docker containers in workflow created & removed](./screenshots/serviceContainerInWorkflow.png)
+
+[Node & NPM in workflow created & removed](./screenshots/node&npmInWorkflow.png)
+
+![Node & NPM in workflow created & removed](./screenshots/node&npmInWorkflow.png)
+
 # Installation Guide
 Follow the official github documentation:
 - https://docs.github.com/en/actions/how-tos/manage-runners/self-hosted-runners/add-runners#adding-a-self-hosted-runner-to-a-repository
@@ -27,7 +36,7 @@ Privacy & Security -> Full Disk Access -> vagrant-vmware-utility
 
 1) cd linux/selfhost-runner
 2) vagrant up --provider vmware_desktop
-3) vagrant provision
+3) vagrant provision (You can skip this step, vagrant up will already provision)
 4) vagrant ssh Server1
 5) sudo chown -R vagrant:vagrant /home/vagrant/actions-runner
 6) cd actions-runner
