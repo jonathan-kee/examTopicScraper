@@ -1,4 +1,4 @@
-name: My first Workflow
+name: Testing Workflow
 
 on:
   workflow_dispatch:
@@ -13,7 +13,7 @@ on:
 # https://docs.github.com/en/actions/tutorials/use-containerized-services/create-postgresql-service-containers#running-jobs-directly-on-the-runner-machine
 
 # Question: What is the difference between using a service container vs running docker as a step?
-# Answer: Github Actions will manage the life cycle of the container
+# Answer: Github Actions will manage the life cycle of the container. Because service container will be remove at the end of workflow run, it's only sutiable for testing.
 
 jobs:
   unit-testing:
