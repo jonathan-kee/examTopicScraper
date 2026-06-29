@@ -1,6 +1,59 @@
 # EXAMTOPICSCRAPER
 The reason I was doing this is because I don't want to pay the expensive fee to see the certification dumps lol. 
 
+# Installation Guide
+Follow the official github documentation:
+- https://docs.github.com/en/actions/how-tos/manage-runners/self-hosted-runners/add-runners#adding-a-self-hosted-runner-to-a-repository
+
+Follow below for personalized installation:
+- https://github.com/jonathan-kee/examTopicScraper/settings/actions/runners/new?arch=arm64&os=linux
+
+# Vagrant After Setup & Provisioning 
+1) cd linux/selfhost-runner
+2) vagrant up --provider vmware_desktop
+3) vagrant ssh Server1
+4) cd actions-runner
+5) ./run.sh
+
+# Run Github Actions
+Link to Github Actions workflow:
+- https://github.com/jonathan-kee/examTopicScraper/actions/workflows/first-example.yml
+
+- Click Run Workflow
+
+# Vagrant Setup & Provisioning
+You need to enable the setting below for vmware to work:
+Privacy & Security -> Full Disk Access -> vagrant-vmware-utility
+
+1) cd linux/selfhost-runner
+2) vagrant up --provider vmware_desktop
+3) vagrant provision
+4) vagrant ssh Server1
+5) sudo chown -R vagrant:vagrant /home/vagrant/actions-runner
+6) cd actions-runner
+7) ./config.sh --url https://github.com/<OWNER>/<REPO> --token YOUR_TOKEN_HERE
+
+*** Enter registration process details ***
+
+./run.sh
+
+# My registration process
+Runner Registration
+Enter the name of the runner group to add this runner to: [press Enter for Default] 
+
+Enter the name of runner: [press Enter for Server1] prod-rocky-runner
+
+This runner will have the following labels: 'self-hosted', 'Linux', 'ARM64' 
+Enter any additional labels (ex. label-1,label-2): [press Enter to skip] 
+
+√ Runner successfully added
+
+Runner settings
+
+Enter name of work folder: [press Enter for _work] 
+
+√ Settings Saved.
+
 # Resources to learn webscraping
 1) Website on webscraping & crawling
 https://webscraping.fyi/
