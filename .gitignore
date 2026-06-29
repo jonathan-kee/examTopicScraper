@@ -62,3 +62,5 @@ build
 
 # test files
 .tap
+
+linux/selfhost-runner/.vagrant
