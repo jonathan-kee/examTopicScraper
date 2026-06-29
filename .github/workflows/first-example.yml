@@ -1,16 +1,89 @@
-name: My First Workflow
+name: My first Workflow
 
-on: push
+on:
+  workflow_dispatch:
+#  push:
+#    branches:
+#      - main
+#      - "feature/*"
+
+# Resources on service container
+# https://docs.github.com/en/actions/tutorials/use-containerized-services/use-docker-service-containers
+# https://docs.github.com/en/actions/tutorials/use-containerized-services/create-postgresql-service-containers
+# https://docs.github.com/en/actions/tutorials/use-containerized-services/create-postgresql-service-containers#running-jobs-directly-on-the-runner-machine
+
+# Question: What is the difference between using a service container vs running docker as a step?
+# Answer: Github Actions will manage the life cycle of the container
 
 jobs:
-    first_job:
-        runs-on: ubuntu-latest
-        steps:
-        - name: Welcome message 
-          run: echo "My first Github Actions"
-        
-        - name: List files
-          run: ls
+  unit-testing:
+    name: Unit Testing
+    runs-on: [self-hosted, Linux, ARM64]
+    # Service containers to run with `runner-job`
+    # These are useful for creating databases or cache services like redis. The runner on the virtual machine will automatically create a network and manage the life cycle of the service containers.
+    # https://docs.github.com/en/actions/tutorials/use-containerized-services/create-postgresql-service-containers#configuring-the-runner-job-for-jobs-directly-on-the-runner-machine
+    services:
+      # Label used to access the service container
+      postgres:
+        # Docker Hub image
+        image: postgres
+        # Provide the password for postgres
+        env:
+          POSTGRES_PASSWORD: postgres
+        # Set health checks to wait until postgres has started
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          # https://docs.github.com/en/actions/tutorials/use-containerized-services/use-docker-service-containers#mapping-docker-host-and-service-container-ports
+          # Maps tcp port 5432 on service container to the host
+          - 5432:5432/tcp
 
-        - name: Read file
-          run: cat README.md
+    # https://docs.github.com/en/actions/tutorials/use-containerized-services/create-postgresql-service-containers#configuring-the-steps-for-jobs-directly-on-the-runner-machine
+    steps:
+      # Downloads a copy of the code in your repository before running CI tests
+      - name: Check out repository code
+        uses: actions/checkout@v6
+      
+      - name: Configure Virtual Machine's DNS resolver to reach internet
+        run: sudo sh -c 'printf "nameserver 8.8.8.8\nnameserver 1.1.1.1\n" > /etc/resolv.conf'
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
+      
+      - name: Verify Node
+        run: node -v
+      
+      - name: Install Typescript
+        run: npm install -g typescript
+      
+      - name: Verify Docker
+        run: docker -v
+
+      - name: Print Working Directory
+        run: pwd
+
+      - name: Print package.json file
+        run: cat package.json
+
+      # Performs a clean installation of all dependencies in the `package.json` file
+      # For more information, see https://docs.npmjs.com/cli/ci.html
+      - name: Install dependencies
+        run: npm install
+      
+      # There should be an output for this step
+      - name: Connect to PostgreSQL
+        # Runs a script that creates a PostgreSQL table, populates
+        # the table with data, and then retrieves the data
+        run: node client.js
+        # Environment variables used by the `client.js` script to create
+        # a new PostgreSQL table.
+        env:
+          # The hostname used to communicate with the PostgreSQL service container
+          POSTGRES_HOST: localhost
+          # The default PostgreSQL port
+          POSTGRES_PORT: 5432
