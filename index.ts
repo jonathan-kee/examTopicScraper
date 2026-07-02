@@ -2,29 +2,24 @@ import fs from "fs";
 
 import { DuckDBInstance } from '@duckdb/node-api';
 import puppeteer, { Page } from 'puppeteer';
-import { Client } from 'pg'
+
+import * as db from './modules/db/index'
 
 class DatabaseManager {
     /** Single source of truth for database operations */
-
     static async executeQuery<T>(query: string, params?: any[]) {
-        /** Execute query - handles connection lifecycle */
-        const connection = new Client({
-            user: 'postgres',
-            password: 'abc123',
-            host: 'localhost',
-            port: 5432,
-            database: 'examtopic',
-        });
+        const result = await db.query(query, params);
+        return result;
+    }
+}
 
-        await connection.connect()
+// Todo 
+class BrowserManager {
+    /** Probably have to use lambda */
+    /** Referring to scrapeDataIntoPostgres */
+    /** check documetation for error handling to avoid memory leaks */
+    static async manage() {
 
-        try {
-            const results = await connection.query(query, params);
-            return results;
-        } finally {
-            await connection.end();
-        }
     }
 }
 
