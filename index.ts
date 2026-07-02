@@ -1,8 +1,5 @@
 import fs from "fs";
-
-import { DuckDBInstance } from '@duckdb/node-api';
-import puppeteer, { Page } from 'puppeteer';
-
+import puppeteer, { Page, PuppeteerError, TimeoutError } from 'puppeteer';
 import * as db from './modules/db/index'
 
 class DatabaseManager {
@@ -13,31 +10,93 @@ class DatabaseManager {
     }
 }
 
+// Documentation around puppeteer errors 
+// https://puppeteer.guide/errors/
+// https://puppeteer.guide/posts/handling-navigation-errors/
+
 // Todo 
 class BrowserManager {
     /** Probably have to use lambda */
     /** Referring to scrapeDataIntoPostgres */
-    /** check documetation for error handling to avoid memory leaks */
+    /** check documetation for error handling to avoid memory leaks or common issues */
     static async manage() {
+        let browser;
+        try {
+            browser = await puppeteer.launch({
+                headless: true,
+            });
+            const page = await browser.newPage();
 
+            let response;
+            try {
+                // try navigation with a short timeout
+                response = await page.goto("https://example.com", {
+                    timeout: 5000, // 5 seconds
+                    waitUntil: "domcontentloaded",
+                });
+            } catch (error: any) {
+                // handle navigation and timeout errors
+                
+                if (error instanceof TimeoutError) {
+                    // you might decide to re-try, throw, or move on.
+                    // for demonstration, we continue with the partially loaded page.
+                } else if (error.message && error.message.startsWith("net::ERR")) {
+                    // networking error (DNS, connection, etc). handle or re-try if needed.
+                    // e.g., throw error;
+                } else {
+                    // an unexpected navigation error occurred
+                    throw error;
+                }
+            }
+
+            // if we did get a response, check HTTP status codes
+            if (response) {
+                const status = response.status();
+                if (status >= 400) {
+                    // handle the error
+                }
+            } else {
+                // no initial response object was returned, try waiting for a response
+                try {
+                    const waitedResponse = await page.waitForResponse(() => true, {
+                        timeout: 5000,
+                    });
+                    const waitedStatus = waitedResponse.status();
+                    if (waitedStatus >= 400) {
+                        // handle the error
+                    }
+                } catch (waitError) {
+                    // handle the error
+                }
+            }
+
+            // check if the page fell back to a default browser error page
+            if (page.url().startsWith("chrome-error://")) {
+                // optionally inspect page content for the specific reason
+                const content = await page.content();
+                if (content.includes("ERR_NAME_NOT_RESOLVED")) {
+                    // handle the error
+                } else if (content.includes("ERR_INTERNET_DISCONNECTED")) {
+                    // handle the error
+                } else {
+                    // handle the error
+                }
+
+                // decide how to handle: throw, return, etc.
+                // for demonstration, we will return early.
+                return;
+            }
+
+            // no you can try to perform your actions
+        } catch (generalError) {
+            // handle the error
+        } finally {
+            // close the browser if it was opened
+            if (browser) {
+                await browser.close();
+            }
+        }
     }
-}
-
-let main = async () => {
-    const instance = await DuckDBInstance.create(':memory:');
-    const connection = await instance.connect();
-
-    // Read SQL file
-    const sql = fs.readFileSync("./schema.sql", "utf8");
-
-    // Run SQL (can be multiple statements)
-    await connection.run(sql);
-
-    const result = await connection.run("select * from answers;");
-    const columns = result.columnNames()
-    const rows = await result.getRows();
-    console.log(columns);
-    console.log(rows);
 }
 
 async function nodeRecursion(el: Element | ChildNode, array: any[]) {
