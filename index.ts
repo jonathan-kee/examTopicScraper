@@ -4,6 +4,30 @@ import { DuckDBInstance } from '@duckdb/node-api';
 import puppeteer, { Page } from 'puppeteer';
 import { Client } from 'pg'
 
+class DatabaseManager {
+    /** Single source of truth for database operations */
+
+    static async executeQuery<T>(query: string, params?: any[]) {
+        /** Execute query - handles connection lifecycle */
+        const connection = new Client({
+            user: 'postgres',
+            password: 'abc123',
+            host: 'localhost',
+            port: 5432,
+            database: 'examtopic',
+        });
+
+        await connection.connect()
+
+        try {
+            const results = await connection.query(query, params);
+            return results;
+        } finally {
+            await connection.end();
+        }
+    }
+}
+
 let main = async () => {
     const instance = await DuckDBInstance.create(':memory:');
     const connection = await instance.connect();
@@ -95,7 +119,7 @@ class Question {
         return new Question(number, exam, result ?? 'null');
     }
 
-    public static async insert(question: Question, client: Client) {
+    public static async insert(question: Question) {
         const query = `
 INSERT INTO questions
     (number, exam, text)
@@ -108,7 +132,7 @@ VALUES ($1, $2, $3);
             question.text
         ];
 
-        const result = await client.query(query, values);
+        const result = await DatabaseManager.executeQuery(query, values);
         console.log(result);
     }
 }
@@ -251,7 +275,7 @@ class Answer {
         return answerList;
     }
 
-    public static async insert(answer: Answer, client: Client) {
+    public static async insert(answer: Answer) {
         const query = `
 INSERT INTO answers
     (number, question_number, question_exam, text, is_correct)
@@ -266,11 +290,11 @@ VALUES ($1, $2, $3, $4, $5);
             answer.isCorrect
         ];
 
-        const result = await client.query(query, values);
+        const result = await DatabaseManager.executeQuery(query, values);
         console.log(result);
     }
 
-    public static async merge(answer: Answer, client: Client) {
+    public static async merge(answer: Answer) {
         const query = `
 MERGE INTO answers
 USING (
@@ -290,8 +314,8 @@ WHEN NOT MATCHED THEN
             answer.text,
             answer.isCorrect
         ];
-        
-        const result = await client.query(query, values);
+
+        const result = await DatabaseManager.executeQuery(query, values);
         console.log(result);
     }
 }
@@ -420,7 +444,7 @@ class Discussion {
         return list;
     }
 
-    public static async insert(discussion: Discussion, client: Client) {
+    public static async insert(discussion: Discussion) {
         const query = `
 INSERT INTO discussions
     (number, question_number, question_exam, selected_answer, text, upvote)
@@ -436,7 +460,7 @@ VALUES ($1, $2, $3, $4, $5, $6);
             discussion.upvote
         ];
 
-        const result = await client.query(query, values);
+        const result = await DatabaseManager.executeQuery(query, values);
         console.log(result);
     }
 }
@@ -548,17 +572,8 @@ function randomDelay(min: number, max: number) {
 let scrapeWebsiteLinksIntoPostgres = async () => {
     console.log("Starting test");
 
-    const client = new Client({
-        user: 'postgres',
-        password: 'abc123',
-        host: 'localhost',
-        port: 5432,
-        database: 'examtopic',
-    })
+    const result = await DatabaseManager.executeQuery("SELECT last_value FROM seq_questionsLink;");
 
-    await client.connect()
-
-    const result = await client.query("SELECT last_value FROM seq_questionsLink;")
     let sequenceLastValue: number = result.rows[0].last_value;
 
     const google = 'https://www.google.com/';
@@ -586,14 +601,14 @@ let scrapeWebsiteLinksIntoPostgres = async () => {
         const link = await element?.evaluate(el => el.href);
         console.log(link);
 
-        const insertResult = await client.query(`INSERT INTO questionsLink (number, exam, link) 
-VALUES ((SELECT last_value FROM seq_questionsLink), '1z0-071', '${link}');`)
+        const insertResult = await DatabaseManager.executeQuery(`INSERT INTO questionsLink (number, exam, link) 
+VALUES ((SELECT last_value FROM seq_questionsLink), '1z0-071', '${link}');`);
         console.log(insertResult);
 
         page.close();
 
         // Increment 
-        const result = await client.query("SELECT nextval('seq_questionsLink') as next_value;")
+        const result = await DatabaseManager.executeQuery("SELECT nextval('seq_questionsLink') as next_value;");
         let sequenceLastValue: number = result.rows[0].next_value;
         i = sequenceLastValue;
 
@@ -603,7 +618,6 @@ VALUES ((SELECT last_value FROM seq_questionsLink), '1z0-071', '${link}');`)
         await new Promise(resolve => setTimeout(resolve, delay));
     }
 
-    await client.end();
     // browser.disconnect();
     await browser.close();
 }
@@ -611,24 +625,14 @@ VALUES ((SELECT last_value FROM seq_questionsLink), '1z0-071', '${link}');`)
 let scrapeDataIntoPostgres = async () => {
     console.log("Starting test");
 
-    const client = new Client({
-        user: 'postgres',
-        password: 'abc123',
-        host: 'localhost',
-        port: 5432,
-        database: 'examtopic',
-    })
-
-    await client.connect()
-
-    const result = await client.query("SELECT last_value FROM seq_questions;")
+    const result = await DatabaseManager.executeQuery("SELECT last_value FROM seq_questions;")
     let sequenceLastValue: number = result.rows[0].last_value;
     const browserURL = 'http://127.0.0.1:9222';  // Remote debugging address
     const browser = await puppeteer.connect({ browserURL });
 
     for (let i = sequenceLastValue; i <= 272;) {
 
-        const questionslinkResult = await client.query(`SELECT link FROM questionslink where number = ${i};`)
+        const questionslinkResult = await DatabaseManager.executeQuery(`SELECT link FROM questionslink where number = ${i};`)
         const questionslink: string = questionslinkResult.rows[0].link;
 
         const page = await browser.newPage();
@@ -668,7 +672,7 @@ let scrapeDataIntoPostgres = async () => {
         // Question
         let question = await Question.create(page, i, '1z0-071');
         console.log(question);
-        await Question.insert(question, client);
+        await Question.insert(question);
 
         // Answers
         let answers = []
@@ -681,20 +685,20 @@ let scrapeDataIntoPostgres = async () => {
 
         for (let i = 0; i < answers.length; i++) {
             console.log(answers[i]);
-            await Answer.insert(answers[i], client);
+            await Answer.insert(answers[i]);
         }
 
         // Discussions
         let discussions = await Discussion.create(page, i, '1z0-071');
         for (let i = 0; i < discussions.length; i++) {
             console.log(discussions[i]);
-            await Discussion.insert(discussions[i], client);
+            await Discussion.insert(discussions[i]);
         }
 
         page.close();
 
         // Increment 
-        const result = await client.query("SELECT nextval('seq_questions') as next_value;")
+        const result = await DatabaseManager.executeQuery("SELECT nextval('seq_questions') as next_value;")
         let sequenceLastValue: number = result.rows[0].next_value;
         i = sequenceLastValue;
 
@@ -704,24 +708,13 @@ let scrapeDataIntoPostgres = async () => {
         await new Promise(resolve => setTimeout(resolve, delay));
     }
 
-    await client.end();
     // browser.disconnect();
     await browser.close();
 }
 
 let rescrapeDataDebug = async () => {
 
-    const client = new Client({
-        user: 'postgres',
-        password: 'abc123',
-        host: 'localhost',
-        port: 5432,
-        database: 'examtopic',
-    })
-
-    await client.connect()
-
-    const result = await client.query("select number, link from missing_answers_link;")
+    const result = await DatabaseManager.executeQuery("select number, link from missing_answers_link;")
 
     const browserURL = 'http://127.0.0.1:9222';  // Remote debugging address
     const browser = await puppeteer.connect({ browserURL });
@@ -775,33 +768,23 @@ let rescrapeDataDebug = async () => {
 
         for (let i = 0; i < answers.length; i++) {
             console.log(answers[i]);
-            await Answer.merge(answers[i], client);
+            await Answer.merge(answers[i]);
         }
 
         page.close();
     }
 
-    await client.end();
     // browser.disconnect();
     await browser.close();
 }
 
 let scrapeImages = async () => {
-    const client = new Client({
-        user: 'postgres',
-        password: 'abc123',
-        host: 'localhost',
-        port: 5432,
-        database: 'examtopic',
-    })
 
-    await client.connect()
-
-    const result = await client.query("SELECT last_value FROM seq_imagesLink;")
+    const result = await DatabaseManager.executeQuery("SELECT last_value FROM seq_imagesLink;")
     let sequenceLastValue: number = result.rows[0].last_value;
 
     for (let i = sequenceLastValue; i <= 57;) {
-        const imageslinkResult = await client.query(`SELECT url FROM view_all_images_url where number = ${i};`)
+        const imageslinkResult = await DatabaseManager.executeQuery(`SELECT url FROM view_all_images_url where number = ${i};`)
         const imageslink: string = imageslinkResult.rows[0].url;
 
         const filename = imageslink.substring(imageslink.lastIndexOf("/") + 1, imageslink.length);
@@ -818,7 +801,7 @@ let scrapeImages = async () => {
         console.log("Image saved as " + filename);
 
         // Increment 
-        const result = await client.query("SELECT nextval('seq_imagesLink') as next_value;")
+        const result = await DatabaseManager.executeQuery("SELECT nextval('seq_imagesLink') as next_value;")
         let sequenceLastValue: number = result.rows[0].next_value;
         i = sequenceLastValue;
 
@@ -828,7 +811,6 @@ let scrapeImages = async () => {
         await new Promise(resolve => setTimeout(resolve, delay));
     }
 
-    await client.end();
 }
 
 class Markdown {
@@ -865,26 +847,16 @@ class Markdown {
 }
 
 let markdown = async () => {
-    const client = new Client({
-        user: 'postgres',
-        password: 'abc123',
-        host: 'localhost',
-        port: 5432,
-        database: 'examtopic',
-    })
-
-    await client.connect()
-
-    const result = await client.query("SELECT last_value FROM seq_markdown;")
+    const result = await DatabaseManager.executeQuery("SELECT last_value FROM seq_markdown;")
     let sequenceLastValue: number = result.rows[0].last_value;
 
     for (let i = sequenceLastValue; i <= 272;) {
-        const questionResult = await client.query(`select questions.number , questions.text
+        const questionResult = await DatabaseManager.executeQuery(`select questions.number , questions.text
 from relative_path_questions as questions
 where questions.number = ${i};`);
         const question: string = questionResult.rows[0].text;
 
-        const answerResult = await client.query(`select REPLACE(answers.text, 'Most Voted', '') as text, answers.is_correct
+        const answerResult = await DatabaseManager.executeQuery(`select REPLACE(answers.text, 'Most Voted', '') as text, answers.is_correct
 from relative_path_questions as questions
 join relative_path_answers as answers 
 on answers.question_number = questions.number and
@@ -898,7 +870,7 @@ order by text`);
             answers.push(answer);
         }
 
-        const discussionResult = await client.query(`select discussions.selected_answer, discussions.text, discussions.upvote
+        const discussionResult = await DatabaseManager.executeQuery(`select discussions.selected_answer, discussions.text, discussions.upvote
 from relative_path_questions as questions
 join discussions
 on discussions.question_number = questions.number and
@@ -918,12 +890,11 @@ limit 5;`);
         markdown.toFile();
 
         // Increment 
-        const result = await client.query("SELECT nextval('seq_markdown') as next_value;")
+        const result = await DatabaseManager.executeQuery("SELECT nextval('seq_markdown') as next_value;")
         let sequenceLastValue: number = result.rows[0].next_value;
         i = sequenceLastValue;
     }
 
-    await client.end();
 }
 
 
