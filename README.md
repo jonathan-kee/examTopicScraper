@@ -173,19 +173,22 @@ The following wont work if ~/.profile exist, Then you need to manually add to .b
 2) Make .bashrc take effect immediately by sourcing:
 - source ~/.bashrc
 
-3) Install Node 20:
-- nvm install 20
+3) Install Node 24:
+- nvm install 24
 
-4) Verify node:
+4) Verify the Node.js version:
 - node -v
 
-5) Install Typescript:
+5) Verify npm version:
+- npm -v
+
+6) Install Typescript:
 - npm install -g typescript
 
-6) Install Dependencies:
+7) Install Dependencies:
 - npm install
 
-7) Compile Typescript and launch with node with sample arguments:
+8) Compile Typescript and launch with node with sample arguments:
 - tsc && node ./build/index.js
 
 # Github Actions / Forejo Actions Setup
