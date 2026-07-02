@@ -191,6 +191,10 @@ The following wont work if ~/.profile exist, Then you need to manually add to .b
 8) Compile Typescript and launch with node with sample arguments:
 - tsc && node ./build/index.js
 
+# Npm Commands that are relevent
+1) After npm install, there might be vulnerabilities
+npm audit fix
+
 # Github Actions / Forejo Actions Setup
 
 # Docker Setup
