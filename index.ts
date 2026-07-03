@@ -1,5 +1,5 @@
 import fs from "fs";
-import puppeteer, { Page, PuppeteerError, TimeoutError } from 'puppeteer';
+import puppeteer, { Browser, Page, PuppeteerError, TimeoutError } from 'puppeteer';
 import * as db from './modules/db/index'
 
 class DatabaseManager {
@@ -19,24 +19,43 @@ class BrowserManager {
     /** Probably have to use lambda */
     /** Referring to scrapeDataIntoPostgres */
     /** check documetation for error handling to avoid memory leaks or common issues */
-    static async manage() {
+    static async manageBrowser(browserURL: string, lastSequenceNumber: number, callPageAfterErrorBoilerPlate: (page: Page, questionNumber: number) => Promise<void>) {
         let browser;
         try {
-            browser = await puppeteer.launch({
-                headless: true,
-            });
+            // browser = await puppeteer.launch({
+            //     headless: true,
+            // });
+
+            browser = await puppeteer.connect({ browserURL });
             const page = await browser.newPage();
+            await BrowserManager.managePage(page, lastSequenceNumber, callPageAfterErrorBoilerPlate);
+
+        } catch (generalError) {
+            // handle the error
+
+        } finally {
+            // close the browser if it was opened
+            if (browser) {
+                await browser.close();
+            }
+        }
+    }
+
+    static async managePage(page: Page, lastSequenceNumber: number, callPageAfterErrorBoilerPlate: (page: Page, questionNumber: number) => Promise<void>) {
+        for (let i = lastSequenceNumber; i <= 272;) {
+            const questionslinkResult = await DatabaseManager.executeQuery(`SELECT link FROM questionslink where number = ${i};`)
+            const questionslink: string = questionslinkResult.rows[0].link;
 
             let response;
             try {
                 // try navigation with a short timeout
-                response = await page.goto("https://example.com", {
+                response = await page.goto(questionslink, {
                     timeout: 5000, // 5 seconds
                     waitUntil: "domcontentloaded",
                 });
             } catch (error: any) {
                 // handle navigation and timeout errors
-                
+
                 if (error instanceof TimeoutError) {
                     // you might decide to re-try, throw, or move on.
                     // for demonstration, we continue with the partially loaded page.
@@ -87,16 +106,85 @@ class BrowserManager {
                 return;
             }
 
-            // no you can try to perform your actions
-        } catch (generalError) {
-            // handle the error
-        } finally {
-            // close the browser if it was opened
-            if (browser) {
-                await browser.close();
-            }
+            // now you can try to perform your actions
+            await callPageAfterErrorBoilerPlate(page, i);
+
+            // Increment 
+            const result = await DatabaseManager.executeQuery("SELECT nextval('seq_questions') as next_value;")
+            let sequenceLastValue: number = result.rows[0].next_value;
+            i = sequenceLastValue;
+
+            // Wait random time between 1min–1min30s
+            const delay = randomDelay(33000, 60000);
+            console.log(`Waiting ${delay / 1000}s...`)
+            await new Promise(resolve => setTimeout(resolve, delay));
         }
     }
+
+    static async lambda() {
+        // Define 'name' explicitly as a string
+        const callPageAfterErrorBoilerPlate = async (page: Page, i: number) => {
+            try {
+                console.log("Page loaded");
+                await page.locator('.popup-overlay.show').wait();
+                console.log("Popup detected");
+
+                // Apparently page.evaluate is like opening up console
+                await page.evaluate(() => {
+                    const el = document.querySelector('.popup-overlay.show');
+                    if (el) {
+                        el.className = 'popup-overla show';
+                    }
+                });
+            } catch (error) {
+                console.log("Popup not detected");
+            }
+
+            try {
+                await page.locator('.load-full-discussion-button').wait();
+                console.log("Load Discussions button detected");
+                await page.locator('.load-full-discussion-button').click();
+                console.log("clicked load Discussions button");
+                // Wait for load discussion to finish
+                await new Promise(resolve => setTimeout(resolve, 5000));
+            } catch (error) {
+                console.log("Load Discussions button not detected");
+            }
+
+            // Question
+            let question = await Question.create(page, i, '1z0-071');
+            console.log(question);
+            await Question.insert(question);
+
+            // Answers
+            let answers = []
+            try {
+                answers = await Answer.create(page, i, '1z0-071');
+            } catch (error) {
+                console.log("cannot find answers")
+                answers = await Answer.newCreate(page, i, '1z0-071');
+            }
+
+            for (let i = 0; i < answers.length; i++) {
+                console.log(answers[i]);
+                await Answer.insert(answers[i]);
+            }
+
+            // Discussions
+            let discussions = await Discussion.create(page, i, '1z0-071');
+            for (let i = 0; i < discussions.length; i++) {
+                console.log(discussions[i]);
+                await Discussion.insert(discussions[i]);
+            }
+
+            await page.close();
+        }
+
+        const result = await DatabaseManager.executeQuery("SELECT last_value FROM seq_questions;");
+        let sequenceLastValue: number = result.rows[0].last_value;
+        await BrowserManager.manageBrowser("http://127.0.0.1:9222", sequenceLastValue, callPageAfterErrorBoilerPlate);
+    }
+
 }
 
 async function nodeRecursion(el: Element | ChildNode, array: any[]) {
