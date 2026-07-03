@@ -19,21 +19,24 @@ class BrowserManager {
     /** Probably have to use lambda */
     /** Referring to scrapeDataIntoPostgres */
     /** check documetation for error handling to avoid memory leaks or common issues */
-    static async manageBrowser(browserURL: string, lastSequenceNumber: number, callPageAfterErrorBoilerPlate: (page: Page, questionNumber: number) => Promise<void>) {
+    static async manageBrowserAndPage(browserURL: string, lastSequenceNumber: number, callPageAfterErrorBoilerPlate: (page: Page, questionNumber: number) => Promise<void>) {
         let browser;
+        let page;
         try {
-            // browser = await puppeteer.launch({
-            //     headless: true,
-            // });
-
+            // One Browser Session
             browser = await puppeteer.connect({ browserURL });
-            const page = await browser.newPage();
+            // One Page Session
+            page = await browser.newPage();
             await BrowserManager.managePage(page, lastSequenceNumber, callPageAfterErrorBoilerPlate);
 
         } catch (generalError) {
             // handle the error
 
         } finally {
+            // close the page if it was opened
+            if (page) {
+                await page.close();
+            }
             // close the browser if it was opened
             if (browser) {
                 await browser.close();
@@ -42,69 +45,12 @@ class BrowserManager {
     }
 
     static async managePage(page: Page, lastSequenceNumber: number, callPageAfterErrorBoilerPlate: (page: Page, questionNumber: number) => Promise<void>) {
+        // Reuse Page Session
         for (let i = lastSequenceNumber; i <= 272;) {
             const questionslinkResult = await DatabaseManager.executeQuery(`SELECT link FROM questionslink where number = ${i};`)
             const questionslink: string = questionslinkResult.rows[0].link;
 
-            let response;
-            try {
-                // try navigation with a short timeout
-                response = await page.goto(questionslink, {
-                    timeout: 5000, // 5 seconds
-                    waitUntil: "domcontentloaded",
-                });
-            } catch (error: any) {
-                // handle navigation and timeout errors
-
-                if (error instanceof TimeoutError) {
-                    // you might decide to re-try, throw, or move on.
-                    // for demonstration, we continue with the partially loaded page.
-                } else if (error.message && error.message.startsWith("net::ERR")) {
-                    // networking error (DNS, connection, etc). handle or re-try if needed.
-                    // e.g., throw error;
-                } else {
-                    // an unexpected navigation error occurred
-                    throw error;
-                }
-            }
-
-            // if we did get a response, check HTTP status codes
-            if (response) {
-                const status = response.status();
-                if (status >= 400) {
-                    // handle the error
-                }
-            } else {
-                // no initial response object was returned, try waiting for a response
-                try {
-                    const waitedResponse = await page.waitForResponse(() => true, {
-                        timeout: 5000,
-                    });
-                    const waitedStatus = waitedResponse.status();
-                    if (waitedStatus >= 400) {
-                        // handle the error
-                    }
-                } catch (waitError) {
-                    // handle the error
-                }
-            }
-
-            // check if the page fell back to a default browser error page
-            if (page.url().startsWith("chrome-error://")) {
-                // optionally inspect page content for the specific reason
-                const content = await page.content();
-                if (content.includes("ERR_NAME_NOT_RESOLVED")) {
-                    // handle the error
-                } else if (content.includes("ERR_INTERNET_DISCONNECTED")) {
-                    // handle the error
-                } else {
-                    // handle the error
-                }
-
-                // decide how to handle: throw, return, etc.
-                // for demonstration, we will return early.
-                return;
-            }
+            await BrowserManager.errorHandlingBoilerPlate(page, questionslink);
 
             // now you can try to perform your actions
             await callPageAfterErrorBoilerPlate(page, i);
@@ -118,6 +64,68 @@ class BrowserManager {
             const delay = randomDelay(33000, 60000);
             console.log(`Waiting ${delay / 1000}s...`)
             await new Promise(resolve => setTimeout(resolve, delay));
+        }
+    }
+
+    static async errorHandlingBoilerPlate(page: Page, questionslink: string) {
+        let response;
+        try {
+            // try navigation with a short timeout
+            response = await page.goto(questionslink, {
+                timeout: 5000, // 5 seconds
+                waitUntil: "domcontentloaded",
+            });
+        } catch (error: any) {
+            // handle navigation and timeout errors
+
+            if (error instanceof TimeoutError) {
+                // you might decide to re-try, throw, or move on.
+                // for demonstration, we continue with the partially loaded page.
+            } else if (error.message && error.message.startsWith("net::ERR")) {
+                // networking error (DNS, connection, etc). handle or re-try if needed.
+                // e.g., throw error;
+            } else {
+                // an unexpected navigation error occurred
+                throw error;
+            }
+        }
+
+        // if we did get a response, check HTTP status codes
+        if (response) {
+            const status = response.status();
+            if (status >= 400) {
+                // handle the error
+            }
+        } else {
+            // no initial response object was returned, try waiting for a response
+            try {
+                const waitedResponse = await page.waitForResponse(() => true, {
+                    timeout: 5000,
+                });
+                const waitedStatus = waitedResponse.status();
+                if (waitedStatus >= 400) {
+                    // handle the error
+                }
+            } catch (waitError) {
+                // handle the error
+            }
+        }
+
+        // check if the page fell back to a default browser error page
+        if (page.url().startsWith("chrome-error://")) {
+            // optionally inspect page content for the specific reason
+            const content = await page.content();
+            if (content.includes("ERR_NAME_NOT_RESOLVED")) {
+                // handle the error
+            } else if (content.includes("ERR_INTERNET_DISCONNECTED")) {
+                // handle the error
+            } else {
+                // handle the error
+            }
+
+            // decide how to handle: throw, return, etc.
+            // for demonstration, we will return early.
+            return;
         }
     }
 
@@ -176,13 +184,11 @@ class BrowserManager {
                 console.log(discussions[i]);
                 await Discussion.insert(discussions[i]);
             }
-
-            await page.close();
         }
 
         const result = await DatabaseManager.executeQuery("SELECT last_value FROM seq_questions;");
         let sequenceLastValue: number = result.rows[0].last_value;
-        await BrowserManager.manageBrowser("http://127.0.0.1:9222", sequenceLastValue, callPageAfterErrorBoilerPlate);
+        await BrowserManager.manageBrowserAndPage("http://127.0.0.1:9222", sequenceLastValue, callPageAfterErrorBoilerPlate);
     }
 
 }
