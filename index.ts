@@ -16,10 +16,8 @@ class DatabaseManager {
 
 // Todo 
 class BrowserManager {
-    /** Probably have to use lambda */
-    /** Referring to scrapeDataIntoPostgres */
-    /** check documetation for error handling to avoid memory leaks or common issues */
-    static async manageBrowserAndPage(browserURL: string, lastSequenceNumber: number, callPageAfterErrorBoilerPlate: (page: Page, questionNumber: number) => Promise<void>) {
+    /** Single source of truth for browser operations */
+    static async manageBrowserAndPage(browserURL: string, lastSequenceNumber: number, scrapeDataLambda: (page: Page, questionNumber: number) => Promise<void>) {
         let browser;
         let page;
         try {
@@ -27,7 +25,7 @@ class BrowserManager {
             browser = await puppeteer.connect({ browserURL });
             // One Page Session
             page = await browser.newPage();
-            await BrowserManager.managePage(page, lastSequenceNumber, callPageAfterErrorBoilerPlate);
+            await BrowserManager.reusePage(page, lastSequenceNumber, scrapeDataLambda);
 
         } catch (generalError) {
             // handle the error
@@ -44,7 +42,7 @@ class BrowserManager {
         }
     }
 
-    static async managePage(page: Page, lastSequenceNumber: number, callPageAfterErrorBoilerPlate: (page: Page, questionNumber: number) => Promise<void>) {
+    static async reusePage(page: Page, lastSequenceNumber: number, scrapeDataLambda: (page: Page, questionNumber: number) => Promise<void>) {
         // Reuse Page Session
         for (let i = lastSequenceNumber; i <= 272;) {
             const questionslinkResult = await DatabaseManager.executeQuery(`SELECT link FROM questionslink where number = ${i};`)
@@ -53,7 +51,7 @@ class BrowserManager {
             await BrowserManager.errorHandlingBoilerPlate(page, questionslink);
 
             // now you can try to perform your actions
-            await callPageAfterErrorBoilerPlate(page, i);
+            await scrapeDataLambda(page, i);
 
             // Increment 
             const result = await DatabaseManager.executeQuery("SELECT nextval('seq_questions') as next_value;")
@@ -130,8 +128,7 @@ class BrowserManager {
     }
 
     static async lambda() {
-        // Define 'name' explicitly as a string
-        const callPageAfterErrorBoilerPlate = async (page: Page, i: number) => {
+        const scrapeDataLambda = async (page: Page, i: number) => {
             try {
                 console.log("Page loaded");
                 await page.locator('.popup-overlay.show').wait();
@@ -188,7 +185,7 @@ class BrowserManager {
 
         const result = await DatabaseManager.executeQuery("SELECT last_value FROM seq_questions;");
         let sequenceLastValue: number = result.rows[0].last_value;
-        await BrowserManager.manageBrowserAndPage("http://127.0.0.1:9222", sequenceLastValue, callPageAfterErrorBoilerPlate);
+        await BrowserManager.manageBrowserAndPage("http://127.0.0.1:9222", sequenceLastValue, scrapeDataLambda);
     }
 
 }
