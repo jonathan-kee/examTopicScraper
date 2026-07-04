@@ -42,8 +42,35 @@ class BrowserManager {
         }
     }
 
+    static async manageBrowserAndPageOverload(browserURL: string, questionsLink: string, questionNumber: number, scrapeDataLambda: (page: Page, questionNumber: number) => Promise<void>) {
+        let browser;
+        let page;
+        try {
+            // One Browser Session
+            browser = await puppeteer.connect({ browserURL });
+            // One Page Session
+            page = await browser.newPage();
+            await BrowserManager.reusePageOverload(page, questionsLink, questionNumber, scrapeDataLambda);
+
+        } catch (generalError) {
+            // handle the error
+
+        } finally {
+            // close the page if it was opened
+            if (page) {
+                await page.close();
+            }
+            // close the browser if it was opened
+            if (browser) {
+                await browser.close();
+            }
+        }
+    }
+
     static async reusePage(page: Page, lastSequenceNumber: number, scrapeDataLambda: (page: Page, questionNumber: number) => Promise<void>) {
         // Reuse Page Session
+        // 272 is not reusable, you get number with max count
+        // 272 should be part of the lambda scope since it's the implementation
         for (let i = lastSequenceNumber; i <= 272;) {
             const questionslinkResult = await DatabaseManager.executeQuery(`SELECT link FROM questionslink where number = ${i};`)
             const questionslink: string = questionslinkResult.rows[0].link;
@@ -64,6 +91,15 @@ class BrowserManager {
             await new Promise(resolve => setTimeout(resolve, delay));
         }
     }
+
+    // I will have to properly learn overloading in the future
+    static async reusePageOverload(page: Page, questionsLink: string, questionNumber: number, scrapeDataLambda: (page: Page, questionNumber: number) => Promise<void>) {
+        await BrowserManager.errorHandlingBoilerPlate(page, questionsLink);
+
+        // now you can try to perform your actions
+        await scrapeDataLambda(page, questionNumber);
+    }
+
 
     static async errorHandlingBoilerPlate(page: Page, questionslink: string) {
         let response;
@@ -612,67 +648,64 @@ VALUES ($1, $2, $3, $4, $5, $6);
 
 let scrapeData = async () => {
     console.log("Starting test");
-    const browser = await puppeteer.launch({ headless: false }); // show browser
-    const page = await browser.newPage();
-    // Make waiting for elements shorter
-    page.setDefaultTimeout(7000);
 
-    // Needs { waitUntil: 'networkidle2' } to make thread continue
-    await page.goto('https://www.examtopics.com/discussions/oracle/view/79530-exam-1z0-071-topic-1-question-2-discussion/', { waitUntil: 'networkidle2' });
-    // await page.goto('https://www.examtopics.com/discussions/oracle/view/79530-exam-1z0-071-topic-1-question-2-discussion/', { waitUntil: 'networkidle2' });
+    const scrapeDataLambda = async (page: Page, i: number) => {
+        try {
+            console.log("Page loaded");
+            await page.locator('.popup-overlay.show').wait();
+            console.log("Popup detected");
 
-    try {
-        console.log("Page loaded");
-        await page.locator('.popup-overlay.show').wait();
-        console.log("Popup detected");
+            // Apparently page.evaluate is like opening up console
+            await page.evaluate(() => {
+                const el = document.querySelector('.popup-overlay.show');
+                if (el) {
+                    el.className = 'popup-overla show';
+                }
+            });
+        } catch (error) {
+            console.log("Popup not detected");
+        }
 
-        // Apparently page.evaluate is like opening up console
-        await page.evaluate(() => {
-            const el = document.querySelector('.popup-overlay.show');
-            if (el) {
-                el.className = 'popup-overla show';
-            }
-        });
-    } catch (error) {
-        console.log("Popup not detected");
+        try {
+            await page.locator('.load-full-discussion-button').wait();
+            console.log("Load Discussions button detected");
+            await page.locator('.load-full-discussion-button').click();
+            console.log("clicked load Discussions button");
+        } catch (error) {
+            console.log("Load Discussions button not detected");
+        }
+
+        console.log('\n');
+
+        // Question
+        let question = await Question.create(page, i, '1z0-071');
+        console.log(question);
+
+        console.log('\n');
+
+        // Answers
+        let answers = await Answer.create(page, i, '1z0-071');
+        console.log(answers);
+
+        console.log('\n');
+
+        // Discussions
+        // The xpath is dynamic, can only be determined by el.className
+        // /html/body/div[2]/div/div[4]/div/div[2]/div[2]/div/div/div[2]/div[1]/div/div[2]/div[1]
+        // /html/body/div[2]/div/div[4]/div/div[2]/div[2]/div/div/div[2]/div[1]/div/div[2]/div[2] 
+
+        let discussions = await Discussion.create(page, i, '1z0-071');
+        console.log(discussions);
+
+        console.log('\n');
     }
 
-    try {
-        await page.locator('.load-full-discussion-button').wait();
-        console.log("Load Discussions button detected");
-        await page.locator('.load-full-discussion-button').click();
-        console.log("clicked load Discussions button");
-    } catch (error) {
-        console.log("Load Discussions button not detected");
-    }
-
-    console.log('\n');
-
-    // Question
-    let question = await Question.create(page, 1, '1z0-071');
-    console.log(question);
-
-    console.log('\n');
-
-    // Answers
-    let answers = await Answer.create(page, 1, '1z0-071');
-    console.log(answers);
-
-    console.log('\n');
-
-    // Discussions
-    // The xpath is dynamic, can only be determined by el.className
-    // /html/body/div[2]/div/div[4]/div/div[2]/div[2]/div/div/div[2]/div[1]/div/div[2]/div[1]
-    // /html/body/div[2]/div/div[4]/div/div[2]/div[2]/div/div/div[2]/div[1]/div/div[2]/div[2] 
-
-    let discussions = await Discussion.create(page, 1, '1z0-071');
-    console.log(discussions);
-
-    console.log('\n');
+    await BrowserManager.manageBrowserAndPageOverload("http://127.0.0.1:9222",
+        'https://www.examtopics.com/discussions/oracle/view/79530-exam-1z0-071-topic-1-question-2-discussion/',
+        1,
+        scrapeDataLambda);
 
     console.log('Ending Test');
-
-    await browser.close();
 }
 
 let main3 = async () => {
