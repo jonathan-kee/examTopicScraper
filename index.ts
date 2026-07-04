@@ -750,22 +750,8 @@ function randomDelay(min: number, max: number) {
 let scrapeWebsiteLinksIntoPostgres = async () => {
     console.log("Starting test");
 
-    const result = await DatabaseManager.executeQuery("SELECT last_value FROM seq_questionsLink;");
-
-    let sequenceLastValue: number = result.rows[0].last_value;
-
-    const google = 'https://www.google.com/';
-    const browserURL = 'http://127.0.0.1:9222';  // Remote debugging address
-    const browser = await puppeteer.connect({ browserURL });
-
-    for (let i = sequenceLastValue; i <= 272;) {
-
+    const scrapeDataLambda = async (page: Page, i: number) => {
         let googleSearch = 'examtopics 1z0-"071" Exam question ' + i;
-        const page = await browser.newPage();
-        // Needs { waitUntil: 'networkidle2' } to make thread continue
-
-        await page.goto(google, { waitUntil: 'networkidle2' });
-
         await page.locator('.gLFyf').wait();
         console.log("Google search input detected");
         await page.locator('.gLFyf').fill(googleSearch);
@@ -782,10 +768,17 @@ let scrapeWebsiteLinksIntoPostgres = async () => {
         const insertResult = await DatabaseManager.executeQuery(`INSERT INTO questionsLink (number, exam, link) 
 VALUES ((SELECT last_value FROM seq_questionsLink), '1z0-071', '${link}');`);
         console.log(insertResult);
+    }
 
-        page.close();
+    // Below is seq_questionsLink instead of seq_questions, this is fine
+    const result = await DatabaseManager.executeQuery("SELECT last_value FROM seq_questionsLink;");
+    let sequenceLastValue: number = result.rows[0].last_value;
 
-        // Increment 
+    for (let i = sequenceLastValue; i <= 272;) {
+        await BrowserManager.manageBrowserAndPageOverload("http://127.0.0.1:9222", 'https://www.google.com/', i, scrapeDataLambda);
+
+        // Increment
+        // Below is seq_questionsLink instead of seq_questions, this is fine 
         const result = await DatabaseManager.executeQuery("SELECT nextval('seq_questionsLink') as next_value;");
         let sequenceLastValue: number = result.rows[0].next_value;
         i = sequenceLastValue;
@@ -795,9 +788,6 @@ VALUES ((SELECT last_value FROM seq_questionsLink), '1z0-071', '${link}');`);
         console.log(`Waiting ${delay / 1000}s...`)
         await new Promise(resolve => setTimeout(resolve, delay));
     }
-
-    // browser.disconnect();
-    await browser.close();
 }
 
 let scrapeDataIntoPostgres = async () => {
