@@ -793,23 +793,8 @@ VALUES ((SELECT last_value FROM seq_questionsLink), '1z0-071', '${link}');`);
 let scrapeDataIntoPostgres = async () => {
     console.log("Starting test");
 
-    const result = await DatabaseManager.executeQuery("SELECT last_value FROM seq_questions;")
-    let sequenceLastValue: number = result.rows[0].last_value;
-    const browserURL = 'http://127.0.0.1:9222';  // Remote debugging address
-    const browser = await puppeteer.connect({ browserURL });
-
-    for (let i = sequenceLastValue; i <= 272;) {
-
-        const questionslinkResult = await DatabaseManager.executeQuery(`SELECT link FROM questionslink where number = ${i};`)
-        const questionslink: string = questionslinkResult.rows[0].link;
-
-        const page = await browser.newPage();
-        // Needs { waitUntil: 'networkidle2' } to make thread continue
-        // Make waiting for elements shorter
-        page.setDefaultTimeout(12000);
-
-        await page.goto(questionslink, { waitUntil: 'networkidle2' });
-
+    // same lambda()
+    const scrapeDataLambda = async (page: Page, i: number) => {
         try {
             console.log("Page loaded");
             await page.locator('.popup-overlay.show').wait();
@@ -862,22 +847,12 @@ let scrapeDataIntoPostgres = async () => {
             console.log(discussions[i]);
             await Discussion.insert(discussions[i]);
         }
-
-        page.close();
-
-        // Increment 
-        const result = await DatabaseManager.executeQuery("SELECT nextval('seq_questions') as next_value;")
-        let sequenceLastValue: number = result.rows[0].next_value;
-        i = sequenceLastValue;
-
-        // Wait random time between 1min–1min30s
-        const delay = randomDelay(33000, 60000);
-        console.log(`Waiting ${delay / 1000}s...`)
-        await new Promise(resolve => setTimeout(resolve, delay));
     }
 
-    // browser.disconnect();
-    await browser.close();
+    // same lambda()
+    const result = await DatabaseManager.executeQuery("SELECT last_value FROM seq_questions;")
+    let sequenceLastValue: number = result.rows[0].last_value;
+    await BrowserManager.manageBrowserAndPage("http://127.0.0.1:9222", sequenceLastValue, scrapeDataLambda);
 }
 
 let rescrapeDataDebug = async () => {
