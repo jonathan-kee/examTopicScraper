@@ -856,23 +856,7 @@ let scrapeDataIntoPostgres = async () => {
 }
 
 let rescrapeDataDebug = async () => {
-
-    const result = await DatabaseManager.executeQuery("select number, link from missing_answers_link;")
-
-    const browserURL = 'http://127.0.0.1:9222';  // Remote debugging address
-    const browser = await puppeteer.connect({ browserURL });
-
-    for (let i = 0; i < (result.rowCount ?? 0); i++) {
-        const questionsnumber = result.rows[i].number
-        const questionslink = result.rows[i].link
-
-        const page = await browser.newPage();
-        // Needs { waitUntil: 'networkidle2' } to make thread continue
-        // Make waiting for elements shorter
-        page.setDefaultTimeout(12000);
-
-        await page.goto(questionslink, { waitUntil: 'networkidle2' });
-
+    const scrapeDataLambda = async (page: Page, questionsnumber: number) => {
         try {
             console.log("Page loaded");
             await page.locator('.popup-overlay.show').wait();
@@ -913,12 +897,18 @@ let rescrapeDataDebug = async () => {
             console.log(answers[i]);
             await Answer.merge(answers[i]);
         }
-
-        page.close();
     }
 
-    // browser.disconnect();
-    await browser.close();
+    // Below looks like a totally different query
+    const result = await DatabaseManager.executeQuery("select number, link from missing_answers_link;")
+    const browserURL = 'http://127.0.0.1:9222';  // Remote debugging address
+
+    for (let i = 0; i < (result.rowCount ?? 0); i++) {
+        const questionsnumber = result.rows[i].number
+        const questionslink = result.rows[i].link
+
+        await BrowserManager.manageBrowserAndPageOverload(browserURL, questionslink, questionsnumber, scrapeDataLambda);
+    }
 }
 
 let scrapeImages = async () => {
