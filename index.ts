@@ -164,10 +164,19 @@ class BrowserManager {
     }
 
     // What is the order of the SQL Files loaded?
-    // lambda()'s       result                         uses docker_pg_seq_schema.sql
-    // lambda()'s       Question, Answers, Answers     uses docker_pg_schema.sql
-    // reusepage()'s    questionslink                  uses docker_pg_scraper.sql
-    // reusepage()'s    increment                      uses docker_pg_seq_schema.sql
+    // 1) lambda()'s       result                         uses docker_pg_seq_schema.sql
+    // 2) lambda()'s       Question, Answers, Answers     uses docker_pg_schema.sql
+    // 3) reusepage()'s    questionslink                  uses docker_pg_scraper.sql
+    // 4) reusepage()'s    increment                      uses docker_pg_seq_schema.sql
+
+    // There are dependencies for this function, need to run SQL in this order
+    // 1) docker_pg_scraper.sql
+    // 2) docker_pg_seq_scraper.sql
+    // 3) Scrape the questions link first.
+    // 4) docker_pg_schema.sql
+    // 5) docker_pg_seq_schema.sql
+    // 6) Run lambda()
+
     static async lambda() {
         const scrapeDataLambda = async (page: Page, i: number) => {
             try {
