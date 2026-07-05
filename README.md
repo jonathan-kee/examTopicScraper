@@ -64,53 +64,51 @@ Enter name of work folder: [press Enter for _work]
 √ Settings Saved.
 
 # Resources to learn webscraping
-1) Website on webscraping & crawling
-https://webscraping.fyi/
+1) Website on webscraping & crawling:
+- https://webscraping.fyi/
 
-^
-https://webscraping.fyi/overview/browser-automation/
+2) I am currently using browser automation instead of http clients:
+- https://webscraping.fyi/overview/browser-automation/
+- https://webscraping.fyi/overview/languages/#http-clients
 
-^
-I am currently using browser automation instead of http clients
+3) Youtube channels on webscraping & crawling:
+- https://www.youtube.com/@MichaelMintz
+- https://www.youtube.com/@JohnWatsonRooney/playlists
 
-^
-https://webscraping.fyi/overview/languages/#http-clients
-
-2) Youtube channels on webscraping & crawling
-https://www.youtube.com/@MichaelMintz
-https://www.youtube.com/@JohnWatsonRooney/playlists
-
-3) Airflow being used for webscraping
-https://www.youtube.com/watch?v=CraPKax37lo
+4) Airflow being used for webscraping:
+- https://www.youtube.com/watch?v=CraPKax37lo
 
 # Resources to learn Data Engineering
 1) Official Reddit Date Engineering website
-https://dataengineering.wiki/Tools/Tools
+- https://dataengineering.wiki/Tools/Tools
 
 2) Kodekloud
-https://kodekloud.com/courses/data-engineering-fundamentals
+- https://kodekloud.com/courses/data-engineering-fundamentals
 
 3) Architecture for Data
-https://www.youtube.com/watch?v=gsUqW1IookY
+- https://www.youtube.com/watch?v=gsUqW1IookY
 
 4) Workflow Orchestration
-- Airflow certification link:
-https://academy.astronomer.io/page/astronomer-certification
 
-- Notes on Airflow certification:
-https://substack.com/@michaelsalata/p-181463528
+Airflow certification link:
+- https://academy.astronomer.io/page/astronomer-certification
+
+Notes on Airflow certification:
+- https://substack.com/@michaelsalata/p-181463528
 
 5) Data Ingestion
-- Dlt Certification links:
-https://dlthub.learnworlds.com/course/dlt-fundamentals
-https://dlthub.learnworlds.com/course/dlt-advanced
+
+Dlt Certification links:
+- https://dlthub.learnworlds.com/course/dlt-fundamentals
+- https://dlthub.learnworlds.com/course/dlt-advanced
 
 6) Data Processing
-- DBT Certification links:
-https://learn.getdbt.com/learning-paths/dbt-certified-developer
-https://learn.getdbt.com/learning-paths/dbt-certified-cloud-architect
 
-- Apache Spark 
+DBT Certification links:
+- https://learn.getdbt.com/learning-paths/dbt-certified-developer
+- https://learn.getdbt.com/learning-paths/dbt-certified-cloud-architect
+
+Apache Spark (Data bricks certs)
 
 7) Data Analytics
 - Excel
@@ -120,24 +118,24 @@ https://learn.getdbt.com/learning-paths/dbt-certified-cloud-architect
 Github Actions solves 
 - Codebase
 - Build, Release and Run
+
 ^
-You have to learn Git before Github Actions to make sense
-^
-Can try below:
-https://blinry.itch.io/oh-my-git
+You have to learn Git before Github Actions to make sense, can try below:
+- https://blinry.itch.io/oh-my-git
 
 # Project Management Tools
 Github's Project Management tool like Trello, Jira:
-https://github.com/jonathan-kee/examTopicScraper/projects?query=is%3Aopen
+- https://github.com/jonathan-kee/examTopicScraper/projects?query=is%3Aopen
 
 Very useful feature for Github:
-https://docs.github.com/en/issues/tracking-your-work-with-issues/using-issues/linking-a-pull-request-to-an-issue
+- https://docs.github.com/en/issues/tracking-your-work-with-issues/using-issues/linking-a-pull-request-to-an-issue
 
 Scrum with GitHub Projects (Very good introduction to Github Projects):
-https://www.youtube.com/watch?v=06AWiNvjlQU&list=PLGxFXI4dC2siB2ENZ6OhagfwSId5FcWmY
+- https://www.youtube.com/watch?v=06AWiNvjlQU&list=PLGxFXI4dC2siB2ENZ6OhagfwSId5FcWmY
 
-Github Workflow for Issues and Pull Requests
-https://www.youtube.com/watch?v=d3N2yeAaLkc
+Github Workflow for Issues and Pull Requests:
+- https://www.youtube.com/watch?v=d3N2yeAaLkc
+
 ^
 1) Create Issues 
 2) Issue can become a branch or link a pull request to the Issue
@@ -147,14 +145,14 @@ https://www.youtube.com/watch?v=d3N2yeAaLkc
 
 TLDR: Create Issue -> New Branch from Issue -> Create Pull Request (Compare branch to main) -> Merge Pull Request -> Close Issue
 
-GitHub Foundations Certification Course (Most detailed explanation on Issues & Pull Request)
-https://www.youtube.com/watch?v=Jdc0i7RcBv8
+GitHub Foundations Certification Course (Most detailed explanation on Issues & Pull Request):
+- https://www.youtube.com/watch?v=Jdc0i7RcBv8
 
 Learn about Github Issue before moving into Github projects:
-https://docs.github.com/en/issues/tracking-your-work-with-issues/learning-about-issues/quickstart
+- https://docs.github.com/en/issues/tracking-your-work-with-issues/learning-about-issues/quickstart
 
 Github projects training course:
-https://learn.microsoft.com/en-us/training/modules/manage-work-github-projects/
+- https://learn.microsoft.com/en-us/training/modules/manage-work-github-projects/
 
 Question: So how does Github Issues, Github Projects fit into CI / CD?
 
@@ -192,20 +190,23 @@ The following wont work if ~/.profile exist, Then you need to manually add to .b
 - tsc && node ./build/index.js
 
 # Npm Commands that are relevent
-1) After npm install, there might be vulnerabilities
-npm audit fix
+1) After npm install, there might be vulnerabilities:
+- npm audit fix
 
 # Github Actions / Forejo Actions Setup
 
 # Docker Setup
 - Minio
 - Postgres
+
 ^
 Both of these need to use volume, otherwise they would data would be lost
 
 I am not entirely sure if I should create an image for the webscraper
+
 ^
 If I am not mistaken, the 12 factor app mentioned about containerize scripts
+
 ^
 The famous voting app has a image that is not a web server, it's like a script that has loop forevor until it errors
 
@@ -213,14 +214,15 @@ Docker is actually a server, it comes with
 - Docker Daemon (dockerd)
 - REST API
 - Docker CLI (docker)
+
 ^
 Based on Kodekloud's Docker-Certified-Associate-Exam-Course, You still need indepth knowledge of Linux
 
 Link to Docker Certified Associate (DCA) Exam:
-https://a.storyblok.com/f/146871/x/2001ce939c/docker-study-guide_v1-5-jan-2025.pdf
+- https://a.storyblok.com/f/146871/x/2001ce939c/docker-study-guide_v1-5-jan-2025.pdf
 
 Mirantis bought over the Docker Certification Exam:
-https://training.mirantis.com/certification/dca-certification-exam/
+- https://training.mirantis.com/certification/dca-certification-exam/
 
 An alternative to Kodekloud's docker courses
 https://labs.iximiuz.com/roadmaps/docker
@@ -248,14 +250,15 @@ I will just assume Postgres DBA SQL is that deep as well.
 I downloaded from https://edu.postgrespro.com/16/DBA1-handouts-16-en.zip
 
 # DBT Setup 
-1) Install DBT fusion
-https://docs.getdbt.com/docs/fusion/install-fusion-cli
+1) Install DBT fusion:
+- https://docs.getdbt.com/docs/fusion/install-fusion-cli
 
-2) Install DBT extension by "dbt Labs Inc"
-https://docs.getdbt.com/docs/install-dbt-extension
+2) Install DBT extension by "dbt Labs Inc":
+- https://docs.getdbt.com/docs/install-dbt-extension
 
 # Features to add
 - Rescrape pages that result in dirty data, need to update / merge existing data.
+
 ^
 Partially added for Answers, never needed for question & discussions
 
@@ -271,41 +274,29 @@ Partially added for Answers, never needed for question & discussions
 
 - Maybe instead of scraping the data directly, you take all the data first and dump it into a data lake,
 then only process it at some future point
+
 ^
 Try to use MINIO as a datalake, Hadoop also works
+
 ^
 This pattern is good, because you don't have to think about transforming the data, you just focus on extracting as much data as possible
+
 ^
 Good oppurtunity to use pg_lake for Postgres:
-https://github.com/Snowflake-Labs/pg_lake
+- https://github.com/Snowflake-Labs/pg_lake
 
 - Convert the project into a CLI
 
 - Add Presentation like Excel or PowerBi if possible
+
+Use Playwright for more scalable web scraping:
+- https://www.youtube.com/watch?v=Vun8FR3Mla0
 
 # QNA
 Question: Is SSIS still worth learning just to learn more about ETL patterns?
 
 # Projects Ideas
 - Connect Touch&Go Ewallet to Bukku Accounting system  
-
-# List of bugs to fix
-- Answer cannot be scraped:
-https://www.examtopics.com/discussions/oracle/view/92435-exam-1z0-071-topic-1-question-24-discussion/
-^
-The answers was already scraped, but it is contained within questions
-
-- Need to handle 
-- https://img.examtopics.com/1z0-071/image98.png
-- https://www.examtopics.com/assets/media/exam-media/04351/0002400002.jpg
-
-- Apparently there was nothing wrong with my scraping code, the image's src just did not appear, meaning the resource did not lead.
-
-- Need to rescrape images from 103, 119, 120, 127, 128, 131, 133, 146, 166, 228, 236, 245, 256
-
-- replace pngMost with png
-
-- if pngMost exist, then replace 'pngMost' with 'png' & replace 'Voted' with ''
 
 # Launch browser that google does not capcha
 /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome \
@@ -315,35 +306,3 @@ The answers was already scraped, but it is contained within questions
 # How to remove popup block
 Apparently if you edit class="popup-overlay show" to "popup-overla show",
 the popup will break
-
-
-# Question with Screenshot (Unsure how to deal with images in question)
-/html/body/div[2]/div/div[4]/div/div[1]/div[2]/p
-
-# Screenshot
-/html/body/div[2]/div/div[4]/div/div[1]/div[2]/p/img
-
-# Question Screenshot full link
-https://www.examtopics.com/assets/media/exam-media/04351/0000200001.png
-
-# Answers
-/html/body/div[2]/div/div[4]/div/div[1]/div[2]/div[2]/ul/li[1]/text()
-
-/html/body/div[2]/div/div[4]/div/div[1]/div[2]/div[2]/ul/li[2]/text()
-
-/html/body/div[2]/div/div[4]/div/div[1]/div[2]/div[2]/ul/li[3]/text()
-
-/html/body/div[2]/div/div[4]/div/div[1]/div[2]/div[2]/ul/li[4]/text()
-
-/html/body/div[2]/div/div[4]/div/div[1]/div[2]/div[2]/ul/li[5]/text()
-
-
-# Discussion texts
-/html/body/div[2]/div/div[4]/div/div[2]/div[2]/div/div/div[2]/div[1]/div/div[2]/div[2]
-
-/html/body/div[2]/div/div[4]/div/div[2]/div[2]/div/div/div[2]/div[2]/div/div[2]/div[2]
-
-# Discussion upvotes
-/html/body/div[2]/div/div[4]/div/div[2]/div[2]/div/div/div[2]/div[1]/div/div[2]/div[3]/span[2]/span
-
-/html/body/div[2]/div/div[4]/div/div[2]/div[2]/div/div/div[2]/div[2]/div/div[2]/div[3]/span[2]/span
