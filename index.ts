@@ -901,13 +901,11 @@ let rescrapeDataDebug = async () => {
 
     // Below looks like a totally different query
     const result = await DatabaseManager.executeQuery("select number, link from missing_answers_link;")
-    const browserURL = 'http://127.0.0.1:9222';  // Remote debugging address
 
     for (let i = 0; i < (result.rowCount ?? 0); i++) {
-        const questionsnumber = result.rows[i].number
-        const questionslink = result.rows[i].link
-
-        await BrowserManager.manageBrowserAndPageOverload(browserURL, questionslink, questionsnumber, scrapeDataLambda);
+        const questionsNumber = result.rows[i].number
+        const questionsLink = result.rows[i].link
+        await BrowserManager.manageBrowserAndPageOverload('http://127.0.0.1:9222', questionsLink, questionsNumber, scrapeDataLambda);
     }
 }
 
@@ -916,6 +914,7 @@ let scrapeImages = async () => {
     const result = await DatabaseManager.executeQuery("SELECT last_value FROM seq_imagesLink;")
     let sequenceLastValue: number = result.rows[0].last_value;
 
+    // The code below is uniquie to the below function
     for (let i = sequenceLastValue; i <= 57;) {
         const imageslinkResult = await DatabaseManager.executeQuery(`SELECT url FROM view_all_images_url where number = ${i};`)
         const imageslink: string = imageslinkResult.rows[0].url;
