@@ -163,6 +163,11 @@ class BrowserManager {
         }
     }
 
+    // What is the order of the SQL Files loaded?
+    // lambda()'s       result                         uses docker_pg_seq_schema.sql
+    // lambda()'s       Question, Answers, Answers     uses docker_pg_schema.sql
+    // reusepage()'s    questionslink                  uses docker_pg_scraper.sql
+    // reusepage()'s    increment                      uses docker_pg_seq_schema.sql
     static async lambda() {
         const scrapeDataLambda = async (page: Page, i: number) => {
             try {
@@ -646,6 +651,7 @@ VALUES ($1, $2, $3, $4, $5, $6);
     }
 }
 
+
 let scrapeData = async () => {
     console.log("Starting test");
 
@@ -1029,8 +1035,7 @@ limit 5;`);
 
 }
 
-
-markdown()
+// markdown()
 // scrapeImages()
 // scrapeWebsiteLinksIntoPostgres()
 //main3()
@@ -1039,3 +1044,5 @@ markdown()
 //main()ts
 
 // rescrapeDataDebug()
+
+BrowserManager.lambda();
