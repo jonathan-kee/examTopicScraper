@@ -778,6 +778,15 @@ function randomDelay(min: number, max: number) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
+// What is the order of the SQL Files loaded?
+// 1) scrapeWebsiteLinksIntoPostgres()'s       result                         uses docker_pg_seq_scraper.sql
+// 2) scrapeWebsiteLinksIntoPostgres()'s       insertResult                   uses docker_pg_scraper.sql
+
+// There are dependencies for this function, need to run SQL in this order
+// 1) docker_pg_scraper.sql
+// 2) docker_pg_seq_scraper.sql
+// 3) Run scrapeWebsiteLinksIntoPostgres()
+
 let scrapeWebsiteLinksIntoPostgres = async () => {
     console.log("Starting test");
 
