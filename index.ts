@@ -92,6 +92,7 @@ class BrowserManager {
         }
     }
 
+    // This function lacks 
     // I will have to properly learn overloading in the future
     static async reusePageOverload(page: Page, questionsLink: string, questionNumber: number, scrapeDataLambda: (page: Page, questionNumber: number) => Promise<void>) {
         await BrowserManager.errorHandlingBoilerPlate(page, questionsLink);
@@ -660,10 +661,25 @@ VALUES ($1, $2, $3, $4, $5, $6);
     }
 }
 
+// What is the order of the SQL Files loaded?
+// 1) scrapeData()'s       Question, Answers, Answers     uses docker_pg_schema.sql
+
+// I think no need to increment after using scrapeData(), because this function is mostly just to test a single page
+// No need docker_pg_seq_schema.sql
+
+// The function docker not involve scraper sql
+// No need docker_pg_scraper.sql
+// No need docker_pg_seq_scraper.sql 
+
+// There are dependencies for this function, need to run SQL in this order
+// 2) (This functions does need scraping the questions link first)
+// 3) docker_pg_schema.sql
+// 4) docker_pg_seq_schema.sql
+// 5) Run scrapeData()
 
 let scrapeData = async () => {
     console.log("Starting test");
-
+    
     const scrapeDataLambda = async (page: Page, i: number) => {
         try {
             console.log("Page loaded");
