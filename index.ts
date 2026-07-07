@@ -963,6 +963,9 @@ let rescrapeDataDebug = async () => {
     }
 }
 
+// There are dependencies for this function, need to run SQL in this order:
+// 1) docker_pg_seq_scrapeImage.sql
+// 2) docker_pg_scrapeImage.sql
 let scrapeImages = async () => {
 
     const result = await DatabaseManager.executeQuery("SELECT last_value FROM seq_imagesLink;")
