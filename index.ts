@@ -1035,6 +1035,10 @@ class Markdown {
     }
 }
 
+// There are dependencies for this function, need to run SQL in this order:
+// 1) docker_pg_cleanImages.sql (Creates relative_path_questions, relative_path_answers)
+// 2) docker_pg_seq_format_markdown.sql
+
 let markdown = async () => {
     const result = await DatabaseManager.executeQuery("SELECT last_value FROM seq_markdown;")
     let sequenceLastValue: number = result.rows[0].last_value;
