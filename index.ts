@@ -830,6 +830,18 @@ VALUES ((SELECT last_value FROM seq_questionsLink), '1z0-071', '${link}');`);
     }
 }
 
+// What is the order of the SQL Files loaded?
+// 1) scrapeDataIntoPostgres()'s       result                         uses docker_pg_seq_schema.sql
+// 2) scrapeDataIntoPostgres()'s       Question, Answers, Answers     uses docker_pg_schema.sql
+// 3) reusepage()'s                    questionslink                  uses docker_pg_scraper.sql
+// 4) reusepage()'s                    increment                      uses docker_pg_seq_schema.sql
+
+// There are dependencies for this function, need to run SQL in this order
+// 1) docker_pg_scraper.sql
+// 2) docker_pg_seq_scraper.sql
+// 3) Scrape the questions link first.
+// 4) docker_pg_schema.sql
+// 5) docker_pg_seq_schema.sql
 let scrapeDataIntoPostgres = async () => {
     console.log("Starting test");
 
