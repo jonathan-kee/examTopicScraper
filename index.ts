@@ -907,6 +907,9 @@ let scrapeDataIntoPostgres = async () => {
     await BrowserManager.manageBrowserAndPage("http://127.0.0.1:9222", sequenceLastValue, scrapeDataLambda);
 }
 
+// There are dependencies for this function, need to run SQL in this order:
+// 1) docker_pg_findMissingAnswers.sql
+// 2) docker_pg_schema.sql
 let rescrapeDataDebug = async () => {
     const scrapeDataLambda = async (page: Page, questionsnumber: number) => {
         try {
@@ -951,7 +954,6 @@ let rescrapeDataDebug = async () => {
         }
     }
 
-    // Below looks like a totally different query
     const result = await DatabaseManager.executeQuery("select number, link from missing_answers_link;")
 
     for (let i = 0; i < (result.rowCount ?? 0); i++) {
