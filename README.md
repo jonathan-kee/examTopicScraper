@@ -10,6 +10,24 @@ The reason I was doing this is because I don't want to pay the expensive fee to 
 
 ![Node & NPM in workflow created & removed](./screenshots/node&npmInWorkflow.png)
 
+# Docker Command for Postgres
+1) Pull a postgres container:
+- docker pull postgres:14.23-bookworm
+
+2) Create the Docker Network
+- docker network create postgresNetwork
+
+3) Start a postgres instance:
+- docker run --name some-postgres \
+  --network=postgresNetwork \
+  -e POSTGRES_PASSWORD=mysecretpassword \
+  -d postgres
+
+4) Connect via psql:
+- docker run -it --rm \
+  --network postgresNetwork \
+  postgres psql -h some-postgres -U postgres
+
 # Installation Guide
 Follow the official github documentation:
 - https://docs.github.com/en/actions/how-tos/manage-runners/self-hosted-runners/add-runners#adding-a-self-hosted-runner-to-a-repository
