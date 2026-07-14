@@ -11,22 +11,22 @@ The reason I was doing this is because I don't want to pay the expensive fee to 
 ![Node & NPM in workflow created & removed](./screenshots/node&npmInWorkflow.png)
 
 # Docker Command for Postgres
-1) Pull a postgres container:
+1) Pull a Postgres Container:
 - docker pull postgres:14.23-bookworm
 
-2) Create the Docker Network
-- docker network create postgresNetwork
+2) Create the Docker Network:
+- docker network create PostgresNetwork
 
-3) Start a postgres instance:
-- docker run --name some-postgres \
-  --network=postgresNetwork \
-  -e POSTGRES_PASSWORD=mysecretpassword \
-  -d postgres
+3) Start a Postgres Instance:
+- docker run --name scaper \
+  --network=PostgresNetwork \
+  -e POSTGRES_PASSWORD=abc123 \
+  -d postgres:14.23-bookworm
 
 4) Connect via psql:
 - docker run -it --rm \
-  --network postgresNetwork \
-  postgres psql -h some-postgres -U postgres
+  --network PostgresNetwork \
+  postgres:14.23-bookworm psql -h scaper -U postgres
 
 # Installation Guide
 Follow the official github documentation:
