@@ -349,10 +349,30 @@ Question: Is SSIS still worth learning just to learn more about ETL patterns?
 # Projects Ideas
 - Connect Touch&Go Ewallet to Bukku Accounting system  
 
+# Download Extension to remove AI overview from Google that prevent scraping
+Extension link:
+- https://chromewebstore.google.com/detail/turn-off-ai-overview-othe/laapdloobiffnfibhbjfhhoilneneomj
+
+# Use Extension for Browser Automation
+# 1. Clean up the old, broken profile directory
+- rm -rf ./chrome-puppeteer-profile
+
+# 2. Create the parent directory structure Chrome expects
+- mkdir -p ./chrome-puppeteer-profile
+
+# 3. Copy your "Default" profile folder inside that new parent directory
+- cp -R "$HOME/Library/Application Support/Google/Chrome/Default" ./chrome-puppeteer-profile/
+
+# 4. Launch Chrome pointing to the parent directory
+- /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome \
+--remote-debugging-port=9222 \
+--user-data-dir="$(pwd)/chrome-puppeteer-profile"
+
+
 # Launch browser that google does not capcha
-/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome \
-  --remote-debugging-port=9222 \
-  --user-data-dir=/tmp/chrome-profile
+- /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome \
+--remote-debugging-port=9222 \
+--user-data-dir="$(pwd)/chrome-puppeteer-profile"
 
 # How to remove popup block
 Apparently if you edit class="popup-overlay show" to "popup-overla show",
