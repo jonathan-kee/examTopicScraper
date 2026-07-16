@@ -65,3 +65,4 @@ build
 
 linux/selfhost-runner/.vagrant
 .env
+docker_volume
