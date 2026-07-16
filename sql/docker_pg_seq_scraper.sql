@@ -6,5 +6,5 @@ SELECT last_value FROM seq_questionsLink;
 
 SELECT nextval('seq_questionsLink') as next_value;
 
-INSERT INTO questionsLink (number, exam, link) 
-VALUES ((SELECT last_value FROM seq_questionsLink), 'test exam', 'test link');
+-- INSERT INTO questionsLink (number, exam, link) 
+-- VALUES ((SELECT last_value FROM seq_questionsLink), 'test exam', 'test link');
