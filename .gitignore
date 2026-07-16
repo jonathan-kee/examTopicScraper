@@ -64,3 +64,4 @@ build
 .tap
 
 linux/selfhost-runner/.vagrant
+.env
