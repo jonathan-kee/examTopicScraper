@@ -2,6 +2,10 @@
 The reason I was doing this is because I don't want to pay the expensive fee to see the certification dumps lol. 
 
 # Project Highlights
+[Postgres container working](./screenshots/datagripConnectPostgres.png)
+
+![Postgres container working](./screenshots/datagripConnectPostgres.png)
+
 [Docker containers in workflow created & removed](./screenshots/serviceContainerInWorkflow.png)
 
 ![Docker containers in workflow created & removed](./screenshots/serviceContainerInWorkflow.png)
