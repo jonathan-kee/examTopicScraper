@@ -37,7 +37,11 @@ Youtube link:
 - https://www.youtube.com/watch?v=Hs9Fh1fr5s8&t=228s
 
 Start a postgres container:
-- docker run --name postgres-container -e POSTGRES_PASSWORD=abc123 -p 5432:5432 -d postgres:latest
+- docker run --name postgres-container \
+  -e POSTGRES_PASSWORD=abc123 \
+  -v "$(pwd)/docker_volume:/var/lib/postgresql" \
+  -p 5432:5432 \
+  -d postgres:latest
 
 Check container processes:
 - docker ps -a 
@@ -52,6 +56,10 @@ Feed sql file to postgres container:
 - docker exec -i postgres-container psql -U postgres -d postgres < ./sql/docker_pg_seq_schema.sql
 
 Use datagrip and connect and see if the SQL files are ran
+
+Data still persist after start & stop:
+- docker stop postgres-container
+- docker start postgres-container
 
 # Installation Guide
 Follow the official github documentation:
