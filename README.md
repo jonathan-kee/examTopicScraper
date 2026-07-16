@@ -28,6 +28,27 @@ The reason I was doing this is because I don't want to pay the expensive fee to 
   --network PostgresNetwork \
   postgres:14.23-bookworm psql -h scaper -U postgres
 
+# Postgres docker installation
+Youtube link:
+- https://www.youtube.com/watch?v=Hs9Fh1fr5s8&t=228s
+
+Start a postgres container:
+- docker run --name postgres-container -e POSGRES_PASSWORD=abc123 -p 5432:5432 -d postgres
+
+Check container processes:
+- docker ps -a 
+
+Run psql inside postgres container:
+- docker exec -it postgres-container psql -U postgres 
+
+Feed sql file to postgres container:
+- docker exec -i postgres-container psql -U postgres -d postgres < /sql/docker_pg_scraper.sql
+- docker exec -i postgres-container psql -U postgres -d postgres < /sql/docker_pg_seq_scraper.sql
+- docker exec -i postgres-container psql -U postgres -d postgres < /sql/docker_pg_schema.sql
+- docker exec -i postgres-container psql -U postgres -d postgres < /sql/docker_pg_seq_schema.sql
+
+Use datagrip and connect and see if the SQL files are ran
+
 # Installation Guide
 Follow the official github documentation:
 - https://docs.github.com/en/actions/how-tos/manage-runners/self-hosted-runners/add-runners#adding-a-self-hosted-runner-to-a-repository
