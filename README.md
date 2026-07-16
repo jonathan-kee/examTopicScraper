@@ -33,7 +33,7 @@ Youtube link:
 - https://www.youtube.com/watch?v=Hs9Fh1fr5s8&t=228s
 
 Start a postgres container:
-- docker run --name postgres-container -e POSGRES_PASSWORD=abc123 -p 5432:5432 -d postgres
+- docker run --name postgres-container -e POSTGRES_PASSWORD=abc123 -p 5432:5432 -d postgres:latest
 
 Check container processes:
 - docker ps -a 
