@@ -42,10 +42,10 @@ Run psql inside postgres container:
 - docker exec -it postgres-container psql -U postgres 
 
 Feed sql file to postgres container:
-- docker exec -i postgres-container psql -U postgres -d postgres < /sql/docker_pg_scraper.sql
-- docker exec -i postgres-container psql -U postgres -d postgres < /sql/docker_pg_seq_scraper.sql
-- docker exec -i postgres-container psql -U postgres -d postgres < /sql/docker_pg_schema.sql
-- docker exec -i postgres-container psql -U postgres -d postgres < /sql/docker_pg_seq_schema.sql
+- docker exec -i postgres-container psql -U postgres -d postgres < ./sql/docker_pg_scraper.sql
+- docker exec -i postgres-container psql -U postgres -d postgres < ./sql/docker_pg_seq_scraper.sql
+- docker exec -i postgres-container psql -U postgres -d postgres < ./sql/docker_pg_schema.sql
+- docker exec -i postgres-container psql -U postgres -d postgres < ./sql/docker_pg_seq_schema.sql
 
 Use datagrip and connect and see if the SQL files are ran
 
