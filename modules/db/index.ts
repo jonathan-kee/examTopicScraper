@@ -11,7 +11,7 @@ const pool = new Pool({
     password: 'abc123',
     host: 'localhost',
     port: 5432,
-    database: 'examtopic',
+    database: 'postgres',
 /** Pool Api Details */
     max: 20,
     idleTimeoutMillis: 30000,
