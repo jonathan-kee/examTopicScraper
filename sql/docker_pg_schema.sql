@@ -6,6 +6,8 @@ CREATE TABLE companies
     CONSTRAINT company_pk PRIMARY KEY (name)
 );
 
+INSERT INTO companies (name) VALUES ('Oracle');
+
 CREATE TABLE exams
 (
     name TEXT,
@@ -13,6 +15,8 @@ CREATE TABLE exams
     CONSTRAINT exam_pk PRIMARY KEY (name),
     CONSTRAINT exam_company_fk FOREIGN KEY (company) REFERENCES companies(name) ON DELETE CASCADE
 );
+
+INSERT INTO exams (name, company) VALUES ('1z0-071', 'Oracle');
 
 CREATE TABLE questions
 (
