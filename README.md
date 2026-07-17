@@ -14,24 +14,6 @@ The reason I was doing this is because I don't want to pay the expensive fee to 
 
 ![Node & NPM in workflow created & removed](./screenshots/node&npmInWorkflow.png)
 
-# Docker Command for Postgres
-1) Pull a Postgres Container:
-- docker pull postgres:14.23-bookworm
-
-2) Create the Docker Network:
-- docker network create PostgresNetwork
-
-3) Start a Postgres Instance:
-- docker run --name scaper \
-  --network=PostgresNetwork \
-  -e POSTGRES_PASSWORD=abc123 \
-  -d postgres:14.23-bookworm
-
-4) Connect via psql:
-- docker run -it --rm \
-  --network PostgresNetwork \
-  postgres:14.23-bookworm psql -h scaper -U postgres
-
 # Postgres docker installation
 Youtube link:
 - https://www.youtube.com/watch?v=Hs9Fh1fr5s8&t=228s
@@ -63,6 +45,16 @@ Data still persist after start & stop:
 
 # Backup Postgres docker data (Incase I lose all data at some point)
 docker exec -t postgres-container pg_dump -U postgres -d postgres > ./backup_sql/backup.sql
+
+# RustFS (Minio Replacement) docker installation
+Create data and logs directories:
+- mkdir -p data logs
+
+Change the owner of these directories:
+- chown -R 10001:10001 data logs
+
+Using latest version:
+- docker run -d -p 9000:9000 -p 9001:9001 -v $(pwd)/data:/data -v $(pwd)/logs:/logs rustfs/rustfs:latest 
 
 # Installation Guide
 Follow the official github documentation:
@@ -345,6 +337,9 @@ Good oppurtunity to use pg_lake for Postgres:
 
 Use Playwright for more scalable web scraping:
 - https://www.youtube.com/watch?v=Vun8FR3Mla0
+
+Indepth book about web scraping: 
+https://github.com/REMitchell/python-scraping
 
 # QNA
 Question: Is SSIS still worth learning just to learn more about ETL patterns?
