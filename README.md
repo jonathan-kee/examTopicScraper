@@ -61,6 +61,9 @@ Data still persist after start & stop:
 - docker stop postgres-container
 - docker start postgres-container
 
+# Backup Postgres docker data (Incase I lose all data at some point)
+docker exec -t postgres-container pg_dump -U postgres -d postgres > ./backup_sql/backup.sql
+
 # Installation Guide
 Follow the official github documentation:
 - https://docs.github.com/en/actions/how-tos/manage-runners/self-hosted-runners/add-runners#adding-a-self-hosted-runner-to-a-repository
