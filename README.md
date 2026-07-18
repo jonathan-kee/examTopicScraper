@@ -262,6 +262,12 @@ The following wont work if ~/.profile exist, Then you need to manually add to .b
 1) After npm install, there might be vulnerabilities:
 - npm audit fix
 
+# Run Test
+1) Compile Typescript to build folder, run test
+- tsc --build --clean 
+- tsc --build  
+- npm run test
+
 # Github Actions / Forejo Actions Setup
 
 # Docker Setup
