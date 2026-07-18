@@ -6,6 +6,10 @@ The reason I was doing this is because I don't want to pay the expensive fee to 
 
 ![Postgres container working](./screenshots/datagripConnectPostgres.png)
 
+[Storage bucker working](./screenshots/storagebucket.png)
+
+![Storage bucker working](./screenshots/storagebucket.png)
+
 [Docker containers in workflow created & removed](./screenshots/serviceContainerInWorkflow.png)
 
 ![Docker containers in workflow created & removed](./screenshots/serviceContainerInWorkflow.png)
@@ -47,14 +51,33 @@ Data still persist after start & stop:
 docker exec -t postgres-container pg_dump -U postgres -d postgres > ./backup_sql/backup.sql
 
 # RustFS (Minio Replacement) docker installation
-Create data and logs directories:
+(Skip, Managed my Docker-managed named volumes) Create data and logs directories:
 - mkdir -p data logs
 
-Change the owner of these directories:
-- chown -R 10001:10001 data logs
+(Skip, Managed my Docker-managed named volumes) Change the owner of these directories:
+- sudo chown -R 10001:10001 data logs
 
-Using latest version:
-- docker run -d -p 9000:9000 -p 9001:9001 -v $(pwd)/data:/data -v $(pwd)/logs:/logs rustfs/rustfs:latest 
+Using latest version (Using Docker-managed named volumes) (Gemini fix):
+- docker run --detach \
+        --name=rustfs \
+        --publish 9000:9000/udp \
+        --publish 9000:9000/tcp \
+        --publish 9001:9001/udp \
+        --publish 9001:9001/tcp \
+        --volume rustfs-data:/data \
+        --volume rustfs-logs:/logs \
+        -e RUSTFS_ACCESS_KEY="rustfsadmin" \
+        -e RUSTFS_SECRET_KEY="rustfsadmin" \
+        -e RUSTFS_ADDRESS="0.0.0.0:9000" \
+        -e RUSTFS_CONSOLE_ADDRESS="0.0.0.0:9001" \
+        -e RUSTFS_CONSOLE_ENABLE=true \
+        -e RUSTFS_CORS_ALLOWED_ORIGINS="*" \
+        -e RUSTFS_CONSOLE_CORS_ALLOWED_ORIGINS="*" \
+        rustfs/rustfs:latest \
+        --access-key "rustfsadmin" \
+        --secret-key "rustfsadmin" \
+        --console-enable \
+        /data
 
 # Installation Guide
 Follow the official github documentation:
