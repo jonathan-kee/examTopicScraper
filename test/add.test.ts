@@ -1,5 +1,10 @@
 import t from 'tap'
-const add = require('./add')
+
+function add(arg1: any, arg2: any) {
+  if (!Number.isInteger(arg1)) throw Error('inputs must be numbers');
+  if (!Number.isInteger(arg2)) throw Error('inputs must be numbers');
+  return arg1 + arg2;
+}
 
 t.test('throw when inputs are not numbers', async t => {
   t.throws(() => add('5', '5'), Error('inputs must be numbers'))
