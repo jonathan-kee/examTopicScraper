@@ -262,11 +262,18 @@ The following wont work if ~/.profile exist, Then you need to manually add to .b
 1) After npm install, there might be vulnerabilities:
 - npm audit fix
 
-# Run Test
-1) Compile Typescript to build folder, run test
+# Run all tests
+Compile Typescript to build folder, run all tests
 - tsc --build --clean 
 - tsc --build  
 - npm run test
+
+# Run specific test
+Compile Typescript to build folder, run specific test
+- tsc --build --clean 
+- tsc --build  
+- npm run unitTest -- build/test/add.test.js
+- npm run unitTest -- build/test/env.test.js
 
 # Github Actions / Forejo Actions Setup
 
