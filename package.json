@@ -7,7 +7,8 @@
     "test": "test"
   },
   "scripts": {
-    "test": "tap \"build/test/**/*.test.js\""
+    "test": "tap \"build/test/**/*.test.js\"",
+    "unitTest": "tap"
   },
   "keywords": [],
   "author": "",
