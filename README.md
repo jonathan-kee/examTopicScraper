@@ -382,6 +382,8 @@ Question: Is SSIS still worth learning just to learn more about ETL patterns?
 
 # Projects Ideas
 - Connect Touch&Go Ewallet to Bukku Accounting system  
+- Interesting site to do data scraping on financial / banking data
+https://apikijangportal.bnm.gov.my/openapi
 
 # Download Extension to remove AI overview from Google that prevent scraping
 Extension link:
