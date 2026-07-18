@@ -316,6 +316,8 @@ class Question {
     }
 
     public static async insert(question: Question) {
+        console.log("Inserting Question")
+
         const query = `
 INSERT INTO questions
     (number, exam, text)
@@ -328,7 +330,14 @@ VALUES ($1, $2, $3);
             question.text
         ];
 
-        const result = await DatabaseManager.executeQuery(query, values);
+        let result = null;
+        try {
+            result = await DatabaseManager.executeQuery(query, values);
+        } catch {
+            console.log("Missing exams insertion data")
+            throw Error("Missing exams insertion data");
+        }
+
         console.log(result);
     }
 }
@@ -472,6 +481,8 @@ class Answer {
     }
 
     public static async insert(answer: Answer) {
+        console.log("Inserting Answer")
+
         const query = `
 INSERT INTO answers
     (number, question_number, question_exam, text, is_correct)
@@ -486,11 +497,19 @@ VALUES ($1, $2, $3, $4, $5);
             answer.isCorrect
         ];
 
-        const result = await DatabaseManager.executeQuery(query, values);
+        let result = null;
+        try {
+            result = await DatabaseManager.executeQuery(query, values);
+        } catch {
+            console.log("Missing questions insertion data")
+            throw Error("Missing questions insertion data");
+        }
         console.log(result);
     }
 
     public static async merge(answer: Answer) {
+        console.log("merge Answer")
+
         const query = `
 MERGE INTO answers
 USING (
@@ -511,7 +530,13 @@ WHEN NOT MATCHED THEN
             answer.isCorrect
         ];
 
-        const result = await DatabaseManager.executeQuery(query, values);
+        let result = null;
+        try {
+            result = await DatabaseManager.executeQuery(query, values);
+        } catch {
+            console.log("Missing questions insertion data")
+            throw Error("Missing questions insertion data");
+        }
         console.log(result);
     }
 }
@@ -641,6 +666,8 @@ class Discussion {
     }
 
     public static async insert(discussion: Discussion) {
+        console.log("Inserting Discussion")
+
         const query = `
 INSERT INTO discussions
     (number, question_number, question_exam, selected_answer, text, upvote)
@@ -656,7 +683,14 @@ VALUES ($1, $2, $3, $4, $5, $6);
             discussion.upvote
         ];
 
-        const result = await DatabaseManager.executeQuery(query, values);
+        let result = null;
+        try {
+            result = await DatabaseManager.executeQuery(query, values);
+        } catch {
+            console.log("Missing questions insertion data")
+            throw Error("Missing questions insertion data");
+        }
+
         console.log(result);
     }
 }
@@ -679,7 +713,7 @@ VALUES ($1, $2, $3, $4, $5, $6);
 
 let scrapeData = async () => {
     console.log("Starting test");
-    
+
     const scrapeDataLambda = async (page: Page, i: number) => {
         try {
             console.log("Page loaded");
@@ -833,7 +867,7 @@ VALUES ((SELECT last_value FROM seq_questionsLink), '1z0-071', '${link}');`);
 
 let scrapeWebsiteLinksIntoPostgresHardcode = async () => {
     console.log("Starting test");
-    
+
     const scrapeDataLambda = async (page: Page, i: number) => {
         let googleSearch = 'examtopics 1z0-"071" Exam question ' + i;
         await page.locator('.gLFyf').wait();
@@ -1010,8 +1044,8 @@ let scrapeImages = async () => {
     let sequenceLastValue: number = result.rows[0].last_value;
 
     // The code below is uniquie to the below function
-    for (let i = sequenceLastValue; i <= 57;) {
-        const imageslinkResult = await DatabaseManager.executeQuery(`SELECT url FROM view_all_images_url where number = ${i};`)
+    for (let i = sequenceLastValue; i <= 235;) {
+        const imageslinkResult = await DatabaseManager.executeQuery(`SELECT url FROM all_images_url where number = ${i};`)
         const imageslink: string = imageslinkResult.rows[0].url;
 
         const filename = imageslink.substring(imageslink.lastIndexOf("/") + 1, imageslink.length);
@@ -1023,7 +1057,7 @@ let scrapeImages = async () => {
         }
 
         const arrayBuffer = await response.arrayBuffer();
-        fs.writeFileSync("./images/" + filename, Buffer.from(arrayBuffer));
+        fs.writeFileSync("./images2/" + filename, Buffer.from(arrayBuffer));
 
         console.log("Image saved as " + filename);
 
@@ -1068,7 +1102,7 @@ class Markdown {
     }
 
     public toFile(): void {
-        fs.writeFileSync("./markdowns/question" + this.questionNumber + ".md", this.toString());
+        fs.writeFileSync("./markdowns2/question" + this.questionNumber + ".md", this.toString());
         console.log("Question, Answers, Discussions saved as " + this.questionNumber + ".md");
     }
 }
@@ -1131,16 +1165,18 @@ limit 5;`);
 // 1)
 // scrapeWebsiteLinksIntoPostgres()
 
+// 2)
 // Missing website links 41 to 73
-scrapeWebsiteLinksIntoPostgresHardcode()
+// scrapeWebsiteLinksIntoPostgresHardcode()
 
-// markdown()
-// scrapeImages()
-//main3()
-// scrapeData()
+// 3)
 // scrapeDataIntoPostgres()
-//main()ts
 
-// rescrapeDataDebug()
+// 4)
+// Need to run in DataGrip
+// docker_pg_scrapeImageTable.sql
+// docker_pg_seq_scrapeImage.sql
+// scrapeImages()
 
-// BrowserManager.lambda();
+// 5)
+markdown()
