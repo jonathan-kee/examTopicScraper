@@ -1,17 +1,20 @@
 import { Pool } from 'pg'
+import { loadEnvFile } from 'node:process';
 
 /** Documentation
 https://node-postgres.com/apis/pool#poolquery
 https://node-postgres.com/guides/project-structure#example
 */
 
+loadEnvFile('./.env');
+
 const pool = new Pool({
 /** Client Api Details */
-    user: 'postgres',
-    password: 'abc123',
-    host: 'localhost',
-    port: 5432,
-    database: 'postgres',
+    user: process.env.RDS_USERNAME,
+    password: process.env.RDS_PASSWORD,
+    host: process.env.RDS_HOST,
+    port: Number.parseInt(process.env.PORT ?? "5432"),
+    database: process.env.RDS_DB_NAME,
 /** Pool Api Details */
     max: 20,
     idleTimeoutMillis: 30000,
