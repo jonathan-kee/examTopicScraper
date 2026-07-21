@@ -18,7 +18,9 @@ The reason I was doing this is because I don't want to pay the expensive fee to 
 
 ![Node & NPM in workflow created & removed](./screenshots/node&npmInWorkflow.png)
 
+[Scape raw document from website using inspect network and code](./screenshots/inspectNetworkAsset.png)
 
+![Scape raw document from website using inspect network and code](./screenshots/inspectNetworkAsset.png)
 
 # Postgres docker installation
 Youtube link:
@@ -276,6 +278,7 @@ Compile Typescript to build folder, run specific test
 - tsc --build  
 - npm run unitTest -- build/test/add.test.js
 - npm run unitTest -- build/test/env.test.js
+- npm run unitTest -- build/test/extractRawDocument.test.js
 
 # Github Actions / Forejo Actions Setup
 
