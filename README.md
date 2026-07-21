@@ -6,9 +6,13 @@ The reason I was doing this is because I don't want to pay the expensive fee to 
 
 ![Postgres container working](./screenshots/datagripConnectPostgres.png)
 
-[Storage bucker working](./screenshots/storagebucket.png)
+[Storage bucket working](./screenshots/storagebucket.png)
 
-![Storage bucker working](./screenshots/storagebucket.png)
+![Storage bucket working](./screenshots/storagebucket.png)
+
+[Upload object to Storage Bucket](./screenshots/createdBucketAndUploadedObject.png)
+
+![Upload object to Storage Bucket](./screenshots/createdBucketAndUploadedObject.png)
 
 [Docker containers in workflow created & removed](./screenshots/serviceContainerInWorkflow.png)
 
@@ -279,6 +283,7 @@ Compile Typescript to build folder, run specific test
 - npm run unitTest -- build/test/add.test.js
 - npm run unitTest -- build/test/env.test.js
 - npm run unitTest -- build/test/extractRawDocument.test.js
+- npm run unitTest -- build/test/storageBucket.test.js
 
 # Github Actions / Forejo Actions Setup
 
