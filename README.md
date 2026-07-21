@@ -18,6 +18,8 @@ The reason I was doing this is because I don't want to pay the expensive fee to 
 
 ![Node & NPM in workflow created & removed](./screenshots/node&npmInWorkflow.png)
 
+
+
 # Postgres docker installation
 Youtube link:
 - https://www.youtube.com/watch?v=Hs9Fh1fr5s8&t=228s
@@ -413,3 +415,98 @@ Extension link:
 # How to remove popup block
 Apparently if you edit class="popup-overlay show" to "popup-overla show",
 the popup will break
+
+
+# HTTP Client vs Headless Browser
+I tried using jsoup but the xpath select result is completely different from puppetter xpath
+
+Answer (Gemini):
+
+Yes, **you should definitely avoid XPaths**—especially absolute ones—if you want selectors that work consistently across both Jsoup and Puppeteer.
+
+Instead, the best method to use is **CSS Selectors targeting attributes, classes, or IDs**.
+
+---
+
+## Why CSS Selectors Work Best for Both
+
+While Jsoup and Puppeteer evaluate against different stages of the DOM (raw vs. JavaScript-rendered), using **CSS selectors based on stable elements** reduces the chance of broken queries:
+
+1. **Identical Syntax:** CSS selector syntax like `ul.question-list` or `div#content > p` is standard across both Java (Jsoup) and JavaScript (Puppeteer).
+2. **Resilient to Structural Shifts:** Unlike XPaths, which break if an extra wrapper `<div>` is added by browser JavaScript or an extension, class and ID selectors target the element directly no matter where it sits in the tree.
+
+---
+
+## Recommended Selector Methods (Ranked)
+
+### 1. Data Attributes or Unique IDs *(Most Reliable)*
+
+If the site provides `id` or `data-*` attributes, use them. They rarely change between static HTML and dynamic rendering.
+
+```css
+#question-list-container
+[data-testid="questions-list"]
+
+```
+
+* **Jsoup (Java):**
+```java
+Elements q = doc.select("[data-testid='questions-list']");
+
+```
+
+
+* **Puppeteer (Node.js):**
+```javascript
+const q = await page.waitForSelector('[data-testid="questions-list"]');
+
+```
+
+
+
+---
+
+### 2. Class Names + Element Tags *(Very Reliable)*
+
+Combine element types with meaningful class names to narrow down the target.
+
+```css
+ul.questions-list
+div.main-content ul.items
+
+```
+
+* **Jsoup (Java):**
+```java
+Elements q = doc.select("ul.questions-list");
+
+```
+
+
+* **Puppeteer (Node.js):**
+```javascript
+const q = await page.waitForSelector('ul.questions-list');
+
+```
+
+
+
+---
+
+### 3. Relative Structural Selectors *(When no classes/IDs exist)*
+
+If the target `<ul>` has no class or ID, anchor your CSS selector to the closest parent container that *does* have a unique identifier, then drill down using standard CSS combinators (like `>` or spaces):
+
+```css
+/* Finds the ul inside the .content-body section, avoiding absolute top-level paths */
+.content-body > div > ul
+
+```
+
+---
+
+## When a Shared Selector Still Fails
+
+If you use the exact same CSS selector (e.g., `ul.questions-list`) and Jsoup returns nothing while Puppeteer succeeds, the issue isn't the selector syntax—it's that **the target HTML element does not exist yet when Jsoup receives the raw response.**
+
+In that scenario, you'll need to either stick with Puppeteer for that specific page or scrape the raw background API endpoint Jsoup can't reach.
