@@ -1,6 +1,7 @@
 import fs from "fs";
 import puppeteer, { Browser, Page, PuppeteerError, TimeoutError } from 'puppeteer';
-import * as db from './modules/db/index'
+import * as db from './modules/db/index.js'
+import * as s3 from './modules/s3/index.js'
 
 class DatabaseManager {
     /** Single source of truth for database operations */
@@ -1119,4 +1120,7 @@ limit 5;`);
 // scrapeImages()
 
 // 5)
-markdown()
+// markdown()
+
+// s3.createBucket("bucket");
+s3.uploadFile("bucket","question1","./document/TestDocument");
