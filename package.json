@@ -14,13 +14,17 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.1091.0",
+    "@aws-sdk/s3-request-presigner": "^3.1091.0",
     "pg": "^8.16.3",
     "puppeteer": "^24.20.0"
   },
   "devDependencies": {
     "@types/node": "^26.1.1",
     "@types/pg": "^8.15.5",
-    "tap": "^21.7.4"
+    "tap": "^21.7.4",
+    "tsx": "^4.23.1",
+    "typescript": "^7.0.2"
   },
-  "type": "commonjs"
+  "type": "module"
 }
