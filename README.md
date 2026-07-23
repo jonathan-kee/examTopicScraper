@@ -28,7 +28,7 @@ The reason I was doing this is because I don't want to pay the expensive fee to 
 
 # Pipeline commands
 1) npm run unitTest -- build/test/extractAllRawDocument.test.js
-2) Run ExamTopicETL java project
+2) java -jar /Users/jonathankee/examTopicScraper/static_page/build/libs/static_page-1.0-SNAPSHOT-all.jar
 3) Run markdown code
 
 # Postgres docker installation
