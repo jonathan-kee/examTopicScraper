@@ -467,7 +467,7 @@ VALUES ($1, $2, $3, $4, $5);
 
         let result = null;
         try {
-            result = await DatabaseManager.executeQuery(query, values);
+            result = await db.DatabaseManager.executeQuery(query, values);
         } catch {
             console.log("Missing questions insertion data")
             throw Error("Missing questions insertion data");
@@ -500,7 +500,7 @@ WHEN NOT MATCHED THEN
 
         let result = null;
         try {
-            result = await DatabaseManager.executeQuery(query, values);
+            result = await db.DatabaseManager.executeQuery(query, values);
         } catch {
             console.log("Missing questions insertion data")
             throw Error("Missing questions insertion data");
