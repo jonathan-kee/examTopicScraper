@@ -22,12 +22,20 @@ const pool = new Pool({
     maxLifetimeSeconds: 60,
 })
 
-export const query = async (text: string, params?: any[]) => {
+export const dbQuery = async (text: string, params?: any[]) => {
     const start = Date.now()
     const res = await pool.query(text, params)
     const duration = Date.now() - start
     console.log('executed query', { text, duration, rows: res.rowCount })
     return res
+}
+
+export class DatabaseManager {
+    /** Single source of truth for database operations */
+    static async executeQuery<T>(query: string, params?: any[]) {
+        const result = await dbQuery(query, params);
+        return result;
+    }
 }
 
 /** Notice in the example above there is no need to check out or release a client. 
