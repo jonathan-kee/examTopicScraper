@@ -209,6 +209,9 @@ Simple Guide on setup DBT with Postgres:
 - https://paulr70.substack.com/p/getting-started-with-dbt
 - https://paulr70.substack.com/p/adding-a-unit-test-to-dbt
 
+Data Engineering with Dbt by Roberto Zagni is a good recommendation:
+https://www.reddit.com/r/dataengineering/comments/1lx0xia/tips_for_books_other_material_for_self_study_on/
+
 Apache Spark (Data bricks certs)
 
 7) Data Analytics
