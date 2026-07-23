@@ -3,14 +3,6 @@ import puppeteer, { Browser, Page, PuppeteerError, TimeoutError } from 'puppetee
 import * as db from './modules/db/index.js'
 import * as s3 from './modules/s3/index.js'
 
-class DatabaseManager {
-    /** Single source of truth for database operations */
-    static async executeQuery<T>(query: string, params?: any[]) {
-        const result = await db.query(query, params);
-        return result;
-    }
-}
-
 // Documentation around puppeteer errors 
 // https://puppeteer.guide/errors/
 // https://puppeteer.guide/posts/handling-navigation-errors/
@@ -73,7 +65,7 @@ class BrowserManager {
         // 272 is not reusable, you get number with max count
         // 272 should be part of the lambda scope since it's the implementation
         for (let i = lastSequenceNumber; i <= 272;) {
-            const questionslinkResult = await DatabaseManager.executeQuery(`SELECT link FROM questionslink where number = ${i};`)
+            const questionslinkResult = await db.DatabaseManager.executeQuery(`SELECT link FROM questionslink where number = ${i};`)
             const questionslink: string = questionslinkResult.rows[0].link;
 
             await BrowserManager.errorHandlingBoilerPlate(page, questionslink);
@@ -82,7 +74,7 @@ class BrowserManager {
             await scrapeDataLambda(page, i);
 
             // Increment 
-            const result = await DatabaseManager.executeQuery("SELECT nextval('seq_questions') as next_value;")
+            const result = await db.DatabaseManager.executeQuery("SELECT nextval('seq_questions') as next_value;")
             let sequenceLastValue: number = result.rows[0].next_value;
             i = sequenceLastValue;
 
@@ -235,7 +227,7 @@ class BrowserManager {
             }
         }
 
-        const result = await DatabaseManager.executeQuery("SELECT last_value FROM seq_questions;");
+        const result = await db.DatabaseManager.executeQuery("SELECT last_value FROM seq_questions;");
         let sequenceLastValue: number = result.rows[0].last_value;
         await BrowserManager.manageBrowserAndPage("http://127.0.0.1:9222", sequenceLastValue, scrapeDataLambda);
     }
@@ -325,7 +317,7 @@ VALUES ($1, $2, $3);
 
         let result = null;
         try {
-            result = await DatabaseManager.executeQuery(query, values);
+            result = await db.DatabaseManager.executeQuery(query, values);
         } catch {
             console.log("Missing exams insertion data")
             throw Error("Missing exams insertion data");
@@ -661,7 +653,7 @@ VALUES ($1, $2, $3, $4, $5, $6);
 
         let result = null;
         try {
-            result = await DatabaseManager.executeQuery(query, values);
+            result = await db.DatabaseManager.executeQuery(query, values);
         } catch {
             console.log("Missing questions insertion data")
             throw Error("Missing questions insertion data");
@@ -780,13 +772,13 @@ let scrapeWebsiteLinksIntoPostgres = async () => {
         const link = await element?.evaluate(el => el.href);
         console.log(link);
 
-        const insertResult = await DatabaseManager.executeQuery(`INSERT INTO questionsLink (number, exam, link) 
+        const insertResult = await db.DatabaseManager.executeQuery(`INSERT INTO questionsLink (number, exam, link) 
 VALUES ((SELECT last_value FROM seq_questionsLink), '1z0-071', '${link}');`);
         console.log(insertResult);
     }
 
     // Below is seq_questionsLink instead of seq_questions, this is fine
-    const result = await DatabaseManager.executeQuery("SELECT last_value FROM seq_questionsLink;");
+    const result = await db.DatabaseManager.executeQuery("SELECT last_value FROM seq_questionsLink;");
     let sequenceLastValue: number = result.rows[0].last_value;
 
     for (let i = sequenceLastValue; i <= 272;) {
@@ -795,7 +787,7 @@ VALUES ((SELECT last_value FROM seq_questionsLink), '1z0-071', '${link}');`);
 
         // Increment
         // Below is seq_questionsLink instead of seq_questions, this is fine 
-        const result = await DatabaseManager.executeQuery("SELECT nextval('seq_questionsLink') as next_value;");
+        const result = await db.DatabaseManager.executeQuery("SELECT nextval('seq_questionsLink') as next_value;");
         let sequenceLastValue: number = result.rows[0].next_value;
         i = sequenceLastValue;
 
@@ -824,7 +816,7 @@ let scrapeWebsiteLinksIntoPostgresHardcode = async () => {
         const link = await element?.evaluate(el => el.href);
         console.log(link);
 
-        const insertResult = await DatabaseManager.executeQuery(`INSERT INTO questionsLink (number, exam, link) 
+        const insertResult = await db.DatabaseManager.executeQuery(`INSERT INTO questionsLink (number, exam, link) 
 VALUES ('${i}', '1z0-071', '${link}');`);
         console.log(insertResult);
     }
@@ -915,7 +907,7 @@ let scrapeDataIntoPostgres = async () => {
     }
 
     // same lambda()
-    const result = await DatabaseManager.executeQuery("SELECT last_value FROM seq_questions;")
+    const result = await db.DatabaseManager.executeQuery("SELECT last_value FROM seq_questions;")
     let sequenceLastValue: number = result.rows[0].last_value;
     await BrowserManager.manageBrowserAndPage("http://127.0.0.1:9222", sequenceLastValue, scrapeDataLambda);
 }
@@ -967,7 +959,7 @@ let rescrapeDataDebug = async () => {
         }
     }
 
-    const result = await DatabaseManager.executeQuery("select number, link from missing_answers_link;")
+    const result = await db.DatabaseManager.executeQuery("select number, link from missing_answers_link;")
 
     for (let i = 0; i < (result.rowCount ?? 0); i++) {
         const questionsNumber = result.rows[i].number
@@ -981,12 +973,12 @@ let rescrapeDataDebug = async () => {
 // 2) docker_pg_scrapeImage.sql
 let scrapeImages = async () => {
 
-    const result = await DatabaseManager.executeQuery("SELECT last_value FROM seq_imagesLink;")
+    const result = await db.DatabaseManager.executeQuery("SELECT last_value FROM seq_imagesLink;")
     let sequenceLastValue: number = result.rows[0].last_value;
 
     // The code below is uniquie to the below function
     for (let i = sequenceLastValue; i <= 235;) {
-        const imageslinkResult = await DatabaseManager.executeQuery(`SELECT url FROM all_images_url where number = ${i};`)
+        const imageslinkResult = await db.DatabaseManager.executeQuery(`SELECT url FROM all_images_url where number = ${i};`)
         const imageslink: string = imageslinkResult.rows[0].url;
 
         const filename = imageslink.substring(imageslink.lastIndexOf("/") + 1, imageslink.length);
@@ -1003,7 +995,7 @@ let scrapeImages = async () => {
         console.log("Image saved as " + filename);
 
         // Increment 
-        const result = await DatabaseManager.executeQuery("SELECT nextval('seq_imagesLink') as next_value;")
+        const result = await db.DatabaseManager.executeQuery("SELECT nextval('seq_imagesLink') as next_value;")
         let sequenceLastValue: number = result.rows[0].next_value;
         i = sequenceLastValue;
 
@@ -1053,16 +1045,16 @@ class Markdown {
 // 2) docker_pg_seq_format_markdown.sql
 
 let markdown = async () => {
-    const result = await DatabaseManager.executeQuery("SELECT last_value FROM seq_markdown;")
+    const result = await db.DatabaseManager.executeQuery("SELECT last_value FROM seq_markdown;")
     let sequenceLastValue: number = result.rows[0].last_value;
 
     for (let i = sequenceLastValue; i <= 272;) {
-        const questionResult = await DatabaseManager.executeQuery(`select questions.number , questions.text
+        const questionResult = await db.DatabaseManager.executeQuery(`select questions.number , questions.text
 from relative_path_questions as questions
 where questions.number = ${i};`);
         const question: string = questionResult.rows[0].text;
 
-        const answerResult = await DatabaseManager.executeQuery(`select REPLACE(answers.text, 'Most Voted', '') as text, answers.is_correct
+        const answerResult = await db.DatabaseManager.executeQuery(`select REPLACE(answers.text, 'Most Voted', '') as text, answers.is_correct
 from relative_path_questions as questions
 join relative_path_answers as answers 
 on answers.question_number = questions.number and
@@ -1076,7 +1068,7 @@ order by text`);
             answers.push(answer);
         }
 
-        const discussionResult = await DatabaseManager.executeQuery(`select discussions.selected_answer, discussions.text, discussions.upvote
+        const discussionResult = await db.DatabaseManager.executeQuery(`select discussions.selected_answer, discussions.text, discussions.upvote
 from relative_path_questions as questions
 join discussions
 on discussions.question_number = questions.number and
@@ -1096,7 +1088,7 @@ limit 5;`);
         markdown.toFile();
 
         // Increment 
-        const result = await DatabaseManager.executeQuery("SELECT nextval('seq_markdown') as next_value;")
+        const result = await db.DatabaseManager.executeQuery("SELECT nextval('seq_markdown') as next_value;")
         let sequenceLastValue: number = result.rows[0].next_value;
         i = sequenceLastValue;
     }
