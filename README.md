@@ -31,6 +31,15 @@ The reason I was doing this is because I don't want to pay the expensive fee to 
 2) java -jar /Users/jonathankee/examTopicScraper/static_page/build/libs/static_page-1.0-SNAPSHOT-all.jar
 3) Run markdown code
 
+# Browser Pipeline commands
+- tsc --build --clean 
+- tsc --build  
+1) tsc && node ./build/commands/scrapeWebsiteLinksIntoPostgres.js
+2) tsc && node ./build/commands/scrapeWebsiteLinksIntoPostgresHardcode.js
+3) tsc && node ./build/commands/scrapeDataIntoPostgres.js
+4) tsc && node ./build/commands/scrapeImages.js
+5) tsc && node ./build/commands/markdown.js
+
 # Postgres docker installation
 Youtube link:
 - https://www.youtube.com/watch?v=Hs9Fh1fr5s8&t=228s
