@@ -1,0 +1,34 @@
+import fs from "fs";
+
+export class Markdown {
+    private questionNumber: number
+    private question: string
+    private answers: string[]
+    private discussions: string[]
+    constructor(questionNumber: number, question: string, answers: string[], discussions: string[]) {
+        this.questionNumber = questionNumber;
+        this.question = question; // string is immutable
+        this.answers = Array.from(answers); // clone to prevent external modification
+        this.discussions = Array.from(discussions); // clone to prevent external modification
+    }
+
+    public toString(): string {
+        let discussionsString = "";
+        for (let i = 0; i < this.discussions.length; i++) {
+            discussionsString += "## Discussion " + (i + 1) + "\n" +
+                this.discussions[i] + "\n\n";
+        }
+
+        return "# Question " + this.questionNumber + "\n" +
+            this.question + "\n\n" +
+            "# Answers\n" +
+            this.answers.join("\n\n") + "\n\n" +
+            "# Discussions\n" +
+            discussionsString;
+    }
+
+    public toFile(): void {
+        fs.writeFileSync("./markdowns2/question" + this.questionNumber + ".md", this.toString());
+        console.log("Question, Answers, Discussions saved as " + this.questionNumber + ".md");
+    }
+}

@@ -2,666 +2,9 @@ import fs from "fs";
 import puppeteer, { Browser, Page, PuppeteerError, TimeoutError } from 'puppeteer';
 import * as db from './modules/db/index.js'
 import * as s3 from './modules/s3/index.js'
-
-// Documentation around puppeteer errors 
-// https://puppeteer.guide/errors/
-// https://puppeteer.guide/posts/handling-navigation-errors/
-
-// Todo 
-class BrowserManager {
-    /** Single source of truth for browser operations */
-    static async manageBrowserAndPage(browserURL: string, lastSequenceNumber: number, scrapeDataLambda: (page: Page, questionNumber: number) => Promise<void>) {
-        let browser;
-        let page;
-        try {
-            // One Browser Session
-            browser = await puppeteer.connect({ browserURL });
-            // One Page Session
-            page = await browser.newPage();
-            await BrowserManager.reusePage(page, lastSequenceNumber, scrapeDataLambda);
-
-        } catch (generalError) {
-            // handle the error
-
-        } finally {
-            // close the page if it was opened
-            if (page) {
-                await page.close();
-            }
-            // close the browser if it was opened
-            if (browser) {
-                await browser.close();
-            }
-        }
-    }
-
-    static async manageBrowserAndPageOverload(browserURL: string, questionsLink: string, questionNumber: number, scrapeDataLambda: (page: Page, questionNumber: number) => Promise<void>) {
-        let browser;
-        let page;
-        try {
-            // One Browser Session
-            browser = await puppeteer.connect({ browserURL });
-            // One Page Session
-            page = await browser.newPage();
-            await BrowserManager.reusePageOverload(page, questionsLink, questionNumber, scrapeDataLambda);
-
-        } catch (generalError) {
-            // handle the error
-
-        } finally {
-            // close the page if it was opened
-            if (page) {
-                await page.close();
-            }
-            // close the browser if it was opened
-            if (browser) {
-                // await browser.close();
-            }
-        }
-    }
-
-    static async reusePage(page: Page, lastSequenceNumber: number, scrapeDataLambda: (page: Page, questionNumber: number) => Promise<void>) {
-        // Reuse Page Session
-        // 272 is not reusable, you get number with max count
-        // 272 should be part of the lambda scope since it's the implementation
-        for (let i = lastSequenceNumber; i <= 272;) {
-            const questionslinkResult = await db.DatabaseManager.executeQuery(`SELECT link FROM questionslink where number = ${i};`)
-            const questionslink: string = questionslinkResult.rows[0].link;
-
-            await BrowserManager.errorHandlingBoilerPlate(page, questionslink);
-
-            // now you can try to perform your actions
-            await scrapeDataLambda(page, i);
-
-            // Increment 
-            const result = await db.DatabaseManager.executeQuery("SELECT nextval('seq_questions') as next_value;")
-            let sequenceLastValue: number = result.rows[0].next_value;
-            i = sequenceLastValue;
-
-            // Wait random time between 1min–1min30s
-            const delay = randomDelay(33000, 60000);
-            console.log(`Waiting ${delay / 1000}s...`)
-            await new Promise(resolve => setTimeout(resolve, delay));
-        }
-    }
-
-    // This function lacks 
-    // I will have to properly learn overloading in the future
-    static async reusePageOverload(page: Page, questionsLink: string, questionNumber: number, scrapeDataLambda: (page: Page, questionNumber: number) => Promise<void>) {
-        await BrowserManager.errorHandlingBoilerPlate(page, questionsLink);
-
-        // now you can try to perform your actions
-        await scrapeDataLambda(page, questionNumber);
-    }
-
-
-    static async errorHandlingBoilerPlate(page: Page, questionslink: string) {
-        let response;
-        try {
-            // try navigation with a short timeout
-            response = await page.goto(questionslink, {
-                timeout: 5000, // 5 seconds
-                waitUntil: "domcontentloaded",
-            });
-        } catch (error: any) {
-            // handle navigation and timeout errors
-
-            if (error instanceof TimeoutError) {
-                // you might decide to re-try, throw, or move on.
-                // for demonstration, we continue with the partially loaded page.
-            } else if (error.message && error.message.startsWith("net::ERR")) {
-                // networking error (DNS, connection, etc). handle or re-try if needed.
-                // e.g., throw error;
-            } else {
-                // an unexpected navigation error occurred
-                throw error;
-            }
-        }
-
-        // if we did get a response, check HTTP status codes
-        if (response) {
-            const status = response.status();
-            if (status >= 400) {
-                // handle the error
-            }
-        } else {
-            // no initial response object was returned, try waiting for a response
-            try {
-                const waitedResponse = await page.waitForResponse(() => true, {
-                    timeout: 5000,
-                });
-                const waitedStatus = waitedResponse.status();
-                if (waitedStatus >= 400) {
-                    // handle the error
-                }
-            } catch (waitError) {
-                // handle the error
-            }
-        }
-
-        // check if the page fell back to a default browser error page
-        if (page.url().startsWith("chrome-error://")) {
-            // optionally inspect page content for the specific reason
-            const content = await page.content();
-            if (content.includes("ERR_NAME_NOT_RESOLVED")) {
-                // handle the error
-            } else if (content.includes("ERR_INTERNET_DISCONNECTED")) {
-                // handle the error
-            } else {
-                // handle the error
-            }
-
-            // decide how to handle: throw, return, etc.
-            // for demonstration, we will return early.
-            return;
-        }
-    }
-
-    // What is the order of the SQL Files loaded?
-    // 1) lambda()'s       result                         uses docker_pg_seq_schema.sql
-    // 2) lambda()'s       Question, Answers, Answers     uses docker_pg_schema.sql
-    // 3) reusepage()'s    questionslink                  uses docker_pg_scraper.sql
-    // 4) reusepage()'s    increment                      uses docker_pg_seq_schema.sql
-
-    // There are dependencies for this function, need to run SQL in this order
-    // 1) docker_pg_scraper.sql
-    // 2) docker_pg_seq_scraper.sql
-    // 3) Scrape the questions link first.
-    // 4) docker_pg_schema.sql
-    // 5) docker_pg_seq_schema.sql
-    // 6) Run lambda()
-
-    static async lambda() {
-        const scrapeDataLambda = async (page: Page, i: number) => {
-            try {
-                console.log("Page loaded");
-                await page.locator('.popup-overlay.show').wait();
-                console.log("Popup detected");
-
-                // Apparently page.evaluate is like opening up console
-                await page.evaluate(() => {
-                    const el = document.querySelector('.popup-overlay.show');
-                    if (el) {
-                        el.className = 'popup-overla show';
-                    }
-                });
-            } catch (error) {
-                console.log("Popup not detected");
-            }
-
-            try {
-                await page.locator('.load-full-discussion-button').wait();
-                console.log("Load Discussions button detected");
-                await page.locator('.load-full-discussion-button').click();
-                console.log("clicked load Discussions button");
-                // Wait for load discussion to finish
-                await new Promise(resolve => setTimeout(resolve, 5000));
-            } catch (error) {
-                console.log("Load Discussions button not detected");
-            }
-
-            // Question
-            let question = await Question.create(page, i, '1z0-071');
-            console.log(question);
-            await Question.insert(question);
-
-            // Answers
-            let answers = []
-            try {
-                answers = await Answer.create(page, i, '1z0-071');
-            } catch (error) {
-                console.log("cannot find answers")
-                answers = await Answer.newCreate(page, i, '1z0-071');
-            }
-
-            for (let i = 0; i < answers.length; i++) {
-                console.log(answers[i]);
-                await Answer.insert(answers[i]);
-            }
-
-            // Discussions
-            let discussions = await Discussion.create(page, i, '1z0-071');
-            for (let i = 0; i < discussions.length; i++) {
-                console.log(discussions[i]);
-                await Discussion.insert(discussions[i]);
-            }
-        }
-
-        const result = await db.DatabaseManager.executeQuery("SELECT last_value FROM seq_questions;");
-        let sequenceLastValue: number = result.rows[0].last_value;
-        await BrowserManager.manageBrowserAndPage("http://127.0.0.1:9222", sequenceLastValue, scrapeDataLambda);
-    }
-
-}
-
-class Company {
-    private _name: string
-    public constructor(name: string) {
-        this._name = name;
-    }
-
-    public get name(): string {
-        return this._name;
-    }
-}
-
-class Exam {
-    private _name: string
-    private _company: string
-    public constructor(name: string, company: string) {
-        this._name = name;
-        this._company = company;
-    }
-
-    public get name(): string {
-        return this._name;
-    }
-
-    public get company(): string {
-        return this._company;
-    }
-}
-
-class Question {
-    private _number: number
-    private _exam: string
-    private _text: string
-    private constructor(number: number, exam: string, text: string) {
-        this._number = number;
-        this._exam = exam;
-        this._text = text;
-    }
-
-    public get number(): number {
-        return this._number;
-    }
-
-    public get exam(): string {
-        return this._exam;
-    }
-
-    public get text(): string {
-        return this._text;
-    }
-
-    public static async create(page: Page, number: number, exam: string): Promise<Question> {
-        const element = await page.waitForSelector('::-p-xpath(/html/body/div[2]/div/div[4]/div/div[1]/div[2]/p)');
-        let arrayOfText = await element?.evaluate(el => {
-            let answer = [];
-            for (let i = 0; i < el.childNodes.length; i++) {
-                // @ts-ignore
-                if (el.childNodes[i].nodeName === 'IMG') answer.push(el.childNodes[i].src);
-                else answer.push(el.childNodes[i].textContent?.trim());
-            }
-            return answer;
-        });
-        const result = arrayOfText?.filter(str => str !== '').join('\n');
-        console.log(result);
-        return new Question(number, exam, result ?? 'null');
-    }
-
-    public static async insert(question: Question) {
-        console.log("Inserting Question")
-
-        const query = `
-INSERT INTO questions
-    (number, exam, text)
-VALUES ($1, $2, $3);
-`;
-
-        const values = [
-            question.number,
-            question.exam,
-            question.text
-        ];
-
-        let result = null;
-        try {
-            result = await db.DatabaseManager.executeQuery(query, values);
-        } catch {
-            console.log("Missing exams insertion data")
-            throw Error("Missing exams insertion data");
-        }
-
-        console.log(result);
-    }
-}
-
-class Answer {
-    private _number: number
-    private _questionNumber: number
-    private _questionExam: string
-    private _text: string
-    private _isCorrect: boolean
-    private constructor(number: number, questionNumber: number, questionExam: string, text: string, isCorrect: boolean) {
-        this._number = number;
-        this._questionNumber = questionNumber;
-        this._questionExam = questionExam;
-        this._text = text;
-        this._isCorrect = isCorrect;
-    }
-
-    public get number(): number {
-        return this._number;
-    }
-
-    public get questionNumber(): number {
-        return this._questionNumber;
-    }
-
-    public get questionExam(): string {
-        return this._questionExam;
-    }
-
-    public get text(): string {
-        return this._text;
-    }
-
-    public get isCorrect(): boolean {
-        return this._isCorrect;
-    }
-
-    public static async create(page: Page, questionNumber: number, questionExam: string): Promise<Answer[]> {
-        let list: Answer[] = [];
-        const questionsElement = await page.waitForSelector('::-p-xpath(/html/body/div[2]/div/div[4]/div/div[1]/div[2]/div[2]/ul)')
-        const questionsChildNodesLength = await questionsElement?.evaluate(el => el.childElementCount);
-        if (questionsChildNodesLength !== undefined) {
-            for (let i = 1; i <= questionsChildNodesLength; i++) {
-                const element = await page.waitForSelector('::-p-xpath(/html/body/div[2]/div/div[4]/div/div[1]/div[2]/div[2]/ul/li[' + i + '])');
-                let answer = await element?.evaluate(el => {
-                    let answer = '';
-                    for (let i = 0; i < el.childNodes.length; i++) {
-                        if (el.childNodes[i].nodeName === 'IMG') {
-                            // @ts-ignore
-                            answer += el.childNodes[i].src;
-                        } else {
-                            answer += el.childNodes[i].textContent?.trim()
-                        }
-                    }
-                    return answer;
-                });
-                console.log(answer);
-
-                let answerObj = new Answer(i, questionNumber, questionExam, answer ?? 'null', answer?.includes("Most Voted") ?? false);
-                list.push(answerObj);
-            }
-        }
-        return list;
-    }
-
-    public static async newCreate(page: Page, questionNumber: number, questionExam: string): Promise<Answer[]> {
-        const element = await page.waitForSelector('::-p-xpath(/html/body/div[2]/div/div[4]/div/div[1]/div[2]/p)');
-        let arrayOfText = await element?.evaluate(el => {
-            let answer = [];
-            for (let i = 0; i < el.childNodes.length; i++) {
-                // @ts-ignore
-                if (el.childNodes[i].nodeName === 'IMG') answer.push(el.childNodes[i].src);
-                else answer.push(el.childNodes[i].textContent?.trim());
-            }
-            return answer;
-        });
-
-        // Check A, B, C, D
-        let answerList: Answer[] = [];
-        const resultList = arrayOfText?.filter(str => str !== '');
-        if (resultList !== undefined) {
-            for (let i = 0; i < resultList.length; i++) {
-                let element: string = resultList[i]
-                console.log(element);
-                switch (element) {
-                    case 'A.': {
-                        let answer = 'A. ' + resultList[i + 1];
-                        console.log(answer);
-                        let answerObj = new Answer(i, questionNumber, questionExam, answer ?? 'null', answer?.includes("Most Voted") ?? false);
-                        answerList.push(answerObj);
-                        i++;
-                        continue;
-                    }
-                    case 'B.': {
-                        let answer = 'B. ' + resultList[i + 1];
-                        console.log(answer);
-                        let answerObj = new Answer(i, questionNumber, questionExam, answer ?? 'null', answer?.includes("Most Voted") ?? false);
-                        answerList.push(answerObj);
-                        i++;
-                        continue;;
-                    }
-                    case 'C.': {
-                        let answer = 'C. ' + resultList[i + 1];
-                        console.log(answer);
-                        let answerObj = new Answer(i, questionNumber, questionExam, answer ?? 'null', answer?.includes("Most Voted") ?? false);
-                        answerList.push(answerObj);
-                        i++;
-                        continue;;
-                    }
-                    case 'D.': {
-                        let answer = 'D. ' + resultList[i + 1];
-                        console.log(answer);
-                        let answerObj = new Answer(i, questionNumber, questionExam, answer ?? 'null', answer?.includes("Most Voted") ?? false);
-                        answerList.push(answerObj);
-                        i++;
-                        continue;
-                    }
-                    default: continue;
-                }
-            }
-        }
-        return answerList;
-    }
-
-    public static async insert(answer: Answer) {
-        console.log("Inserting Answer")
-
-        const query = `
-INSERT INTO answers
-    (number, question_number, question_exam, text, is_correct)
-VALUES ($1, $2, $3, $4, $5);
-`;
-
-        const values = [
-            answer.number,
-            answer.questionNumber,
-            answer.questionExam,
-            answer.text,
-            answer.isCorrect
-        ];
-
-        let result = null;
-        try {
-            result = await db.DatabaseManager.executeQuery(query, values);
-        } catch {
-            console.log("Missing questions insertion data")
-            throw Error("Missing questions insertion data");
-        }
-        console.log(result);
-    }
-
-    public static async merge(answer: Answer) {
-        console.log("merge Answer")
-
-        const query = `
-MERGE INTO answers
-USING (
-SELECT CAST($1 AS integer) AS number, CAST($2 AS integer) AS question_number, CAST($3 AS text) AS question_exam, CAST($4 AS text) AS text, CAST($5 AS boolean) AS is_correct
-) AS src
-ON answers.number = src.number AND answers.question_number = src.question_number AND answers.question_exam = src.question_exam 
-WHEN MATCHED THEN
-    UPDATE SET text = src.text, is_correct = src.is_correct
-WHEN NOT MATCHED THEN
-    INSERT (number, question_number, question_exam, text, is_correct) VALUES (src.number, src.question_number, src.question_exam, src.text, src.is_correct); 
-        `
-
-        const values = [
-            answer.number,
-            answer.questionNumber,
-            answer.questionExam,
-            answer.text,
-            answer.isCorrect
-        ];
-
-        let result = null;
-        try {
-            result = await db.DatabaseManager.executeQuery(query, values);
-        } catch {
-            console.log("Missing questions insertion data")
-            throw Error("Missing questions insertion data");
-        }
-        console.log(result);
-    }
-}
-
-class Discussion {
-    private _number: number
-    private _questionNumber: number
-    private _questionExam: string
-    private _selectedAnswer: string
-    private _text: string
-    private _upvote: number
-    private constructor(number: number, questionNumber: number, questionExam: string, selectedAnswer: string, text: string, upvote: number) {
-        this._number = number;
-        this._questionNumber = questionNumber;
-        this._questionExam = questionExam;
-        this._selectedAnswer = selectedAnswer;
-        this._text = text;
-        this._upvote = upvote;
-    }
-
-    public get number(): number {
-        return this._number;
-    }
-
-    public get questionNumber(): number {
-        return this._questionNumber;
-    }
-
-    public get questionExam(): string {
-        return this._questionExam;
-    }
-
-    public get selectedAnswer(): string {
-        return this._selectedAnswer;
-    }
-
-    public get text(): string {
-        return this._text;
-    }
-
-    public get upvote(): number {
-        return this._upvote;
-    }
-
-    // Builder Pattern (Not used)
-    static Builder = class {
-        private _selectedAnswer: string
-        private _text: string
-        private _upvote: number
-
-        constructor() {
-            this._selectedAnswer = 'null';
-            this._text = 'null';
-            this._upvote = -1;
-        }
-
-        public set selectedAnswer(selectedAnswer: string) {
-            this._selectedAnswer = selectedAnswer;
-        }
-
-        public set text(text: string) {
-            this._text = text;
-        }
-
-        public set upvote(upvote: number) {
-            this._upvote = upvote;
-        }
-
-        build(number: number, questionNumber: number, questionExam: string): Discussion {
-            return new Discussion(number, questionNumber, questionExam, this._selectedAnswer, this._text, this._upvote);
-        }
-
-    }
-
-    public static async create(page: Page, questionNumber: number, questionExam: string): Promise<Discussion[]> {
-        let list: Discussion[] = [];
-        const discussionsElement = await page.waitForSelector('::-p-xpath(/html/body/div[2]/div/div[4]/div/div[2]/div[2]/div/div/div[2])')
-        const discussionsChildNodesLength = await discussionsElement?.evaluate(el => el.childElementCount);
-        if (discussionsChildNodesLength !== undefined) {
-            for (let i = 1; i <= discussionsChildNodesLength; i++) {
-                const discusstionElement = await page.waitForSelector('::-p-xpath(/html/body/div[2]/div/div[4]/div/div[2]/div[2]/div/div/div[2]/div[' + i + ']/div/div[2])');
-                const obj = await discusstionElement?.evaluate(async el => {
-                    async function nodeRecursion(el: Element | ChildNode, object: any) {
-                        // @ts-ignore
-                        if (el.className !== 'comment-replies' && el.hasChildNodes()) {
-                            for (let i = 0; i < el.childNodes.length; i++) {
-                                await nodeRecursion(el.childNodes[i], object);
-                            }
-                        }
-                        // @ts-ignore
-                        if (el.className === 'comment-selected-answers badge badge-warning') {
-                            // console.log(el.textContent?.trim());
-                            // array.push(el.textContent?.trim());
-                            object.selectedAnswer = el.textContent?.trim() ?? 'null';
-                        }
-                        // @ts-ignore
-                        else if (el.className === 'comment-content') {
-                            // console.log(el.textContent?.trim());
-                            // array.push(el.textContent?.trim());
-                            object.text = el.textContent?.trim() ?? 'null';
-                        }
-                        // @ts-ignore
-                        else if (el.className === 'ml-2 upvote-text') {
-                            // console.log(el.textContent?.trim());
-                            // array.push(el.textContent?.trim());
-                            let upvoteText = el.textContent?.trim();
-                            let upvote = Number(upvoteText?.split(' ')[1]);
-                            object.upvote = upvote;
-                        }
-                    }
-
-                    let object = {
-                        selectedAnswer: 'null',
-                        text: 'null',
-                        upvote: -1
-                    };
-
-                    await nodeRecursion(el, object);
-                    return object;
-                });
-                // console.log(obj);
-                let discussion = new Discussion(i, questionNumber, questionExam, obj?.selectedAnswer ?? 'null', obj?.text ?? 'null', obj?.upvote ?? -1);
-                list.push(discussion);
-            }
-        }
-        return list;
-    }
-
-    public static async insert(discussion: Discussion) {
-        console.log("Inserting Discussion")
-
-        const query = `
-INSERT INTO discussions
-    (number, question_number, question_exam, selected_answer, text, upvote)
-VALUES ($1, $2, $3, $4, $5, $6);
-`;
-
-        const values = [
-            discussion.number,
-            discussion.questionNumber,
-            discussion.questionExam,
-            discussion.selectedAnswer,
-            discussion.text,
-            discussion.upvote
-        ];
-
-        let result = null;
-        try {
-            result = await db.DatabaseManager.executeQuery(query, values);
-        } catch {
-            console.log("Missing questions insertion data")
-            throw Error("Missing questions insertion data");
-        }
-
-        console.log(result);
-    }
-}
+import * as schema from './modules/schema/index.js'
+import * as browser from './modules/browser/index.js'
+import * as presentation from './modules/presentation/index.js'
 
 // What is the order of the SQL Files loaded?
 // 1) scrapeData()'s       Question, Answers, Answers     uses docker_pg_schema.sql
@@ -711,13 +54,13 @@ let scrapeData = async () => {
         console.log('\n');
 
         // Question
-        let question = await Question.create(page, i, '1z0-071');
+        let question = await schema.Question.create(page, i, '1z0-071');
         console.log(question);
 
         console.log('\n');
 
         // Answers
-        let answers = await Answer.create(page, i, '1z0-071');
+        let answers = await schema.Answer.create(page, i, '1z0-071');
         console.log(answers);
 
         console.log('\n');
@@ -727,13 +70,13 @@ let scrapeData = async () => {
         // /html/body/div[2]/div/div[4]/div/div[2]/div[2]/div/div/div[2]/div[1]/div/div[2]/div[1]
         // /html/body/div[2]/div/div[4]/div/div[2]/div[2]/div/div/div[2]/div[1]/div/div[2]/div[2] 
 
-        let discussions = await Discussion.create(page, i, '1z0-071');
+        let discussions = await schema.Discussion.create(page, i, '1z0-071');
         console.log(discussions);
 
         console.log('\n');
     }
 
-    await BrowserManager.manageBrowserAndPageOverload("http://127.0.0.1:9222",
+    await browser.BrowserManager.manageBrowserAndPageOverload("http://127.0.0.1:9222",
         'https://www.examtopics.com/discussions/oracle/view/79530-exam-1z0-071-topic-1-question-2-discussion/',
         1,
         scrapeDataLambda);
@@ -783,7 +126,7 @@ VALUES ((SELECT last_value FROM seq_questionsLink), '1z0-071', '${link}');`);
 
     for (let i = sequenceLastValue; i <= 272;) {
         // I will open and close the browser which is not what I wanted
-        await BrowserManager.manageBrowserAndPageOverload("http://127.0.0.1:9222", 'https://www.google.com/', i, scrapeDataLambda);
+        await browser.BrowserManager.manageBrowserAndPageOverload("http://127.0.0.1:9222", 'https://www.google.com/', i, scrapeDataLambda);
 
         // Increment
         // Below is seq_questionsLink instead of seq_questions, this is fine 
@@ -826,7 +169,7 @@ VALUES ('${i}', '1z0-071', '${link}');`);
 
     for (let i = sequenceLastValue; i <= 73; i++) {
         // I will open and close the browser which is not what I wanted
-        await BrowserManager.manageBrowserAndPageOverload("http://127.0.0.1:9222", 'https://www.google.com/', i, scrapeDataLambda);
+        await browser.BrowserManager.manageBrowserAndPageOverload("http://127.0.0.1:9222", 'https://www.google.com/', i, scrapeDataLambda);
 
         // Wait random time between 1min–1min30s
         const delay = randomDelay(61000, 65000);
@@ -880,36 +223,36 @@ let scrapeDataIntoPostgres = async () => {
         }
 
         // Question
-        let question = await Question.create(page, i, '1z0-071');
+        let question = await schema.Question.create(page, i, '1z0-071');
         console.log(question);
-        await Question.insert(question);
+        await schema.Question.insert(question);
 
         // Answers
         let answers = []
         try {
-            answers = await Answer.create(page, i, '1z0-071');
+            answers = await schema.Answer.create(page, i, '1z0-071');
         } catch (error) {
             console.log("cannot find answers")
-            answers = await Answer.newCreate(page, i, '1z0-071');
+            answers = await schema.Answer.newCreate(page, i, '1z0-071');
         }
 
         for (let i = 0; i < answers.length; i++) {
             console.log(answers[i]);
-            await Answer.insert(answers[i]);
+            await schema.Answer.insert(answers[i]);
         }
 
         // Discussions
-        let discussions = await Discussion.create(page, i, '1z0-071');
+        let discussions = await schema.Discussion.create(page, i, '1z0-071');
         for (let i = 0; i < discussions.length; i++) {
             console.log(discussions[i]);
-            await Discussion.insert(discussions[i]);
+            await schema.Discussion.insert(discussions[i]);
         }
     }
 
     // same lambda()
     const result = await db.DatabaseManager.executeQuery("SELECT last_value FROM seq_questions;")
     let sequenceLastValue: number = result.rows[0].last_value;
-    await BrowserManager.manageBrowserAndPage("http://127.0.0.1:9222", sequenceLastValue, scrapeDataLambda);
+    await browser.BrowserManager.manageBrowserAndPage("http://127.0.0.1:9222", sequenceLastValue, scrapeDataLambda);
 }
 
 // There are dependencies for this function, need to run SQL in this order:
@@ -947,15 +290,15 @@ let rescrapeDataDebug = async () => {
         // Answers
         let answers = []
         try {
-            answers = await Answer.create(page, questionsnumber, '1z0-071');
+            answers = await schema.Answer.create(page, questionsnumber, '1z0-071');
         } catch (error) {
             console.log("cannot find answers")
-            answers = await Answer.newCreate(page, questionsnumber, '1z0-071');
+            answers = await schema.Answer.newCreate(page, questionsnumber, '1z0-071');
         }
 
         for (let i = 0; i < answers.length; i++) {
             console.log(answers[i]);
-            await Answer.merge(answers[i]);
+            await schema.Answer.merge(answers[i]);
         }
     }
 
@@ -964,7 +307,7 @@ let rescrapeDataDebug = async () => {
     for (let i = 0; i < (result.rowCount ?? 0); i++) {
         const questionsNumber = result.rows[i].number
         const questionsLink = result.rows[i].link
-        await BrowserManager.manageBrowserAndPageOverload('http://127.0.0.1:9222', questionsLink, questionsNumber, scrapeDataLambda);
+        await browser.BrowserManager.manageBrowserAndPageOverload('http://127.0.0.1:9222', questionsLink, questionsNumber, scrapeDataLambda);
     }
 }
 
@@ -1005,39 +348,6 @@ let scrapeImages = async () => {
         await new Promise(resolve => setTimeout(resolve, delay));
     }
 
-}
-
-class Markdown {
-    private questionNumber: number
-    private question: string
-    private answers: string[]
-    private discussions: string[]
-    constructor(questionNumber: number, question: string, answers: string[], discussions: string[]) {
-        this.questionNumber = questionNumber;
-        this.question = question; // string is immutable
-        this.answers = Array.from(answers); // clone to prevent external modification
-        this.discussions = Array.from(discussions); // clone to prevent external modification
-    }
-
-    public toString(): string {
-        let discussionsString = "";
-        for (let i = 0; i < this.discussions.length; i++) {
-            discussionsString += "## Discussion " + (i + 1) + "\n" +
-                this.discussions[i] + "\n\n";
-        }
-
-        return "# Question " + this.questionNumber + "\n" +
-            this.question + "\n\n" +
-            "# Answers\n" +
-            this.answers.join("\n\n") + "\n\n" +
-            "# Discussions\n" +
-            discussionsString;
-    }
-
-    public toFile(): void {
-        fs.writeFileSync("./markdowns2/question" + this.questionNumber + ".md", this.toString());
-        console.log("Question, Answers, Discussions saved as " + this.questionNumber + ".md");
-    }
 }
 
 // There are dependencies for this function, need to run SQL in this order:
@@ -1084,7 +394,7 @@ limit 5;`);
             discussions.push(discussion);
         }
 
-        let markdown = new Markdown(i, question, answers, discussions);
+        let markdown = new presentation.Markdown(i, question, answers, discussions);
         markdown.toFile();
 
         // Increment 
