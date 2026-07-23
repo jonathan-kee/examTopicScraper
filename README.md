@@ -204,6 +204,11 @@ DBT Certification links:
 - https://learn.getdbt.com/learning-paths/dbt-certified-developer
 - https://learn.getdbt.com/learning-paths/dbt-certified-cloud-architect
 
+Simple Guide on setup DBT with Postgres:
+- https://github.com/prule/dbt-spike/tree/main
+- https://paulr70.substack.com/p/getting-started-with-dbt
+- https://paulr70.substack.com/p/adding-a-unit-test-to-dbt
+
 Apache Spark (Data bricks certs)
 
 7) Data Analytics
