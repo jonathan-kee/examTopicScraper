@@ -1,14 +1,14 @@
 {
   "name": "examTopicScraper",
   "version": "1.0.0",
-  "description": "This project was bootstrapped with Fastify-CLI.",
+  "description": "This project is to demonstrate browser vs browserless webscraping",
   "main": "app.js",
   "directories": {
     "test": "test"
   },
   "scripts": {
-    "test": "tap \"build/test/**/*.test.js\"",
-    "unitTest": "tap"
+    "test": "node --test \"build/test/**/*.test.js\"",
+    "unitTest": "node --test"
   },
   "keywords": [],
   "author": "",
@@ -22,7 +22,6 @@
   "devDependencies": {
     "@types/node": "^26.1.1",
     "@types/pg": "^8.15.5",
-    "tap": "^21.7.4",
     "tsx": "^4.23.1",
     "typescript": "^7.0.2"
   },
