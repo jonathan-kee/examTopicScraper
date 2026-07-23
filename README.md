@@ -284,6 +284,7 @@ Compile Typescript to build folder, run specific test
 - npm run unitTest -- build/test/env.test.js
 - npm run unitTest -- build/test/extractRawDocument.test.js
 - npm run unitTest -- build/test/storageBucket.test.js
+- npm run unitTest -- build/test/extractAllRawDocument.test.js
 
 # Github Actions / Forejo Actions Setup
 
