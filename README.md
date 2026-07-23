@@ -26,6 +26,11 @@ The reason I was doing this is because I don't want to pay the expensive fee to 
 
 ![Scape raw document from website using inspect network and code](./screenshots/inspectNetworkAsset.png)
 
+# Pipeline commands
+1) npm run unitTest -- build/test/extractAllRawDocument.test.js
+2) Run ExamTopicETL java project
+3) Run markdown code
+
 # Postgres docker installation
 Youtube link:
 - https://www.youtube.com/watch?v=Hs9Fh1fr5s8&t=228s
